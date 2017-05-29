@@ -38,3 +38,6 @@
 	path = git
 	url = https://github.com/puppetlabs/puppetlabs-git.git
 
+[submodule "hash_resources"]
+	path = hash_resources
+	url = https://github.com/stbenjam/puppet-hash_resources.git
