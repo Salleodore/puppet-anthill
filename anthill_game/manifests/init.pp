@@ -1,0 +1,4 @@
+
+class anthill_game {
+
+}

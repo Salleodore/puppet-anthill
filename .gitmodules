@@ -1,0 +1,40 @@
+[submodule "apt"]
+	path = apt
+	url = https://github.com/puppetlabs/puppetlabs-apt.git
+[submodule "concat"]
+	path = concat
+	url = https://github.com/puppetlabs/puppetlabs-concat.git
+[submodule "mysql"]
+	path = mysql
+	url = git://github.com/puppetlabs/puppetlabs-mysql.git
+[submodule "rabbitmq"]
+	path = rabbitmq
+	url = https://github.com/puppetlabs/puppetlabs-rabbitmq.git
+[submodule "redis"]
+	path = redis
+	url = https://github.com/arioch/puppet-redis.git
+[submodule "staging"]
+	path = staging
+	url = https://github.com/voxpupuli/puppet-staging.git
+[submodule "stdlib"]
+	path = stdlib
+	url = https://github.com/puppetlabs/puppetlabs-stdlib.git
+[submodule "supervisor"]
+	path = supervisor
+	url = https://github.com/desertkun/puppet-supervisor.git
+[submodule "epel"]
+	path = epel
+	url = http://github.com/stahnma/puppet-module-epel.git
+[submodule "nginx"]
+	path = nginx
+	url = https://github.com/desertkun/puppet-nginx.git
+[submodule "python"]
+	path = python
+	url = https://github.com/desertkun/puppet-python.git
+[submodule "vcsrepo"]
+	path = vcsrepo
+	url = https://github.com/puppetlabs/puppetlabs-vcsrepo.git
+[submodule "git"]
+	path = git
+	url = https://github.com/puppetlabs/puppetlabs-git.git
+
