@@ -25,6 +25,8 @@ define anthill_game::master::version (
   $rate_cache_max_connections = $anthill_game::master::rate_cache_max_connections,
   $rate_cache_db = $anthill_game::master::rate_cache_db,
 
+  $party_broker = $anthill_game::master::party_broker,
+
   $host = $anthill_game::master::host,
   $domain = $anthill_game::master::domain,
 
@@ -69,7 +71,9 @@ define anthill_game::master::version (
     "rate_cache_host" => $rate_cache_host,
     "rate_cache_port" => $rate_cache_port,
     "rate_cache_max_connections" => $rate_cache_max_connections,
-    "rate_cache_db" => $rate_cache_db
+    "rate_cache_db" => $rate_cache_db,
+
+    "party_broker" => $party_broker
   }
 
   $application_environment = {

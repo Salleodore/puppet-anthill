@@ -24,6 +24,8 @@ class anthill_game::master (
   $rate_cache_db = $anthill_game::master::params::rate_cache_db,
   $rate_cache_max_connections = $anthill_game::master::params::rate_cache_max_connections,
 
+  $party_broker = $anthill_game::master::params::party_broker,
+
   $nginx_max_body_size = $anthill_game::master::params::nginx_max_body_size,
 
   $ensure = undef,

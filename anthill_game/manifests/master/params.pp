@@ -26,4 +26,6 @@ class anthill_game::master::params {
   $rate_cache_db = 29
 
   $nginx_max_body_size = '1024m'
+
+  $party_broker = "amqp://${anthill::rabbitmq::username}:${anthill::rabbitmq::password}@${anthill::rabbitmq::host}:${anthill::rabbitmq::port}/${environment}"
 }
