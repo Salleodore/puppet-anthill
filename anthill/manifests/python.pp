@@ -26,10 +26,6 @@ class anthill::python inherits anthill {
     require => File["${anthill::virtualenv_location}"]
   }
 
-  package { 'libboost-python-dev': ensure => 'present' }
-  package { 'libboost-system-dev': ensure => 'present' }
-  package { 'libboost-thread-dev': ensure => 'present' }
-
   python::pip { 'termcolor': virtualenv => $venv }
   python::pip { 'ipaddr': virtualenv => $venv }
   python::pip { 'ujson': virtualenv => $venv }

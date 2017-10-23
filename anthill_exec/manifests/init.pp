@@ -46,13 +46,9 @@ class anthill_exec (
 
 ) inherits anthill_exec::params {
 
-  package { 'libv8-dev':
-    ensure => 'present'
-  }
-
-  python::pip { 'PyV8':
+  python::pip { 'v8py':
     virtualenv => "${anthill::virtualenv_location}/${environment}",
-    url => "git+https://github.com/anthill-utils/pyv8.git"
+    url => "https://github.com/anthill-utils/v8py.git"
   }
 
   anthill::service { $service_name:
