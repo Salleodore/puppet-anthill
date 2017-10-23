@@ -13,6 +13,11 @@ define anthill_event::version (
   $token_cache_max_connections = $anthill_event::token_cache_max_connections,
   $token_cache_db = $anthill_event::token_cache_db,
 
+  $cache_host = $anthill_event::cache_host,
+  $cache_port = $anthill_event::cache_port,
+  $cache_max_connections = $anthill_event::cache_max_connections,
+  $cache_db = $anthill_event::cache_db,
+
   $schedule_update = $anthill_event::schedule_update,
 
   $host = $anthill_event::host,
@@ -48,6 +53,11 @@ define anthill_event::version (
     "token_cache_port" => $token_cache_port,
     "token_cache_max_connections" => $token_cache_max_connections,
     "token_cache_db" => $token_cache_db,
+
+    "cache_host" => $cache_host,
+    "cache_port" => $cache_port,
+    "cache_max_connections" => $cache_max_connections,
+    "cache_db" => $cache_db,
 
     "schedule_update" => $schedule_update
   }

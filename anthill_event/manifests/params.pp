@@ -13,5 +13,10 @@ class anthill_event::params {
   $token_cache_max_connections = 500
   $token_cache_db = 15
 
+  $cache_host = $anthill::redis::host
+  $cache_port = $anthill::redis::port
+  $cache_max_connections = 500
+  $cache_db = 29
+
   $schedule_update = 300
 }

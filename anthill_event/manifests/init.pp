@@ -13,6 +13,11 @@ class anthill_event (
   $token_cache_db = $anthill_event::params::token_cache_db,
   $token_cache_max_connections = $anthill_event::params::token_cache_max_connections,
 
+  $cache_host = $anthill_event::params::cache_host,
+  $cache_port = $anthill_event::params::cache_port,
+  $cache_db = $anthill_event::params::cache_db,
+  $cache_max_connections = $anthill_event::params::cache_max_connections,
+
   $schedule_update = $anthill_event::params::schedule_update,
 
   $ensure = undef,
