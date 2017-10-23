@@ -3,7 +3,6 @@ class anthill::params {
 
   $manage_mysql = true
   $manage_redis = true
-  $manage_mysql_server = true
   $manage_nginx = true
   $manage_rabbitmq = true
   $manage_supervisor = true

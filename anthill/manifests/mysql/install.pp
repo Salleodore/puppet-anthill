@@ -1,7 +1,7 @@
 
 class anthill::mysql::install inherits anthill::mysql {
 
-  if ($anthill::manage_mysql) and ($anthill::manage_mysql_server) {
+  if ($anthill::manage_mysql) {
     include '::apt'
 
     apt::source { 'mysql-5.7':

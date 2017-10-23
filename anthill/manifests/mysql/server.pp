@@ -1,7 +1,7 @@
 
 class anthill::mysql::server inherits anthill::mysql {
 
-  if ($anthill::manage_mysql) and ($anthill::manage_mysql_server) {
+  if ($anthill::manage_mysql) {
 
     class { '::mysql::server':
       package_manage          => false,

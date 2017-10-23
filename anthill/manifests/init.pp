@@ -4,7 +4,6 @@ class anthill (
   $versions,
 
   $manage_mysql = $anthill::params::manage_mysql,
-  $manage_mysql_server = $anthill::params::manage_mysql_server,
   $manage_nginx = $anthill::params::manage_nginx,
   $manage_rabbitmq = $anthill::params::manage_rabbitmq,
   $manage_redis = $anthill::params::manage_redis,
