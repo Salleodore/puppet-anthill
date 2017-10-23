@@ -3,11 +3,6 @@ define anthill_admin::version (
   $version,
   $default_version = undef,
 
-  $db_host = $anthill_admin::db_host,
-  $db_username = $anthill_admin::db_username,
-  $db_password = $anthill_admin::db_password,
-  $db_name = $anthill_admin::db_name,
-
   $token_cache_host = $anthill_admin::token_cache_host,
   $token_cache_port = $anthill_admin::token_cache_port,
   $token_cache_max_connections = $anthill_admin::token_cache_max_connections,
@@ -43,10 +38,6 @@ define anthill_admin::version (
 ) {
 
   $args = {
-    "db_host" => $db_host,
-    "db_username" => $db_username,
-    "db_name" => $db_name,
-
     "token_cache_host" => $token_cache_host,
     "token_cache_port" => $token_cache_port,
     "token_cache_max_connections" => $token_cache_max_connections,
@@ -59,7 +50,6 @@ define anthill_admin::version (
   }
 
   $application_environment = {
-    "db_password" => $db_password
   }
 
   anthill::service::version { "${name}":

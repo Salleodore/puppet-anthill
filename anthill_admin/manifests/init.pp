@@ -3,11 +3,6 @@ class anthill_admin (
 
   $service_name = $anthill_admin::params::service_name,
 
-  $db_host = $anthill_admin::params::db_host,
-  $db_username = $anthill_admin::params::db_username,
-  $db_password = $anthill_admin::params::db_password,
-  $db_name = $anthill_admin::params::db_name,
-
   $token_cache_host = $anthill_admin::params::token_cache_host,
   $token_cache_port = $anthill_admin::params::token_cache_port,
   $token_cache_db = $anthill_admin::params::token_cache_db,
@@ -50,9 +45,6 @@ class anthill_admin (
 
     use_nginx => $use_nginx,
     use_mysql => $use_mysql,
-
-    mysql_username => $db_username,
-    mysql_password => $db_password,
 
     domain => $domain,
     listen_port => $listen_port,
