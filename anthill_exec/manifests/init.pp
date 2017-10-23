@@ -48,7 +48,7 @@ class anthill_exec (
 
   python::pip { 'v8py':
     virtualenv => "${anthill::virtualenv_location}/${environment}",
-    url => "https://github.com/anthill-utils/v8py.git"
+    url => "git+https://github.com/anthill-utils/v8py.git"
   }
 
   anthill::service { $service_name:
