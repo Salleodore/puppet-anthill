@@ -3,6 +3,8 @@ class anthill_exec::params {
 
   $service_name = "exec"
 
+  $source_path = "${anthill::applications_location}/${environment}-exec-src"
+
   $db_host = $anthill::mysql::mysql_host
   $db_username = $anthill::mysql::mysql_username
   $db_password = $anthill::mysql::mysql_password
@@ -18,6 +20,5 @@ class anthill_exec::params {
   $cache_max_connections = 500
   $cache_db = 22
 
-  $js_compile_workers = 0
   $js_call_timeout = 10
 }

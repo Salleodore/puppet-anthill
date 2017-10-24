@@ -18,7 +18,7 @@ class anthill_exec (
   $cache_db = $anthill_exec::params::cache_db,
   $cache_max_connections = $anthill_exec::params::cache_max_connections,
 
-  $js_compile_workers = $anthill_exec::params::js_compile_workers,
+  $source_path = $anthill_exec::params::source_path,
   $js_call_timeout = $anthill_exec::params::js_call_timeout,
 
   $ensure = undef,
@@ -48,7 +48,8 @@ class anthill_exec (
 
   python::pip { 'v8py':
     virtualenv => "${anthill::virtualenv_location}/${environment}",
-    url => "git+https://github.com/anthill-utils/v8py.git"
+    url => "git+https://github.com/anthill-utils/v8py.git",
+    timeout => 3600
   }
 
   anthill::service { $service_name:

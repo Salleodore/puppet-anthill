@@ -3,6 +3,8 @@ define anthill_exec::version (
   $version,
   $default_version = undef,
 
+  $source_path = $anthill_exec::source_path,
+
   $db_host = $anthill_exec::db_host,
   $db_username = $anthill_exec::db_username,
   $db_password = $anthill_exec::db_password,
@@ -18,7 +20,6 @@ define anthill_exec::version (
   $cache_max_connections = $anthill_exec::cache_max_connections,
   $cache_db = $anthill_exec::cache_db,
 
-  $js_compile_workers = $anthill_exec::js_compile_workers,
   $js_call_timeout = $anthill_exec::js_call_timeout,
 
   $host = $anthill_exec::host,
@@ -60,7 +61,7 @@ define anthill_exec::version (
     "cache_max_connections" => $cache_max_connections,
     "cache_db" => $cache_db,
 
-    "js_compile_workers" => $js_compile_workers,
+    "source_dir" => $source_path,
     "js_call_timeout" => $js_call_timeout
   }
 
