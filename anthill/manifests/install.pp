@@ -66,6 +66,16 @@ class anthill::install inherits anthill {
     }
   }
 
+  if ($keys_location)
+  {
+    file { $keys_location:
+      ensure => 'directory',
+      owner  => $anthill::applications_user,
+      group  => $anthill::applications_group,
+      mode   => '0760'
+    }
+  }
+
   package { 'build-essential': ensure => 'present' }
   package { 'libcurl4-openssl-dev': ensure => 'present' }
   package { 'libssl-dev': ensure => 'present' }

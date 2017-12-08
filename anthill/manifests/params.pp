@@ -24,6 +24,7 @@ class anthill::params {
   $sources_location = "${applications_location}/${environment}/sources"
   $runtime_location = "${applications_location}/${environment}/runtime"
   $tools_location = "${applications_location}/${environment}/tools"
+  $keys_location = "${applications_location}/${environment}/keys"
 
   $applications_user = 'anthill'
   # anthill

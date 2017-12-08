@@ -20,6 +20,7 @@ class anthill (
   $sources_location = $anthill::params::sources_location,
   $runtime_location = $anthill::params::runtime_location,
   $tools_location = $anthill::params::tools_location,
+  $keys_location = $anthill::params::keys_location,
 
   $applications_user = $anthill::params::applications_user,
   $applications_group = $anthill::params::applications_group,

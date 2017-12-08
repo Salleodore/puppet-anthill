@@ -23,8 +23,8 @@ class anthill::rabbitmq::install inherits anthill::rabbitmq {
 
     class { ::rabbitmq:
       port              => $port,
-      node_ip_address   => '127.0.0.1',
-      management_ip_address => '127.0.0.1',
+      node_ip_address   => $anthill::dns::local_ip_address,
+      management_ip_address => $anthill::dns::local_ip_address,
       management_port   => $admin_port,
       management_ssl    => false,
       admin_enable      => $admin_management,
@@ -35,8 +35,8 @@ class anthill::rabbitmq::install inherits anthill::rabbitmq {
       }
     }
 
-    @@anthill::dns::entry { "rabbimq":
-      internal_hostname => "rabbimq-${environment}.${anthill::internal_domain_name}",
+    @@anthill::dns::entry { "rabbitmq":
+      internal_hostname => "rabbitmq-${environment}.${anthill::internal_domain_name}",
       tag => "internal"
     }
 
