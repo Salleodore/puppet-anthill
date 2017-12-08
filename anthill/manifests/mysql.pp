@@ -11,7 +11,6 @@ class anthill::mysql (
   anchor { 'anthill::mysql::begin': } ->
 
   class { '::anthill::mysql::install': } ->
-  class { '::anthill::mysql::server': } ->
   class { '::anthill::mysql::dbuser': } ->
 
   anchor { 'anthill::mysql::end': }

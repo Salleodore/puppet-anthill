@@ -1,8 +1,11 @@
 
 class anthill_environment (
 
+  $default_version = undef,
   $service_name = $anthill_environment::params::service_name,
-  $api_versions = $anthill_environment::params::api_versions,
+
+  $repository_remote_url = $anthill_environment::params::repository_remote_url,
+  $source_directory = $anthill_environment::params::source_directory,
 
   $db_host = $anthill_environment::params::db_host,
   $db_username = $anthill_environment::params::db_username,
@@ -35,11 +38,18 @@ class anthill_environment (
   $internal_restrict = undef,
   $internal_max_connections = undef,
   $discovery_service = undef,
-  $auth_key_public = undef
-
+  $auth_key_public = undef,
+  $whitelist = undef
 ) inherits anthill_environment::params {
 
-  anthill::service { $service_name:
+  require anthill::common
+
+  anthill::service {$service_name:
+
+    default_version => $default_version,
+    repository_remote_url => $repository_remote_url,
+    repository_source_directory => $source_directory,
+
     service_name => $service_name,
     ensure => $ensure,
 
@@ -57,7 +67,10 @@ class anthill_environment (
     ssl_key => $ssl_key,
 
     external_domain_name => $external_domain_name,
-    internal_domain_name => $internal_domain_name
+    internal_domain_name => $internal_domain_name,
+    internal_broker => $internal_broker,
+
+    whitelist => $whitelist
   }
 
 }

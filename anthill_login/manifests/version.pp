@@ -1,7 +1,9 @@
 define anthill_login::version (
 
-  $version,
-  $default_version = undef,
+  $version = $title,
+  $source_commit,
+
+  $source_directory = $anthill_login::source_directory,
 
   $db_host = $anthill_login::db_host,
   $db_username = $anthill_login::db_username,
@@ -20,7 +22,7 @@ define anthill_login::version (
 
   $application_keys_secret = $anthill_login::application_keys_secret,
   $auth_key_private = $anthill_login::auth_key_private,
-  $auth_key_private_secret = $anthill_login::auth_key_private_secret,
+  $auth_key_private_passphrase = $anthill_login::auth_key_private_passphrase,
 
   $host = $anthill_login::host,
   $domain = $anthill_login::domain,
@@ -40,11 +42,8 @@ define anthill_login::version (
   $ensure = undef,
   $use_nginx = undef,
   $use_supervisor = undef,
-  $applications_location = undef,
-  $sockets_location = undef,
-
-  $whitelist = undef
-
+  $runtime_location = undef,
+  $sockets_location = undef
 ) {
 
   $args = {
@@ -63,20 +62,23 @@ define anthill_login::version (
 
   $application_environment = {
     "db_password" => $db_password,
-    "private_key_password" => $auth_key_private_secret,
+    "private_key_password" => $auth_key_private_passphrase,
     "application_keys_secret" => $application_keys_secret,
     "auth_key_private" => $auth_key_private,
     "passwords_salt" => $passwords_salt
   }
 
-  anthill::service::version { "${name}":
+  anthill::service::version { "${anthill_login::service_name}_${version}":
     version                                     => $version,
-    default_version                             => $default_version,
     service_name                                => $anthill_login::service_name,
     args                                        => $args,
 
+    source_directory                            => $source_directory,
+    source_commit                               => $source_commit,
+
     host                                        => $host,
     domain                                      => $domain,
+    ensure                                      => $ensure,
 
     internal_broker                             => $internal_broker,
     internal_restrict                           => $internal_restrict,
@@ -92,12 +94,12 @@ define anthill_login::version (
     instances                                   => $instances,
     use_nginx                                   => $use_nginx,
     use_supervisor                              => $use_supervisor,
-    applications_location                       => $applications_location,
+    runtime_location                            => $runtime_location,
     sockets_location                            => $sockets_location,
     application_arguments                       => $application_arguments,
     application_environment                     => $application_environment,
 
-    whitelist                                   => $whitelist
+    require                                     => Anthill::Common::Version[$version]
 
   }
 }

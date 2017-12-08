@@ -1,7 +1,11 @@
 
 class anthill_store (
 
+  $default_version = undef,
   $service_name = $anthill_store::params::service_name,
+
+  $repository_remote_url = $anthill_store::params::repository_remote_url,
+  $source_directory = $anthill_store::params::source_directory,
 
   $db_host = $anthill_store::params::db_host,
   $db_username = $anthill_store::params::db_username,
@@ -34,11 +38,18 @@ class anthill_store (
   $internal_restrict = undef,
   $internal_max_connections = undef,
   $discovery_service = undef,
-  $auth_key_public = undef
-
+  $auth_key_public = undef,
+  $whitelist = undef
 ) inherits anthill_store::params {
 
-  anthill::service { $service_name:
+  require anthill::common
+
+  anthill::service {$service_name:
+
+    default_version => $default_version,
+    repository_remote_url => $repository_remote_url,
+    repository_source_directory => $source_directory,
+
     service_name => $service_name,
     ensure => $ensure,
 
@@ -56,7 +67,10 @@ class anthill_store (
     ssl_key => $ssl_key,
 
     external_domain_name => $external_domain_name,
-    internal_domain_name => $internal_domain_name
+    internal_domain_name => $internal_domain_name,
+    internal_broker => $internal_broker,
+
+    whitelist => $whitelist
   }
 
 }

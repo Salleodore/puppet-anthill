@@ -1,7 +1,9 @@
 define anthill_config::version (
 
-  $version,
-  $default_version = undef,
+  $version = $title,
+  $source_commit,
+
+  $source_directory = $anthill_config::source_directory,
 
   $db_host = $anthill_config::db_host,
   $db_username = $anthill_config::db_username,
@@ -35,11 +37,8 @@ define anthill_config::version (
   $ensure = undef,
   $use_nginx = undef,
   $use_supervisor = undef,
-  $applications_location = undef,
-  $sockets_location = undef,
-
-  $whitelist = undef
-
+  $runtime_location = undef,
+  $sockets_location = undef
 ) {
 
   $args = {
@@ -62,14 +61,17 @@ define anthill_config::version (
     "db_password" => $db_password
   }
 
-  anthill::service::version { "${name}":
+  anthill::service::version { "${anthill_config::service_name}_${version}":
     version                                     => $version,
-    default_version                             => $default_version,
     service_name                                => $anthill_config::service_name,
     args                                        => $args,
 
+    source_directory                            => $source_directory,
+    source_commit                               => $source_commit,
+
     host                                        => $host,
     domain                                      => $domain,
+    ensure                                      => $ensure,
 
     internal_broker                             => $internal_broker,
     internal_restrict                           => $internal_restrict,
@@ -85,12 +87,12 @@ define anthill_config::version (
     instances                                   => $instances,
     use_nginx                                   => $use_nginx,
     use_supervisor                              => $use_supervisor,
-    applications_location                       => $applications_location,
+    runtime_location                            => $runtime_location,
     sockets_location                            => $sockets_location,
     application_arguments                       => $application_arguments,
     application_environment                     => $application_environment,
 
-    whitelist                                   => $whitelist
+    require                                     => Anthill::Common::Version[$version]
 
   }
 }

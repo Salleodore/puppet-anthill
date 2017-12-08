@@ -1,8 +1,5 @@
 
 class anthill (
-
-  $versions,
-
   $manage_mysql = $anthill::params::manage_mysql,
   $manage_nginx = $anthill::params::manage_nginx,
   $manage_rabbitmq = $anthill::params::manage_rabbitmq,
@@ -20,20 +17,16 @@ class anthill (
   $sockets_location = $anthill::params::sockets_location,
   $applications_location = $anthill::params::applications_location,
 
-  $applications_group = $anthill::params::applications_group,
+  $sources_location = $anthill::params::sources_location,
+  $runtime_location = $anthill::params::runtime_location,
+  $tools_location = $anthill::params::tools_location,
 
   $applications_user = $anthill::params::applications_user,
+  $applications_group = $anthill::params::applications_group,
   $applications_user_password = $anthill::params::applications_user_password,
 
-  $applications_keys_location = $anthill::params::applications_keys_location,
-  $applications_keys_public_key = $anthill::params::applications_keys_public_key,
-  $applications_keys_private_key = $anthill::params::applications_keys_private_key,
-
-  $https_keys_location = $anthill::params::https_keys_location,
-  $https_keys_certificate = $anthill::params::https_keys_certificate,
-  $https_keys_private_key = $anthill::params::https_keys_private_key,
-
-  $virtualenv_location = $anthill::params::virtualenv_location
+  $virtualenv_location = $anthill::params::virtualenv_location,
+  $redis_default_max_connections = $anthill::params::redis_default_max_connections,
 
 ) inherits anthill::params {
 

@@ -1,7 +1,14 @@
 define anthill_admin::version (
 
-  $version,
-  $default_version = undef,
+  $version = $title,
+  $source_commit,
+
+  $source_directory = $anthill_admin::source_directory,
+
+  $db_host = $anthill_admin::db_host,
+  $db_username = $anthill_admin::db_username,
+  $db_password = $anthill_admin::db_password,
+  $db_name = $anthill_admin::db_name,
 
   $token_cache_host = $anthill_admin::token_cache_host,
   $token_cache_port = $anthill_admin::token_cache_port,
@@ -30,14 +37,16 @@ define anthill_admin::version (
   $ensure = undef,
   $use_nginx = undef,
   $use_supervisor = undef,
-  $applications_location = undef,
-  $sockets_location = undef,
-
-  $whitelist = undef
+  $runtime_location = undef,
+  $sockets_location = undef
 
 ) {
 
   $args = {
+    "db_host" => $db_host,
+    "db_username" => $db_username,
+    "db_name" => $db_name,
+
     "token_cache_host" => $token_cache_host,
     "token_cache_port" => $token_cache_port,
     "token_cache_max_connections" => $token_cache_max_connections,
@@ -50,16 +59,20 @@ define anthill_admin::version (
   }
 
   $application_environment = {
+    "db_password" => $db_password
   }
 
-  anthill::service::version { "${name}":
+  anthill::service::version { "${anthill_admin::service_name}_${version}":
     version                                     => $version,
-    default_version                             => $default_version,
     service_name                                => $anthill_admin::service_name,
     args                                        => $args,
 
+    source_directory                            => $source_directory,
+    source_commit                               => $source_commit,
+
     host                                        => $host,
     domain                                      => $domain,
+    ensure                                      => $ensure,
 
     internal_broker                             => $internal_broker,
     internal_restrict                           => $internal_restrict,
@@ -75,12 +88,12 @@ define anthill_admin::version (
     instances                                   => $instances,
     use_nginx                                   => $use_nginx,
     use_supervisor                              => $use_supervisor,
-    applications_location                       => $applications_location,
+    runtime_location                            => $runtime_location,
     sockets_location                            => $sockets_location,
     application_arguments                       => $application_arguments,
     application_environment                     => $application_environment,
 
-    whitelist                                   => $whitelist
+    require                                     => Anthill::Common::Version[$version]
 
   }
 }

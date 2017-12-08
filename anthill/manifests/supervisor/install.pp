@@ -30,7 +30,7 @@ class anthill::supervisor::install inherits anthill::supervisor {
 
       include '::nginx'
 
-      nginx::resource::vhost { "${environment}_supervisor":
+      nginx::resource::server { "${environment}_supervisor":
         ensure               => present,
         server_name          => [
           "${domain_id}.${external_domain_name}"
@@ -47,12 +47,12 @@ class anthill::supervisor::install inherits anthill::supervisor {
       }
 
       nginx::resource::location { "${environment}_supervisor/":
-        ensure        => present,
-        location      => "/",
-        vhost         => "${environment}_supervisor",
-        rewrite_rules => [],
-        proxy         => "http://127.0.0.1:${admin_port}",
-        proxy_buffering => 'off',
+        ensure               => present,
+        location             => "/",
+        server               => "${environment}_supervisor",
+        rewrite_rules        => [],
+        proxy                => "http://127.0.0.1:${admin_port}",
+        proxy_buffering      => 'off',
 
         ssl => $anthill::nginx::ssl
       }
@@ -60,7 +60,7 @@ class anthill::supervisor::install inherits anthill::supervisor {
     else
     {
       if ($anthill::manage_nginx) {
-        nginx::resource::vhost { "${environment}_supervisor":
+        nginx::resource::server { "${environment}_supervisor":
           ensure => 'abscent'
         }
 

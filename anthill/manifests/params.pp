@@ -13,26 +13,22 @@ class anthill::params {
   $logging_level = 'info'
   $protocol = 'http'
 
-  $external_domain_name = 'anthill.web'
+  $external_domain_name = 'anthillplatform.org'
   $internal_domain_name = 'anthill.internal'
 
   $sockets_location = '/tmp'
-  $applications_location = '/opt/anthill'
 
-  $applications_group = 'anthill'
+  $applications_location = '/opt/anthill'
+  $virtualenv_location = '/opt/venv'
+
+  $sources_location = "${applications_location}/${environment}/sources"
+  $runtime_location = "${applications_location}/${environment}/runtime"
+  $tools_location = "${applications_location}/${environment}/tools"
 
   $applications_user = 'anthill'
-
   # anthill
   $applications_user_password = '$6$4qanSdNuFPMZ4$fLO4Q.XxJ7kjC3BPCeVNAdMmfsCd279VILxkbkMHsRCao4lmlef6tMzUCg9hRCdu3osItXP3E89Gcw.Rqk3uy.'
+  $applications_group = 'anthill'
 
-  $applications_keys_location = '.anthill-keys'
-  $applications_keys_public_key = 'anthill.pub'
-  $applications_keys_private_key = 'anthill.pem'
-
-  $https_keys_location = '/opt/.https'
-  $https_keys_certificate = undef
-  $https_keys_private_key = undef
-
-  $virtualenv_location = '/opt/venv'
+  $redis_default_max_connections = 500
 }

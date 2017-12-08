@@ -13,9 +13,6 @@
 [submodule "redis"]
 	path = redis
 	url = https://github.com/arioch/puppet-redis.git
-[submodule "staging"]
-	path = staging
-	url = https://github.com/voxpupuli/puppet-staging.git
 [submodule "stdlib"]
 	path = stdlib
 	url = https://github.com/puppetlabs/puppetlabs-stdlib.git
@@ -25,9 +22,6 @@
 [submodule "epel"]
 	path = epel
 	url = http://github.com/stahnma/puppet-module-epel.git
-[submodule "nginx"]
-	path = nginx
-	url = https://github.com/desertkun/puppet-nginx.git
 [submodule "python"]
 	path = python
 	url = https://github.com/desertkun/puppet-python.git
@@ -41,3 +35,36 @@
 [submodule "hash_resources"]
 	path = hash_resources
 	url = https://github.com/stbenjam/puppet-hash_resources.git
+[submodule "augeasproviders_core"]
+	path = augeasproviders_core
+	url = https://github.com/hercules-team/augeasproviders_core.git
+[submodule "augeasproviders_sysctl"]
+	path = augeasproviders_sysctl
+	url = https://github.com/hercules-team/augeasproviders_sysctl.git
+[submodule "nginx"]
+	path = nginx
+	url = https://github.com/anthill-utils/puppet-nginx.git
+[submodule "archive"]
+	path = archive
+	url = https://github.com/voxpupuli/puppet-archive.git
+[submodule "translate"]
+	path = translate
+	url = https://github.com/puppetlabs/puppetlabs-translate.git
+[submodule "staging"]
+	path = staging
+	url = https://github.com/voxpupuli/puppet-staging.git
+[submodule "puppetdb"]
+	path = puppetdb
+	url = https://github.com/anthill-utils/puppetlabs-puppetdb.git
+[submodule "inifile"]
+	path = inifile
+	url = https://github.com/puppetlabs/puppetlabs-inifile.git
+[submodule "postgresql"]
+	path = postgresql
+	url = https://github.com/puppetlabs/puppetlabs-postgresql.git
+[submodule "firewall"]
+	path = firewall
+	url = https://github.com/puppetlabs/puppetlabs-firewall.git
+[submodule "ohmyzsh"]
+	path = ohmyzsh
+	url = https://github.com/acme/puppet-acme-oh-my-zsh

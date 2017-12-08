@@ -1,7 +1,16 @@
 
 class anthill_admin (
 
+  $default_version = undef,
   $service_name = $anthill_admin::params::service_name,
+
+  $repository_remote_url = $anthill_admin::params::repository_remote_url,
+  $source_directory = $anthill_admin::params::source_directory,
+
+  $db_host = $anthill_admin::params::db_host,
+  $db_username = $anthill_admin::params::db_username,
+  $db_password = $anthill_admin::params::db_password,
+  $db_name = $anthill_admin::params::db_name,
 
   $token_cache_host = $anthill_admin::params::token_cache_host,
   $token_cache_port = $anthill_admin::params::token_cache_port,
@@ -35,12 +44,19 @@ class anthill_admin (
   $internal_restrict = undef,
   $internal_max_connections = undef,
   $discovery_service = undef,
-  $auth_key_public = undef
-
+  $auth_key_public = undef,
+  $whitelist = undef
 ) inherits anthill_admin::params {
 
-  anthill::service { $service_name:
+  require anthill::common
+
+  anthill::service {$service_name:
     service_name => $service_name,
+
+    default_version => $default_version,
+    repository_remote_url => $repository_remote_url,
+    repository_source_directory => $source_directory,
+
     ensure => $ensure,
 
     use_nginx => $use_nginx,
@@ -56,7 +72,10 @@ class anthill_admin (
     nginx_max_body_size => $nginx_max_body_size,
 
     external_domain_name => $external_domain_name,
-    internal_domain_name => $internal_domain_name
+    internal_domain_name => $internal_domain_name,
+    internal_broker => $internal_broker,
+
+    whitelist => $whitelist
   }
 
 }

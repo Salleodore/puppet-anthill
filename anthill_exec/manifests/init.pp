@@ -1,7 +1,11 @@
 
 class anthill_exec (
 
+  $default_version = undef,
   $service_name = $anthill_exec::params::service_name,
+
+  $repository_remote_url = $anthill_exec::params::repository_remote_url,
+  $source_directory = $anthill_exec::params::source_directory,
 
   $db_host = $anthill_exec::params::db_host,
   $db_username = $anthill_exec::params::db_username,
@@ -18,7 +22,7 @@ class anthill_exec (
   $cache_db = $anthill_exec::params::cache_db,
   $cache_max_connections = $anthill_exec::params::cache_max_connections,
 
-  $source_path = $anthill_exec::params::source_path,
+  $js_source_path = $anthill_exec::params::js_source_path,
   $js_call_timeout = $anthill_exec::params::js_call_timeout,
 
   $ensure = undef,
@@ -42,17 +46,24 @@ class anthill_exec (
   $internal_restrict = undef,
   $internal_max_connections = undef,
   $discovery_service = undef,
-  $auth_key_public = undef
-
+  $auth_key_public = undef,
+  $whitelist = undef
 ) inherits anthill_exec::params {
 
   python::pip { 'v8py':
     virtualenv => "${anthill::virtualenv_location}/${environment}",
     url => "git+https://github.com/anthill-utils/v8py.git",
-    timeout => 3600
-  }
+    timeout => 3600,
+    require => Python::Virtualenv["${anthill::virtualenv_location}/${environment}"]}
 
-  anthill::service { $service_name:
+  require anthill::common
+
+  anthill::service {$service_name:
+
+    default_version => $default_version,
+    repository_remote_url => $repository_remote_url,
+    repository_source_directory => $source_directory,
+
     service_name => $service_name,
     ensure => $ensure,
 
@@ -70,7 +81,10 @@ class anthill_exec (
     ssl_key => $ssl_key,
 
     external_domain_name => $external_domain_name,
-    internal_domain_name => $internal_domain_name
+    internal_domain_name => $internal_domain_name,
+    internal_broker => $internal_broker,
+
+    whitelist => $whitelist
   }
 
 }

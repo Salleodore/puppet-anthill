@@ -1,7 +1,11 @@
 
 class anthill_discovery (
 
+  $default_version = undef,
   $service_name = $anthill_discovery::params::service_name,
+
+  $repository_remote_url = $anthill_discovery::params::repository_remote_url,
+  $source_directory = $anthill_discovery::params::source_directory,
 
   $discover_services_host = $anthill_discovery::params::discover_services_host,
   $discover_services_port = $anthill_discovery::params::discover_services_port,
@@ -34,11 +38,40 @@ class anthill_discovery (
   $internal_restrict = undef,
   $internal_max_connections = undef,
   $discovery_service = undef,
-  $auth_key_public = undef
-
+  $auth_key_public = undef,
+  $whitelist = undef
 ) inherits anthill_discovery::params {
 
-  anthill::service { $service_name:
+  require anthill::common
+
+  concat { "${anthill::runtime_location}/discovery-services.json":
+    ensure => $ensure,
+    owner  => $anthill::applications_user,
+    group  => $anthill::applications_group,
+    mode   => '0440',
+    require => File[$anthill::runtime_location]
+  }
+
+  concat::fragment { "${anthill::runtime_location}/discovery-services-header":
+    target => "${anthill::runtime_location}/discovery-services.json",
+    content => template("anthill_discovery/services_init_header.erb"),
+    order => "0"
+  }
+
+  concat::fragment { "${anthill::runtime_location}/discovery-services-footer":
+    target => "${anthill::runtime_location}/discovery-services.json",
+    content => template("anthill_discovery/services_init_footer.erb"),
+    order => "9"
+  }
+
+  Anthill::Discovery::Entry <<| |>>
+
+  anthill::service {$service_name:
+
+    default_version => $default_version,
+    repository_remote_url => $repository_remote_url,
+    repository_source_directory => $source_directory,
+
     service_name => $service_name,
     ensure => $ensure,
 
@@ -53,7 +86,11 @@ class anthill_discovery (
     ssl_key => $ssl_key,
 
     external_domain_name => $external_domain_name,
-    internal_domain_name => $internal_domain_name
+    internal_domain_name => $internal_domain_name,
+    internal_broker => $internal_broker,
+
+    whitelist => $whitelist,
+    dns_first_record => true
   }
 
 }

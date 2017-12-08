@@ -1,9 +1,12 @@
 define anthill_exec::version (
 
-  $version,
-  $default_version = undef,
+  $version = $title,
+  $source_commit,
 
-  $source_path = $anthill_exec::source_path,
+  $source_directory = $anthill_exec::source_directory,
+
+  $js_source_path = $anthill_exec::js_source_path,
+  $js_call_timeout = $anthill_exec::js_call_timeout,
 
   $db_host = $anthill_exec::db_host,
   $db_username = $anthill_exec::db_username,
@@ -19,8 +22,6 @@ define anthill_exec::version (
   $cache_port = $anthill_exec::cache_port,
   $cache_max_connections = $anthill_exec::cache_max_connections,
   $cache_db = $anthill_exec::cache_db,
-
-  $js_call_timeout = $anthill_exec::js_call_timeout,
 
   $host = $anthill_exec::host,
   $domain = $anthill_exec::domain,
@@ -39,11 +40,8 @@ define anthill_exec::version (
   $ensure = undef,
   $use_nginx = undef,
   $use_supervisor = undef,
-  $applications_location = undef,
-  $sockets_location = undef,
-
-  $whitelist = undef
-
+  $runtime_location = undef,
+  $sockets_location = undef
 ) {
 
   $args = {
@@ -61,7 +59,7 @@ define anthill_exec::version (
     "cache_max_connections" => $cache_max_connections,
     "cache_db" => $cache_db,
 
-    "source_dir" => $source_path,
+    "source_dir" => $js_source_path,
     "js_call_timeout" => $js_call_timeout
   }
 
@@ -69,14 +67,17 @@ define anthill_exec::version (
     "db_password" => $db_password
   }
 
-  anthill::service::version { "${name}":
+  anthill::service::version { "${anthill_exec::service_name}_${version}":
     version                                     => $version,
-    default_version                             => $default_version,
     service_name                                => $anthill_exec::service_name,
     args                                        => $args,
 
+    source_directory                            => $source_directory,
+    source_commit                               => $source_commit,
+
     host                                        => $host,
     domain                                      => $domain,
+    ensure                                      => $ensure,
 
     internal_broker                             => $internal_broker,
     internal_restrict                           => $internal_restrict,
@@ -92,12 +93,12 @@ define anthill_exec::version (
     instances                                   => $instances,
     use_nginx                                   => $use_nginx,
     use_supervisor                              => $use_supervisor,
-    applications_location                       => $applications_location,
+    runtime_location                            => $runtime_location,
     sockets_location                            => $sockets_location,
     application_arguments                       => $application_arguments,
     application_environment                     => $application_environment,
 
-    whitelist                                   => $whitelist
+    require                                     => Anthill::Common::Version[$version]
 
   }
 }

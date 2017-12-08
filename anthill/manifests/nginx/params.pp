@@ -9,8 +9,8 @@ class anthill::nginx::params {
 
   $ssl = $anthill::enable_https
 
-  $ssl_cert = "${anthill::keys::https_keys_location}/${anthill::keys::https_keys_certificate}"
-  $ssl_key = "${anthill::keys::https_keys_location}/${anthill::keys::https_keys_private_key}"
+  $ssl_cert = "${anthill::keys::https_keys_location}/${anthill::keys::https_keys_bundle_name}"
+  $ssl_key = "${anthill::keys::https_keys_location}/${anthill::keys::https_keys_private_key_name}"
 
   $ssl_port = 443
 

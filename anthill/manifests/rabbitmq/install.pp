@@ -3,19 +3,41 @@ class anthill::rabbitmq::install inherits anthill::rabbitmq {
 
   if ($anthill::manage_rabbitmq)
   {
-    apt::key { 'rabbitmq-pgp-key':
-      id      => '0A9AF2115F4687BD29803A206B73A36E6026DFCA',
-      server  => 'hkps.pool.sks-keyservers.net',
-      notify => Exec["apt_update"]
+    if ($::operatingsystem == 'Debian' and $::operatingsystemmajrelease == '8')
+    {
+      apt::source { 'debian_8_erlang':
+        location => 'https://packages.erlang-solutions.com/debian',
+        release  => 'jessie',
+        repos    => 'contrib'
+      }
+
+      apt::key { 'erlang_solutions':
+        id => "434975BD900CCBE4F7EE1B1ED208507CA14F4FCA",
+        source => "https://packages.erlang-solutions.com/debian/erlang_solutions.asc",
+        notify => Class['apt::update'],
+        require => Apt::Source['debian_8_erlang']
+      }
+
+      Apt::Key['erlang_solutions'] -> Class['rabbitmq']
     }
 
-    class { '::rabbitmq':
+    class { ::rabbitmq:
       port              => $port,
       node_ip_address   => '127.0.0.1',
+      management_ip_address => '127.0.0.1',
       management_port   => $admin_port,
       management_ssl    => false,
       admin_enable      => $admin_management,
-      delete_guest_user => true
+      delete_guest_user => true,
+      repos_ensure => true,
+      environment_variables => {
+        'LC_ALL' => 'en_US.UTF-8',
+      }
+    }
+
+    @@anthill::dns::entry { "rabbimq":
+      internal_hostname => "rabbimq-${environment}.${anthill::internal_domain_name}",
+      tag => "internal"
     }
 
     rabbitmq_vhost { $environment:
@@ -52,7 +74,7 @@ class anthill::rabbitmq::install inherits anthill::rabbitmq {
 
       $external_domain_name = $anthill::external_domain_name
 
-      nginx::resource::vhost { "${environment}_rabbitmq":
+      nginx::resource::server { "${environment}_rabbitmq":
         ensure               => present,
         server_name          => [
           "rabbitmq-${environment}.${external_domain_name}"
@@ -69,12 +91,12 @@ class anthill::rabbitmq::install inherits anthill::rabbitmq {
       }
 
       nginx::resource::location { "${environment}_rabbitmq/":
-        ensure        => present,
-        location      => "/",
-        vhost         => "${environment}_rabbitmq",
-        rewrite_rules => [],
-        proxy         => "http://127.0.0.1:${admin_port}",
-        proxy_buffering => 'off',
+        ensure               => present,
+        location             => "/",
+        server               => "${environment}_rabbitmq",
+        rewrite_rules        => [],
+        proxy                => "http://127.0.0.1:${admin_port}",
+        proxy_buffering      => 'off',
 
         ssl => $anthill::nginx::ssl
       }
@@ -82,7 +104,7 @@ class anthill::rabbitmq::install inherits anthill::rabbitmq {
     }
     else
     {
-      nginx::resource::vhost { "${environment}_rabbitmq":
+      nginx::resource::server { "${environment}_rabbitmq":
         ensure => 'abscent'
       }
 
