@@ -7,6 +7,8 @@ class anthill_discovery (
   $repository_remote_url = $anthill_discovery::params::repository_remote_url,
   $source_directory = $anthill_discovery::params::source_directory,
 
+  $services_init_file = $anthill_discovery::params::services_init_file,
+
   $discover_services_host = $anthill_discovery::params::discover_services_host,
   $discover_services_port = $anthill_discovery::params::discover_services_port,
   $discover_services_db = $anthill_discovery::params::discover_services_db,
@@ -44,7 +46,7 @@ class anthill_discovery (
 
   require anthill::common
 
-  concat { "${anthill::runtime_location}/discovery-services.json":
+  concat { $services_init_file:
     ensure => $ensure,
     owner  => $anthill::applications_user,
     group  => $anthill::applications_group,
@@ -53,13 +55,13 @@ class anthill_discovery (
   }
 
   concat::fragment { "${anthill::runtime_location}/discovery-services-header":
-    target => "${anthill::runtime_location}/discovery-services.json",
+    target => $services_init_file,
     content => template("anthill_discovery/services_init_header.erb"),
     order => "0"
   }
 
   concat::fragment { "${anthill::runtime_location}/discovery-services-footer":
-    target => "${anthill::runtime_location}/discovery-services.json",
+    target => $services_init_file,
     content => template("anthill_discovery/services_init_footer.erb"),
     order => "9"
   }

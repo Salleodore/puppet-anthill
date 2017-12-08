@@ -6,6 +6,8 @@ class anthill_discovery::params {
   $repository_remote_url = "https://github.com/anthill-platform/anthill-discovery.git"
   $source_directory = "${anthill::sources_location}/${service_name}"
 
+  $services_init_file = "${anthill::runtime_location}/discovery-services.json"
+
   $discover_services_host = $anthill::redis::host
   $discover_services_port = $anthill::redis::port
   $discover_services_max_connections = $anthill::redis_default_max_connections

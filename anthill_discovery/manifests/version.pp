@@ -4,6 +4,7 @@ define anthill_discovery::version (
   $source_commit,
 
   $source_directory = $anthill_discovery::source_directory,
+  $services_init_file = $anthill_discovery::services_init_file,
 
   $discover_services_host = $anthill_discovery::discover_services_host,
   $discover_services_port = $anthill_discovery::discover_services_port,
@@ -45,7 +46,9 @@ define anthill_discovery::version (
     "token_cache_host" => $token_cache_host,
     "token_cache_port" => $token_cache_port,
     "token_cache_max_connections" => $token_cache_max_connections,
-    "token_cache_db" => $token_cache_db
+    "token_cache_db" => $token_cache_db,
+
+    "services_init_file" => $services_init_file
   }
 
   anthill::service::version { "${anthill_discovery::service_name}_${version}":
