@@ -1,7 +1,7 @@
 
 class anthill_game_controller::params {
 
-  $service_name = "game-ctl"
+  $service_name = "game_controller"
 
   $repository_remote_url = "https://github.com/anthill-platform/anthill-game-controller.git"
   $source_directory = "${anthill::sources_location}/${service_name}"
@@ -15,8 +15,6 @@ class anthill_game_controller::params {
   $token_cache_port = $anthill::redis::port
   $token_cache_max_connections = $anthill::redis_default_max_connections
   $token_cache_db = 4
-
-  $service_directory_name = "game"
 
   $gs_host = "${service_name}-${environment}.${anthill::external_domain_name}"
 

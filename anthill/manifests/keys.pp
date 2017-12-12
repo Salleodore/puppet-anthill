@@ -1,15 +1,10 @@
 
 class anthill::keys (
-
-  # primary passphrase for application keys
-  $application_keys_passphrase,
-
-  # file contents for a public key (required)
-  $application_keys_public,
-
-  # file contents and a passphrase for a private key (optional)
-  $application_keys_private = undef,
-  $private_key_passphrase = undef,
+  # file contents for a public key
+  $authentication_public_key = undef,
+  # file contents and a passphrase for a private key
+  $authentication_private_key = undef,
+  $authentication_private_key_passphrase = undef,
 
   # if https enabled, content files for a ssl-bundle and .key are required
   $enable_https = $anthill::enable_https,
@@ -43,22 +38,24 @@ class anthill::keys (
     require => File[$application_keys_location]
   }
 
-  file { "${application_keys_location}/${environment}/${application_keys_public_name}":
-    ensure => 'present',
-    owner => $applications_user,
-    group => $applications_group,
-    mode   => '0440',
-    source => $application_keys_public,
-    require => File["${application_keys_location}/${environment}"]
+  if ($authentication_public_key) {
+    file { "${application_keys_location}/${environment}/${application_keys_public_name}":
+      ensure  => 'present',
+      owner   => $applications_user,
+      group   => $applications_group,
+      mode    => '0440',
+      source  => $authentication_public_key,
+      require => File["${application_keys_location}/${environment}"]
+    }
   }
 
-  if ($application_keys_private) {
+  if ($authentication_private_key) {
     file { "${application_keys_location}/${environment}/${application_keys_private_name}":
       ensure => 'present',
       owner => $applications_user,
       group => $applications_group,
       mode   => '0440',
-      source => $application_keys_private,
+      source => $authentication_private_key,
       require => File["${application_keys_location}/${environment}"]
     }
   }

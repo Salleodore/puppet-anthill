@@ -10,7 +10,20 @@ class anthill::install inherits anthill {
     gid              => $applications_group,
     home             => "/home/${applications_user}",
     shell            => '/bin/bash',
-    password         => $applications_user_password
+    password         => $applications_user_password,
+    require          => Group[$applications_group]
+  }
+
+  group { $ssh_keys_group:
+    ensure           => 'present'
+  }
+
+  user { $ssh_keys_user:
+    ensure           => 'present',
+    gid              => $ssh_keys_group,
+    home             => "/home/${ssh_keys_user}",
+    shell            => '/bin/bash',
+    require          => Group[$ssh_keys_group]
   }
 
   file { "/home/${applications_user}":
@@ -18,6 +31,13 @@ class anthill::install inherits anthill {
     owner  => $applications_user,
     mode   => '0750',
     require => User[$applications_user]
+  }
+
+  file { "/home/${ssh_keys_user}":
+    ensure => 'directory',
+    owner  => $ssh_keys_user,
+    mode   => '0750',
+    require => User[$ssh_keys_user]
   }
 
   file { $applications_location:
@@ -82,5 +102,5 @@ class anthill::install inherits anthill {
   package { 'libffi-dev': ensure => 'present' }
   package { 'ntp': ensure => 'present' }
   package { 'libmysqlclient-dev': ensure => 'present' }
-
+  package { 'apt-transport-https': ensure => 'present' }
 }

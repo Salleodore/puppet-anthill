@@ -1,8 +1,14 @@
 class anthill::dns (
   $backend = 'hosts',
-  $interface = 'eth0'
+  $interface = undef
 ) {
-  $local_ip_address = inline_template("<%= scope.lookupvar('::ipaddress_${interface}') -%>")
+
+  if defined (Class[Anthill::Vpn]) {
+    $local_ip_address = $anthill::vpn::ip
+  } else {
+    $local_ip_address = inline_template("<%= scope.lookupvar('::ipaddress_eth0') -%>")
+  }
+
 
   case $backend {
     "hosts": {

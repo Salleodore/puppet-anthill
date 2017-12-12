@@ -38,8 +38,10 @@ class anthill_game_controller (
   $whitelist = undef
 ) inherits anthill_game_controller::params {
 
+
   file { $binaries_path:
-    ensure => 'directory',
+    ensure => $ensure ? {default => 'directory', 'absent' => 'absent' },
+    force  => true,
     owner  => $anthill::applications_user,
     group  => $anthill::applications_group,
     mode   => '0760'

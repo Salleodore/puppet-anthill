@@ -23,14 +23,14 @@ define anthill::source (
 }
 
 define anthill::checkout_version (
-  $ensure = present,
+  $ensure = 'present',
   $version_directory,
   $source_directory,
   $directory_name,
   $source_commit
 ) {
 
-  if ($ensure == present) {
+  if ($ensure == 'present') {
     include git
 
     validate_re($source_commit, "^[0-9a-f]{40}$", "source_commit should be a valid Git commit 40-characters hash.")

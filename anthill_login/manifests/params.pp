@@ -21,10 +21,10 @@ class anthill_login::params {
   $cache_max_connections = $anthill::redis_default_max_connections
   $cache_db = 2
 
-  $application_keys_secret = $anthill::keys::application_keys_passphrase
+  $application_keys_secret = "anthill"
   $passwords_salt = "t6YJbMTvMRnYyPW7WfZC2tGXUsJwy252pU0OiCM5"
 
   $auth_key_private = "${anthill::keys::application_keys_location}/${environment}/${anthill::keys::application_keys_private_name}"
-  $auth_key_private_passphrase = $anthill::keys::private_key_passphrase
+  $auth_key_private_passphrase = $anthill::keys::authentication_private_key_passphrase
 
 }

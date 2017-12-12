@@ -28,7 +28,7 @@ define anthill::service::version (
   $internal_broker = "amqp://${anthill::rabbitmq::username}:${anthill::rabbitmq::password}@${anthill::rabbitmq::host}:${anthill::rabbitmq::port}/${environment}",
   $pubsub = "amqp://${anthill::rabbitmq::username}:${anthill::rabbitmq::password}@${anthill::rabbitmq::host}:${anthill::rabbitmq::port}/${environment}",
 
-  $internal_restrict = ["127.0.0.1/24", "192.168.0.0/16", "::1/128"],
+  $internal_restrict = ["127.0.0.1/24", "10.8.0.0/24", "192.168.0.0/16", "::1/128"],
   $internal_max_connections = '10',
 
   $mysql_username = $anthill::mysql::mysql_username,

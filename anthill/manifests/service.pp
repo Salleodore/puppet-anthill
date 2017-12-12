@@ -39,20 +39,29 @@ define anthill::service (
 ) {
   $vhost = "${environment}_${service_name}"
 
-  if ($repository_source_directory) {
-    file { $repository_source_directory:
-      ensure => 'directory',
-      owner  => $anthill::applications_user,
-      group  => $anthill::applications_group,
-      mode   => '0760'
+  if ($ensure == 'present') {
+    if ($repository_source_directory) {
+      file { $repository_source_directory:
+        ensure => 'directory',
+        owner  => $anthill::applications_user,
+        group  => $anthill::applications_group,
+        mode   => '0760'
+      }
     }
-  }
 
-  if ($repository_remote_url and $repository_source_directory)
-  {
-    anthill::source { "${environment}_${service_name}":
-      repository_remote_url => $repository_remote_url,
-      repository_local_directory => "${repository_source_directory}/.git"
+    if ($repository_remote_url and $repository_source_directory)
+    {
+      anthill::source { "${environment}_${service_name}":
+        repository_remote_url      => $repository_remote_url,
+        repository_local_directory => "${repository_source_directory}/.git"
+      }
+    }
+  } else {
+    if ($repository_source_directory) {
+      file { $repository_source_directory:
+        ensure => 'absent',
+        force => true
+      }
     }
   }
 
@@ -94,12 +103,14 @@ define anthill::service (
       @@anthill::discovery::entry { "${environment}_$service_name":
         service_name => $service_name,
         locations    => $real_dns_locations,
+        ensure       => $ensure,
         first        => $dns_first_record
       }
     }
 
     @@anthill::dns::entry { $service_name:
       internal_hostname => "${full_domain}${internal_domain_name}",
+      ensure => $ensure,
       tag => "internal"
     }
 
@@ -114,6 +125,7 @@ define anthill::service (
 
     nginx::resource::map { "${environment}_${service_name}":
       string => "\$http_x_api_version",
+      ensure => $ensure,
       default => $default_version_map,
       include_files => [],
       require => $default_version_require
@@ -194,7 +206,7 @@ define anthill::service (
     }
 
     mysql_database { "${environment}_${service_name}":
-      ensure => 'present',
+      ensure => $ensure,
       charset => 'utf8'
     }
   }
