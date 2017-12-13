@@ -68,12 +68,12 @@
 [submodule "ohmyzsh"]
 	path = ohmyzsh
 	url = https://github.com/acme/puppet-acme-oh-my-zsh
-[submodule "openvpn"]
-	path = openvpn
-	url = https://github.com/voxpupuli/puppet-openvpn.git
 [submodule "ipcalc"]
 	path = ipcalc
 	url = https://github.com/inkblot/puppet-ipcalc.git
 [submodule "name_service_lookups"]
 	path = name_service_lookups
 	url = https://github.com/wcooley/puppet-name_service_lookups.git
+[submodule "openvpn"]
+	path = openvpn
+	url = https://github.com/anthill-utils/puppet-openvpn.git
