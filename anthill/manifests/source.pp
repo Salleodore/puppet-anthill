@@ -20,6 +20,10 @@ define anthill::source (
     user => $anthill::applications_user
   }
 
+  if ($anthill::keys::ssh_private_key) {
+    Vcsrepo[$repository_local_directory] -> File["/home/${anthill::applications_user}/.ssh/id_rsa"]
+  }
+
 }
 
 define anthill::checkout_version (
