@@ -3,6 +3,8 @@ class anthill_game_master (
 
   $default_version = undef,
   $service_name = $anthill_game_master::params::service_name,
+
+  $repository_remote_url = $anthill_game_master::params::repository_remote_url,
   $source_directory = $anthill_game_master::params::source_directory,
 
   $deployments_path = $anthill_game_master::params::deployments_path,

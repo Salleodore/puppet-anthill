@@ -3,6 +3,8 @@ class anthill_game_controller (
 
   $default_version = undef,
   $service_name = $anthill_game_controller::params::service_name,
+
+  $repository_remote_url = $anthill_game_controller::params::repository_remote_url,
   $source_directory = $anthill_game_controller::params::source_directory,
 
   $sock_path = $anthill_game_controller::params::sock_path,
