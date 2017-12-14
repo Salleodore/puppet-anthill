@@ -19,9 +19,6 @@
 [submodule "supervisor"]
 	path = supervisor
 	url = https://github.com/desertkun/puppet-supervisor.git
-[submodule "epel"]
-	path = epel
-	url = http://github.com/stahnma/puppet-module-epel.git
 [submodule "python"]
 	path = python
 	url = https://github.com/desertkun/puppet-python.git
