@@ -30,14 +30,14 @@ class anthill::keys (
     ensure => 'directory',
     owner  => $applications_user,
     group  => $applications_group,
-    mode   => '0440'
+    mode   => '0400'
   }
 
   file { "${application_keys_location}/${environment}":
     ensure => 'directory',
     owner  => $applications_user,
     group  => $applications_group,
-    mode   => '0440',
+    mode   => '0400',
     require => File[$application_keys_location]
   }
 
@@ -46,7 +46,7 @@ class anthill::keys (
       ensure  => 'present',
       owner   => $applications_user,
       group   => $applications_group,
-      mode    => '0440',
+      mode    => '0400',
       source  => $authentication_public_key,
       require => File["${application_keys_location}/${environment}"]
     }
@@ -57,12 +57,12 @@ class anthill::keys (
       ensure  => 'directory',
       owner   => $applications_user,
       group   => $applications_group,
-      mode    => '0440'
+      mode    => '0400'
     } -> file { "/home/${applications_user}/.ssh/id_rsa":
       ensure  => 'present',
       owner   => $applications_user,
       group   => $applications_group,
-      mode    => '0440',
+      mode    => '0400',
       source  => $ssh_private_key
     }
   }
@@ -72,7 +72,7 @@ class anthill::keys (
       ensure => 'present',
       owner => $applications_user,
       group => $applications_group,
-      mode   => '0440',
+      mode   => '0400',
       source => $authentication_private_key,
       require => File["${application_keys_location}/${environment}"]
     }
@@ -83,14 +83,14 @@ class anthill::keys (
       ensure => 'directory',
       owner  => $applications_user,
       group  => $applications_group,
-      mode   => '0440'
+      mode   => '0400'
     }
 
     file { "${https_keys_location}/${https_keys_bundle_name}":
       ensure  => 'present',
       owner   => $applications_user,
       group   => $applications_group,
-      mode    => '0440',
+      mode    => '0400',
       source => $https_keys_bundle_contents,
       require => File[$https_keys_location]
     }
@@ -99,7 +99,7 @@ class anthill::keys (
       ensure  => 'present',
       owner   => $applications_user,
       group   => $applications_group,
-      mode    => '0440',
+      mode    => '0400',
       source => $https_keys_private_key_contents,
       require => File[$https_keys_location]
     }
