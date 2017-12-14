@@ -8,10 +8,10 @@ define anthill::source (
 
   if ($anthill::keys::ssh_private_key) {
     $ssh_identity = "/home/${anthill::applications_user}/.ssh/id_rsa"
-    $git_update_environment = ["GIT_SSH_COMMAND=ssh -i ${ssh_identity} -o StrictHostKeyChecking=no"]
+    $git_update_environment = "GIT_SSH_COMMAND='ssh -i ${ssh_identity} -o StrictHostKeyChecking=no' "
   } else {
     $ssh_identity = undef
-    $git_update_environment = undef
+    $git_update_environment = ""
   }
 
   vcsrepo { $repository_local_directory:
@@ -19,16 +19,17 @@ define anthill::source (
     provider => git,
     source   => $repository_remote_url,
     user => $anthill::applications_user,
+    group => $anthill::applications_group,
     owner => $anthill::applications_user,
     force => true,
     trust_server_cert => true,
     identity => $ssh_identity
   } -> exec { "update_source_${repository_local_directory}":
-    command => "/usr/bin/git remote update --prune",
+    command => "${git_update_environment} /usr/bin/git remote update --prune",
     cwd => $repository_local_directory,
     timeout => 1800,
     user => $anthill::applications_user,
-    environment => $git_update_environment
+    provider => shell
   }
 
   if ($anthill::keys::ssh_private_key) {
