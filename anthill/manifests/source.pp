@@ -8,7 +8,7 @@ define anthill::source (
 
   if ($anthill::keys::ssh_private_key) {
     $ssh_identity = "/home/${anthill::applications_user}/.ssh/id_rsa"
-    $git_update_environment = "GIT_SSH_COMMAND='ssh -i ${ssh_identity} -o StrictHostKeyChecking=no'"
+    $git_update_environment = ["GIT_SSH_COMMAND=ssh -i ${ssh_identity} -o StrictHostKeyChecking=no"]
   } else {
     $ssh_identity = undef
     $git_update_environment = undef
