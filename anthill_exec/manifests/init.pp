@@ -54,7 +54,11 @@ class anthill_exec (
     virtualenv => "${anthill::virtualenv_location}/${environment}",
     url => "git+https://github.com/anthill-utils/v8py.git",
     timeout => 3600,
-    require => Python::Virtualenv["${anthill::virtualenv_location}/${environment}"]}
+    require => [
+      Python::Virtualenv["${anthill::virtualenv_location}/${environment}"],
+      Package['curl']
+    ]
+  }
 
   require anthill::common
 

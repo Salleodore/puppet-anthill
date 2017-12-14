@@ -97,6 +97,7 @@ class anthill::install inherits anthill {
   }
 
   package { 'rsync': ensure => 'present' }
+  package { 'curl': ensure => 'present' }
   package { 'build-essential': ensure => 'present' }
   package { 'libcurl4-openssl-dev': ensure => 'present' }
   package { 'libssl-dev': ensure => 'present' }
