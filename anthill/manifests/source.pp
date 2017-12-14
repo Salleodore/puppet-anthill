@@ -21,7 +21,7 @@ define anthill::source (
   }
 
   if ($anthill::keys::ssh_private_key) {
-    Vcsrepo[$repository_local_directory] -> File["/home/${anthill::applications_user}/.ssh/id_rsa"]
+    File["/home/${anthill::applications_user}/.ssh/id_rsa"] -> Vcsrepo[$repository_local_directory]
   }
 
 }
