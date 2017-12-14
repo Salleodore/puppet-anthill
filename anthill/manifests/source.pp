@@ -19,6 +19,7 @@ define anthill::source (
     provider => git,
     source   => $repository_remote_url,
     user => $anthill::applications_user,
+    owner => $anthill::applications_user,
     force => true,
     trust_server_cert => true,
     identity => $ssh_identity
