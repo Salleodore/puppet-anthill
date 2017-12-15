@@ -25,8 +25,8 @@ define anthill::service::version (
   $use_redis = $anthill::manage_redis,
   $logging_level = $anthill::logging_level,
 
-  $internal_broker = "amqp://${anthill::rabbitmq::username}:${anthill::rabbitmq::password}@${anthill::rabbitmq::host}:${anthill::rabbitmq::port}/${environment}",
-  $pubsub = "amqp://${anthill::rabbitmq::username}:${anthill::rabbitmq::password}@${anthill::rabbitmq::host}:${anthill::rabbitmq::port}/${environment}",
+  $internal_broker = "amqp://${anthill::rabbitmq::username}:${anthill::rabbitmq::password}@rabbitmq-${environment}.${anthill::internal_domain_name}:${anthill::rabbitmq::port}/${environment}",
+  $pubsub = "amqp://${anthill::rabbitmq::username}:${anthill::rabbitmq::password}@rabbitmq-${environment}.${anthill::internal_domain_name}:${anthill::rabbitmq::port}/${environment}",
 
   $internal_restrict = ["127.0.0.1/24", "10.8.0.0/24", "192.168.0.0/16", "::1/128"],
   $internal_max_connections = '10',
