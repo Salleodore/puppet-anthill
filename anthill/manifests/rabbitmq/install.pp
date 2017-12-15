@@ -23,8 +23,8 @@ class anthill::rabbitmq::install inherits anthill::rabbitmq {
 
     class { ::rabbitmq:
       port              => $port,
-      node_ip_address   => $anthill::dns::local_ip_address,
-      management_ip_address => $anthill::dns::local_ip_address,
+      node_ip_address   => $host,
+      management_ip_address => $host,
       management_port   => $admin_port,
       management_ssl    => false,
       admin_enable      => $admin_management,
@@ -95,7 +95,7 @@ class anthill::rabbitmq::install inherits anthill::rabbitmq {
         location             => "/",
         server               => "${environment}_rabbitmq",
         rewrite_rules        => [],
-        proxy                => "http://127.0.0.1:${admin_port}",
+        proxy                => "http://${host}:${admin_port}",
         proxy_buffering      => 'off',
 
         ssl => $anthill::nginx::ssl
