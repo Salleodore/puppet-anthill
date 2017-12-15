@@ -176,6 +176,7 @@ define anthill::service (
       proxy => "http://\$${environment}_${service_name}",
       ssl => $anthill::nginx::ssl,
       proxy_set_header => $headers,
+      proxy_http_version => "1.1",
 
       location_allow => $location_allow,
       location_deny => $location_deny
