@@ -17,5 +17,5 @@ class anthill_message::params {
   $token_cache_db = 4
 
   $message_broker = "amqp://${anthill::rabbitmq::username}:${anthill::rabbitmq::password}@${anthill::rabbitmq::host}:${anthill::rabbitmq::port}/${environment}"
-  $message_broker_max_connections = 10
+  $message_broker_max_connections = 1
 }

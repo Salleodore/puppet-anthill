@@ -29,7 +29,7 @@ define anthill::service::version (
   $pubsub = "amqp://${anthill::rabbitmq::username}:${anthill::rabbitmq::password}@rabbitmq-${environment}.${anthill::internal_domain_name}:${anthill::rabbitmq::port}/${environment}",
 
   $internal_restrict = ["127.0.0.1/24", "10.8.0.0/24", "192.168.0.0/16", "::1/128"],
-  $internal_max_connections = '10',
+  $internal_max_connections = '1',
 
   $mysql_username = $anthill::mysql::mysql_username,
   $mysql_password = $anthill::mysql::mysql_password,
