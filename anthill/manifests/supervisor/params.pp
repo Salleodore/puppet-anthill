@@ -9,5 +9,5 @@ class anthill::supervisor::params {
 
   $admin_port = "4545"
   $user = $anthill::applications_user
-  $minfds = 64000
+  $minfds = 200000
 }

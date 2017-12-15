@@ -77,3 +77,12 @@
 [submodule "mysql"]
 	path = mysql
 	url = https://github.com/anthill-utils/puppetlabs-mysql.git
+[submodule "grafana"]
+	path = grafana
+	url = https://github.com/voxpupuli/puppet-grafana.git
+[submodule "collectd"]
+	path = collectd
+	url = https://github.com/voxpupuli/puppet-collectd.git
+[submodule "influxdb"]
+	path = influxdb
+	url = https://github.com/anthill-utils/golja-influxdb.git

@@ -35,6 +35,10 @@ class anthill (
   String $ssh_keys_group                                              = $anthill::params::ssh_keys_group,
   # How much the services will use the redis connections by default
   Integer $redis_default_max_connections                              = $anthill::params::redis_default_max_connections,
+  # A default configuration if the monitoring enabled for all services
+  Boolean $services_enable_monitoring                                 = $anthill::params::services_enable_monitoring,
+  # Default location of the InfluxDB to push the stats into
+  String $services_monitoring_location                                = $anthill::params::services_monitoring_location,
 
 ) inherits anthill::params {
 

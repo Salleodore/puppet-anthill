@@ -63,5 +63,6 @@ class anthill::python inherits anthill {
   python::pip { 'psutil': virtualenv => $venv, require => Python::Virtualenv[$venv] }
   python::pip { 'lazy': virtualenv => $venv, require => Python::Virtualenv[$venv] }
   python::pip { 'GitPython': virtualenv => $venv, require => Python::Virtualenv[$venv]}
+  python::pip { 'sprockets-influxdb': virtualenv => $venv, require => Python::Virtualenv[$venv]}
 
 }

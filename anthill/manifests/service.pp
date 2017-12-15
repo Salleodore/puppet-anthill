@@ -135,8 +135,19 @@ define anthill::service (
     use_default_location => false,
     index_files          => [],
 
+<<<<<<< HEAD
     client_max_body_size => $nginx_max_body_size
   }
+=======
+    nginx::resource::location { "nginx_location_${vhost}":
+      ensure => $ensure,
+      location => "/",
+      server => $vhost,
+      proxy => "http://\$${environment}_${service_name}",
+      ssl => $anthill::nginx::ssl,
+      proxy_set_header => $headers,
+      proxy_http_version => "1.1",
+>>>>>>> 39826f6... Finxed HTTP Version 1.1
 
   $headers = [
     'Host $host',

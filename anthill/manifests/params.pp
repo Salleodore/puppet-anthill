@@ -19,6 +19,9 @@ class anthill::params {
   $tools_location_dir = "tools"
   $keys_location_dir = "keys"
 
+  $services_enable_monitoring = false
+  $services_monitoring_location = "influxdb-${hostname}"
+
   $applications_user = 'anthill'
   # anthill
   $applications_user_password = '$6$4qanSdNuFPMZ4$fLO4Q.XxJ7kjC3BPCeVNAdMmfsCd279VILxkbkMHsRCao4lmlef6tMzUCg9hRCdu3osItXP3E89Gcw.Rqk3uy.'

@@ -14,6 +14,9 @@ define anthill::service::version (
   $host = undef,
   $domain = undef,
 
+  $enable_monitoring = false,
+  $monitoring_location = "",
+
   $application_arguments = '',
   $application_environment = {},
   $service_directory_name = $service_name,
@@ -114,6 +117,21 @@ define anthill::service::version (
     $debug_ = "false"
   }
 
+  if ($enable_monitoring) {
+     anthill::ensure_location("influxdb location", $monitoring_location)
+     $monitoring_host = getparam(Anthill::Location[$monitoring_location], "host")
+     $monitoring_port = getparam(Anthill::Location[$monitoring_location], "port")
+     $monitoring_username = getparam(Anthill::Location[$monitoring_location], "username")
+     $monitoring_password = getparam(Anthill::Location[$monitoring_location], "password")
+     $monitoring_db = getparam(Anthill::Location[$monitoring_location], "other")["db"]
+   } else {
+     $monitoring_host = ""
+     $monitoring_port = "0"
+     $monitoring_username = ""
+     $monitoring_password = ""
+     $monitoring_db = ""
+   }
+
   $result_arguments = merge({
     "listen" => $listen_socket,
     "debug" => $debug_,
@@ -126,7 +144,13 @@ define anthill::service::version (
     "discovery_service" => $discovery_service,
     "serve_static" => $serve_static,
     "logging" => $logging_level,
-    "api_version" => $version
+    "api_version" => $version,
+    "enable_monitoring" => $enable_monitoring,
+    "monitoring_host" => $monitoring_host,
+    "monitoring_port" => $monitoring_port,
+    "monitoring_username" => $monitoring_username,
+    "monitoring_password" => $monitoring_password,
+    "monitoring_db" => $monitoring_db
   }, $args)
 
   $common_lib_source_directory = getparam(Anthill::Common::Version[$version], 'source_directory')
