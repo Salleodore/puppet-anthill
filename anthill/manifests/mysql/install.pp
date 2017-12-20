@@ -22,26 +22,9 @@ class anthill::mysql::install inherits anthill::mysql {
       tag => "internal"
     }
 
-
-
-    case ($::operatingsystem) {
-      "Debian": {
-
-        if (versioncmp($::operatingsystemrelease, '8.10') >= 0) {
-          $package_version = '5.7.20-1debian8'
-        } else {
-          $package_version = '5.7.17-1debian8'
-        }
-
-      }
-      default: {
-        $package_version = 'latest'
-      }
-    }
-
     class { '::mysql::server':
       package_name            => 'mysql-server',
-      package_ensure          => $package_version,
+      package_ensure          => '5.7.20-1debian8',
       root_password           => $mysql_root_password,
       remove_default_accounts => true,
       override_options => {
