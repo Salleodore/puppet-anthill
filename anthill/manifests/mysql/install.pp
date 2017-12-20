@@ -24,7 +24,7 @@ class anthill::mysql::install inherits anthill::mysql {
 
     class { '::mysql::server':
       package_name            => 'mysql-server',
-      package_ensure          => '5.7.20-1debian8',
+      package_ensure          => '5.7.17-1debian8',
       root_password           => $mysql_root_password,
       remove_default_accounts => true,
       override_options => {
