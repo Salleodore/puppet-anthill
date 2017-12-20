@@ -20,7 +20,7 @@ define anthill::vpn::client (
   }
 
   # export keys to the client itself, he should relize them
-  # with File <<| tag == "openvpn_${openvpn_service_name}_${client_name}" |>>
+  # with File <<| tag == "openvpn_${openvpn_service_name}_${client_name}_${client_index}" |>>
 
   @@file { "openvpn_${client_index}_ca":
     path => "/etc/openvpn/${server}/keys/ca.crt",
@@ -28,7 +28,7 @@ define anthill::vpn::client (
     owner => "root",
     ensure => present,
     mode => "0400",
-    tag => [ "openvpn_${server}_${host_name}" ]
+    tag => [ "openvpn_${server}_${host_name}_${client_index}" ]
   }
 
   @@file { "openvpn_${client_index}_crt":
@@ -37,7 +37,7 @@ define anthill::vpn::client (
     owner => "root",
     ensure => present,
     mode => "0400",
-    tag => [ "openvpn_${server}_${host_name}" ]
+    tag => [ "openvpn_${server}_${host_name}_${client_index}" ]
   }
 
   @@file { "openvpn_${client_index}_key":
@@ -46,6 +46,6 @@ define anthill::vpn::client (
     owner => "root",
     ensure => present,
     mode => "0400",
-    tag => [ "openvpn_${server}_${host_name}" ]
+    tag => [ "openvpn_${server}_${host_name}_${client_index}" ]
   }
 }

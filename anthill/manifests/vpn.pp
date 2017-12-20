@@ -51,7 +51,7 @@ class anthill::vpn (
     }
 
     # if the remote server exported VPN client keys for us, realize them here
-    File <<| tag == "openvpn_${openvpn_service_name}_${client_name}" |>>
+    File <<| tag == "openvpn_${openvpn_service_name}_${client_name}_${client_index}" |>>
 
     # If we have "ca.crt" file in place (see lib/facter/openvpn_client_keys.rb)
     $can_start_openvpn = $facts["openvpn_${openvpn_service_name}_client_keys"]
