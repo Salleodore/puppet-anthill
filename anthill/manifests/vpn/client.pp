@@ -23,7 +23,7 @@ define anthill::vpn::client (
   # with File <<| tag == "openvpn_${openvpn_service_name}_${client_name}_${client_index}" |>>
 
   @@file { "openvpn_${client_index}_ca":
-    path => "/etc/openvpn/${server}/keys/ca.crt",
+    path => "/etc/openvpn/${server}/keys/ca_${client_index}.crt",
     content => $facts["openvpn_${server}_${host_name}_ca"],
     owner => "root",
     ensure => present,
@@ -32,7 +32,7 @@ define anthill::vpn::client (
   }
 
   @@file { "openvpn_${client_index}_crt":
-    path => "/etc/openvpn/${server}/keys/${server}.crt",
+    path => "/etc/openvpn/${server}/keys/${server}_${client_index}.crt",
     content => $facts["openvpn_${server}_${host_name}_crt"],
     owner => "root",
     ensure => present,
@@ -41,7 +41,7 @@ define anthill::vpn::client (
   }
 
   @@file { "openvpn_${client_index}_key":
-    path => "/etc/openvpn/${server}/keys/${server}.key",
+    path => "/etc/openvpn/${server}/keys/${server}_${client_index}.key",
     content => $facts["openvpn_${server}_${host_name}_key"],
     owner => "root",
     ensure => present,

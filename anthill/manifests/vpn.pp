@@ -68,7 +68,11 @@ class anthill::vpn (
       persist_tun     => true,
       tls_client      => true,
       tls_version_min => '1.2',
-      local           => ''
+      local           => '',
+      extca_enabled   => true,
+      extca_ca_cert_file => "/etc/openvpn/${openvpn_service_name}/keys/ca_${client_index}.crt",
+      extca_server_cert_file => "/etc/openvpn/${openvpn_service_name}/keys/${openvpn_service_name}_${client_index}.crt",
+      extca_server_key_file => "/etc/openvpn/${openvpn_service_name}/keys/${openvpn_service_name}_${client_index}.key"
     }
 
   } elsif ($mode == 'server') {
