@@ -13,7 +13,6 @@ define anthill::service::version (
 
   $application_arguments = '',
   $application_environment = {},
-  $service_directory_name = $service_name,
   $subdirectory = 'src',
   $instances = 1,
   $ensure = present,

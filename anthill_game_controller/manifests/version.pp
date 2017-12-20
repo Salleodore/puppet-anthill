@@ -10,8 +10,6 @@ define anthill_game_controller::version (
   $ports_pool_to = $anthill_game_controller::ports_pool_to,
   $gs_host = $anthill_game_controller::gs_host,
 
-  $service_directory_name = $anthill_game_controller::service_directory_name,
-
   $host = $anthill_game_controller::host,
   $domain = $anthill_game_controller::domain,
 
@@ -61,7 +59,6 @@ define anthill_game_controller::version (
   anthill::service::version { "${anthill_game_controller::service_name}_${version}":
     version                                     => $version,
     service_name                                => $anthill_game_controller::service_name,
-    service_directory_name                      => $service_directory_name,
     args                                        => $args,
 
     source_directory                            => $source_directory,

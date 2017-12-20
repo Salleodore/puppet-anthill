@@ -13,8 +13,9 @@ class anthill_game_controller (
   $ports_pool_to = $anthill_game_controller::params::ports_pool_to,
   $gs_host = $anthill_game_controller::params::gs_host,
 
-  $service_directory_name = $anthill_game_controller::params::service_directory_name,
   $nginx_max_body_size = $anthill_game_controller::params::nginx_max_body_size,
+
+  $register_dns_entry = true,
 
   $ensure = undef,
 
@@ -64,6 +65,7 @@ class anthill_game_controller (
 
     nginx_max_body_size => $nginx_max_body_size,
     register_discovery_entry => false,
+    register_dns_entry => $register_dns_entry,
 
     domain => $domain,
     listen_port => $listen_port,

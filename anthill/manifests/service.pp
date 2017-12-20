@@ -27,6 +27,7 @@ define anthill::service (
   $internal_broker = $anthill::rabbitmq::amqp_location,
 
   $register_discovery_entry = true,
+  $register_dns_entry = true,
 
   $whitelist = undef,
   $discover = true,
@@ -108,10 +109,12 @@ define anthill::service (
       }
     }
 
-    @@anthill::dns::entry { $service_name:
-      internal_hostname => "${full_domain}${internal_domain_name}",
-      ensure => $ensure,
-      tag => "internal"
+    if ($register_dns_entry) {
+      @@anthill::dns::entry { $service_name:
+        internal_hostname => "${full_domain}${internal_domain_name}",
+        ensure => $ensure,
+        tag => "internal"
+      }
     }
 
     if ($default_version) {
