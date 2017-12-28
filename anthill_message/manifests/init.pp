@@ -1,79 +1,62 @@
 
 class anthill_message (
 
-  $default_version = undef,
-  $service_name = $anthill_message::params::service_name,
+  String $default_version,
 
-  $repository_remote_url = $anthill_message::params::repository_remote_url,
-  $source_directory = $anthill_message::params::source_directory,
+  Enum['present', 'absent'] $ensure             = 'present',
+  String $service_name                          = $anthill_message::params::service_name,
 
-  $db_host = $anthill_message::params::db_host,
-  $db_username = $anthill_message::params::db_username,
-  $db_password = $anthill_message::params::db_password,
-  $db_name = $anthill_message::params::db_name,
+  String $repository_remote_url                 = $anthill_message::params::repository_remote_url,
+  String $source_directory                      = $anthill_message::params::source_directory,
 
-  $token_cache_host = $anthill_message::params::token_cache_host,
-  $token_cache_port = $anthill_message::params::token_cache_port,
-  $token_cache_db = $anthill_message::params::token_cache_db,
-  $token_cache_max_connections = $anthill_message::params::token_cache_max_connections,
+  String $db_location                           = $anthill_message::params::db_location,
+  Boolean $manage_db                            = true,
+  String $db_name                               = $anthill_message::params::db_name,
 
-  $message_broker = $anthill_message::params::message_broker,
-  $message_broker_max_connections = $anthill_message::params::message_broker_max_connections,
+  String $token_cache_location                  = $anthill_message::params::token_cache_location,
+  Integer $token_cache_db                       = $anthill_message::params::token_cache_db,
+  Integer $token_cache_max_connections          = $anthill_message::params::token_cache_max_connections,
 
-  $ensure = undef,
+  String $internal_broker_location              = $anthill_message::params::internal_broker_location,
+  String $pubsub_location                       = $anthill_message::params::pubsub_location,
+  String $message_broker_location               = $anthill_message::params::message_broker_location,
+  Integer $message_broker_max_connections       = $anthill_message::params::message_broker_max_connections,
 
-  $host = undef,
-  $domain = undef,
-  $listen_port = undef,
-  $ssl = undef,
-  $ssl_port = undef,
-  $ssl_cert = undef,
-  $ssl_key = undef,
-  $external_domain_name = undef,
-  $internal_domain_name = undef,
+  Optional[String] $discovery_service           = undef,
+  Optional[String] $host                        = undef,
+  Optional[String] $domain                      = undef,
+  Optional[String] $external_domain_name        = undef,
+  Optional[String] $internal_domain_name        = undef,
 
-  $use_supervisor = undef,
-  $use_nginx = undef,
-  $use_mysql = undef,
-  $use_redis = undef,
-  $internal_broker = undef,
-  $pubsub = undef,
-  $internal_restrict = undef,
-  $internal_max_connections = undef,
-  $discovery_service = undef,
-  $auth_key_public = undef,
-  $whitelist = undef
+  Optional[Array[String]] $internal_restrict    = undef,
+  Optional[Integer] $internal_max_connections   = undef,
+  Optional[String] $auth_key_public             = undef,
+  Optional[Array[String]] $whitelist            = undef
+
 ) inherits anthill_message::params {
 
   require anthill::common
 
   anthill::service {$service_name:
-
     default_version => $default_version,
     repository_remote_url => $repository_remote_url,
     repository_source_directory => $source_directory,
-
     service_name => $service_name,
     ensure => $ensure,
-
-    use_nginx => $use_nginx,
-    use_mysql => $use_mysql,
-
-    mysql_username => $db_username,
-    mysql_password => $db_password,
-
     domain => $domain,
-    listen_port => $listen_port,
-    ssl => $ssl,
-    ssl_port => $ssl_port,
-    ssl_cert => $ssl_cert,
-    ssl_key => $ssl_key,
-
     external_domain_name => $external_domain_name,
     internal_domain_name => $internal_domain_name,
-    internal_broker => $internal_broker,
-
+    internal_broker_location => $internal_broker_location,
     whitelist => $whitelist
+  }
+
+  if ($manage_db)
+  {
+    @@mysql_database { $db_name:
+      ensure => 'present',
+      charset => 'utf8',
+      tag => [ $db_location ]
+    }
   }
 
 }

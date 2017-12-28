@@ -1,9 +1,9 @@
 
 class anthill::mysql::params {
 
-  $mysql_host = 'localhost'
-  $mysql_root_password = '1234'
-  $mysql_username = 'anthill'
-  $mysql_password = 'anthill'
+  $listen_port = '3306'
+  $root_password = '1234'
+  $username = 'anthill'
+  $password = 'anthill'
 
 }

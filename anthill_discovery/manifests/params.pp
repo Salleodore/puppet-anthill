@@ -8,14 +8,14 @@ class anthill_discovery::params {
 
   $services_init_file = "${anthill::runtime_location}/discovery-services.json"
 
-  $discover_services_host = $anthill::redis::host
-  $discover_services_port = $anthill::redis::port
+  $discover_services_location = "redis-${hostname}"
   $discover_services_max_connections = $anthill::redis_default_max_connections
   $discover_services_db = 3
 
-  $token_cache_host = $anthill::redis::host
-  $token_cache_port = $anthill::redis::port
+  $token_cache_location = "redis-${hostname}"
   $token_cache_max_connections = $anthill::redis_default_max_connections
   $token_cache_db = 4
 
+  $internal_broker_location = "rabbitmq-${hostname}"
+  $pubsub_location = "rabbitmq-${hostname}"
 }

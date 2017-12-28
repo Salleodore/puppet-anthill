@@ -3,57 +3,39 @@ class anthill::install inherits anthill {
 
   group { $applications_group:
     ensure           => 'present'
-  }
-
-  user { $applications_user:
+  } -> user { $applications_user:
     ensure           => 'present',
     gid              => $applications_group,
     home             => "/home/${applications_user}",
     shell            => '/bin/bash',
-    password         => $applications_user_password,
-    require          => Group[$applications_group]
+    password         => $applications_user_password
+  } -> file { "/home/${applications_user}":
+    ensure => 'directory',
+    owner  => $applications_user,
+    mode   => '0750'
+  } -> file { $applications_location:
+    ensure => 'directory',
+    owner  => 'root',
+    group => $applications_group,
+    mode   => '0760'
+  } -> file { "${applications_location}/${environment}":
+    ensure => 'directory',
+    owner  => $applications_user,
+    group => $applications_group,
+    mode   => '0760'
   }
 
   group { $ssh_keys_group:
     ensure           => 'present'
-  }
-
-  user { $ssh_keys_user:
+  } -> user { $ssh_keys_user:
     ensure           => 'present',
     gid              => $ssh_keys_group,
     home             => "/home/${ssh_keys_user}",
-    shell            => '/bin/bash',
-    require          => Group[$ssh_keys_group]
-  }
-
-  file { "/home/${applications_user}":
-    ensure => 'directory',
-    owner  => $applications_user,
-    mode   => '0750',
-    require => User[$applications_user]
-  }
-
-  file { "/home/${ssh_keys_user}":
+    shell            => '/bin/bash'
+  } -> file { "/home/${ssh_keys_user}":
     ensure => 'directory',
     owner  => $ssh_keys_user,
-    mode   => '0750',
-    require => User[$ssh_keys_user]
-  }
-
-  file { $applications_location:
-    ensure => 'directory',
-    owner  => 'root',
-    group => $applications_group,
-    mode   => '0760',
-    require => Group[$applications_group]
-  }
-
-  file { "${applications_location}/${environment}":
-    ensure => 'directory',
-    owner  => $applications_user,
-    group => $applications_group,
-    mode   => '0760',
-    require => File[$applications_location]
+    mode   => '0750'
   }
 
   if ($sources_location)

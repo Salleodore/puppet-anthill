@@ -1,70 +1,56 @@
 define anthill_report::version (
 
-  $version = $title,
-  $source_commit,
+  String $source_commit,
+  String $version                                     = $title,
 
-  $source_directory = $anthill_report::source_directory,
+  String $source_directory                            = $anthill_report::source_directory,
 
-  $db_host = $anthill_report::db_host,
-  $db_username = $anthill_report::db_username,
-  $db_password = $anthill_report::db_password,
-  $db_name = $anthill_report::db_name,
+  String $db_location                                 = $anthill_report::db_location,
+  String $db_name                                     = $anthill_report::db_name,
 
-  $token_cache_host = $anthill_report::token_cache_host,
-  $token_cache_port = $anthill_report::token_cache_port,
-  $token_cache_max_connections = $anthill_report::token_cache_max_connections,
-  $token_cache_db = $anthill_report::token_cache_db,
+  String $token_cache_location                        = $anthill_report::token_cache_location,
+  Integer $token_cache_max_connections                = $anthill_report::token_cache_max_connections,
+  Integer $token_cache_db                             = $anthill_report::token_cache_db,
 
-  $rate_cache_host = $anthill_report::rate_cache_host,
-  $rate_cache_port = $anthill_report::rate_cache_port,
-  $rate_cache_max_connections = $anthill_report::rate_cache_max_connections,
-  $rate_cache_db = $anthill_report::rate_cache_db,
+  Optional[String] $host                              = $anthill_report::host,
+  Optional[String] $domain                            = $anthill_report::domain,
 
-  $rate_report_upload = $anthill_report::rate_report_upload,
-  $max_report_size = $anthill_report::max_report_size,
+  String $internal_broker_location                    = $anthill_report::internal_broker_location,
+  Optional[Array[String]] $internal_restrict          = $anthill_report::internal_restrict,
+  Optional[Integer] $internal_max_connections         = $anthill_report::internal_max_connections,
 
-  $host = $anthill_report::host,
-  $domain = $anthill_report::domain,
+  String $pubsub_location                             = $anthill_report::pubsub_location,
+  Optional[String] $discovery_service                 = $anthill_report::discovery_service,
+  Optional[String] $auth_key_public                   = $anthill_report::auth_key_public,
 
-  $internal_broker = $anthill_report::internal_broker,
-  $internal_restrict = $anthill_report::internal_restrict,
-  $internal_max_connections = $anthill_report::internal_max_connections,
+  String $application_arguments                       = '',
+  Optional[Integer] $instances                        = undef,
+  Optional[Enum['present', 'absent']] $ensure         = undef,
+  Optional[String] $runtime_location                  = undef,
+  Optional[String] $sockets_location                  = undef
 
-  $pubsub = $anthill_report::pubsub,
-
-  $discovery_service = $anthill_report::discovery_service,
-  $auth_key_public = $anthill_report::auth_key_public,
-
-  $application_arguments = '',
-  $instances = undef,
-  $ensure = undef,
-  $use_nginx = undef,
-  $use_supervisor = undef,
-  $runtime_location = undef,
-  $sockets_location = undef
 ) {
 
+  anthill::ensure_location("mysql database", $db_location)
+  anthill::ensure_location("token cache redis", $token_cache_location)
+  anthill::ensure_location("internal broker", $internal_broker_location)
+  anthill::ensure_location("pubsub", $pubsub_location)
+
+  $internal_broker = generate_rabbitmq_url(Anthill::Location[$internal_broker_location], $environment)
+  $pubsub = generate_rabbitmq_url(Anthill::Location[$pubsub_location], $environment)
+
   $args = {
-    "db_host" => $db_host,
-    "db_username" => $db_username,
+    "db_host" => getparam(Anthill::Location[$db_location], "host"),
+    "db_username" => getparam(Anthill::Location[$db_location], "username"),
     "db_name" => $db_name,
-
-    "rate_cache_host" => $rate_cache_host,
-    "rate_cache_port" => $rate_cache_port,
-    "rate_cache_max_connections" => $rate_cache_max_connections,
-    "rate_cache_db" => $rate_cache_db,
-
-    "rate_report_upload" => $rate_report_upload,
-    "max_report_size" => $max_report_size,
-
-    "token_cache_host" => $token_cache_host,
-    "token_cache_port" => $token_cache_port,
+    "token_cache_host" => getparam(Anthill::Location[$token_cache_location], "host"),
+    "token_cache_port" => getparam(Anthill::Location[$token_cache_location], "port"),
     "token_cache_max_connections" => $token_cache_max_connections,
     "token_cache_db" => $token_cache_db
   }
 
   $application_environment = {
-    "db_password" => $db_password
+    "db_password" => getparam(Anthill::Location[$db_location], "password")
   }
 
   anthill::service::version { "${anthill_report::service_name}_${version}":
@@ -83,21 +69,17 @@ define anthill_report::version (
     internal_restrict                           => $internal_restrict,
     internal_max_connections                    => $internal_max_connections,
 
-    mysql_username                              => $anthill::mysql::mysql_username,
-    mysql_password                              => $anthill::mysql::mysql_password,
-
     pubsub                                      => $pubsub,
     discovery_service                           => $discovery_service,
     auth_key_public                             => $auth_key_public,
 
     instances                                   => $instances,
-    use_nginx                                   => $use_nginx,
-    use_supervisor                              => $use_supervisor,
     runtime_location                            => $runtime_location,
     sockets_location                            => $sockets_location,
     application_arguments                       => $application_arguments,
     application_environment                     => $application_environment,
 
     require                                     => Anthill::Common::Version[$version]
+
   }
 }

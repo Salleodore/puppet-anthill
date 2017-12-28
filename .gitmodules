@@ -4,9 +4,6 @@
 [submodule "concat"]
 	path = concat
 	url = https://github.com/puppetlabs/puppetlabs-concat.git
-[submodule "mysql"]
-	path = mysql
-	url = https://github.com/anthill-utils/puppetlabs-mysql.git
 [submodule "rabbitmq"]
 	path = rabbitmq
 	url = https://github.com/puppetlabs/puppetlabs-rabbitmq.git
@@ -74,3 +71,6 @@
 [submodule "openvpn"]
 	path = openvpn
 	url = https://github.com/anthill-utils/puppet-openvpn.git
+[submodule "mysql"]
+	path = mysql
+	url = https://github.com/anthill-utils/puppetlabs-mysql.git

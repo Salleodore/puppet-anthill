@@ -1,56 +1,62 @@
 define anthill_game_controller::version (
 
-  $version = $title,
-  $source_commit,
+  String $source_commit,
+  String $version                                     = $title,
 
-  $source_directory = $anthill_game_controller::source_directory,
-  $sock_path = $anthill_game_controller::sock_path,
-  $binaries_path = $anthill_game_controller::binaries_path,
-  $ports_pool_from = $anthill_game_controller::ports_pool_from,
-  $ports_pool_to = $anthill_game_controller::ports_pool_to,
-  $gs_host = $anthill_game_controller::gs_host,
+  String $source_directory                            = $anthill_game_controller::source_directory,
 
-  $host = $anthill_game_controller::host,
-  $domain = $anthill_game_controller::domain,
+  String $sock_directory                              = $anthill_game_controller::sock_directory,
+  String $binaries_directory                          = $anthill_game_controller::binaries_directory,
+  Integer $ports_pool_from                            = $anthill_game_controller::ports_pool_from,
+  Integer $ports_pool_to                              = $anthill_game_controller::ports_pool_to,
+  String $gs_host                                     = $anthill_game_controller::gs_host,
 
-  $token_cache_host = $anthill_game_controller::token_cache_host,
-  $token_cache_port = $anthill_game_controller::token_cache_port,
-  $token_cache_max_connections = $anthill_game_controller::token_cache_max_connections,
-  $token_cache_db = $anthill_game_controller::token_cache_db,
+  String $token_cache_location                        = $anthill_game_controller::token_cache_location,
+  Integer $token_cache_max_connections                = $anthill_game_controller::token_cache_max_connections,
+  Integer $token_cache_db                             = $anthill_game_controller::token_cache_db,
 
-  $internal_broker = $anthill_game_controller::internal_broker,
-  $internal_restrict = $anthill_game_controller::internal_restrict,
-  $internal_max_connections = $anthill_game_controller::internal_max_connections,
+  Optional[String] $host                              = $anthill_game_controller::host,
+  Optional[String] $domain                            = $anthill_game_controller::domain,
 
-  $pubsub = $anthill_game_controller::pubsub,
+  String $internal_broker_location                    = $anthill_game_controller::internal_broker_location,
+  Optional[Array[String]] $internal_restrict          = $anthill_game_controller::internal_restrict,
+  Optional[Integer] $internal_max_connections         = $anthill_game_controller::internal_max_connections,
 
-  $discovery_service = $anthill_game_controller::discovery_service,
-  $auth_key_public = $anthill_game_controller::auth_key_public,
+  String $pubsub_location                             = $anthill_game_controller::pubsub_location,
+  Optional[String] $discovery_service                 = $anthill_game_controller::discovery_service,
+  Optional[String] $auth_key_public                   = $anthill_game_controller::auth_key_public,
 
-  $application_arguments = '',
-  $instances = undef,
-  $ensure = undef,
-  $use_nginx = undef,
-  $use_supervisor = undef,
-  $runtime_location = undef,
-  $sockets_location = undef
+  String $application_arguments                       = '',
+  Optional[Integer] $instances                        = undef,
+  Optional[Enum['present', 'absent']] $ensure         = undef,
+  Optional[String] $runtime_location                  = undef,
+  Optional[String] $sockets_location                  = undef
+
 ) {
 
   if ! defined(Anthill_game_controller::Version[$version]) {
     fail("anthill_game:version { \"${version}\": } is not defined. Please define it with appropriate commit")
   }
 
+  anthill::ensure_location("token cache redis", $token_cache_location)
+  anthill::ensure_location("internal broker", $internal_broker_location)
+  anthill::ensure_location("pubsub", $pubsub_location)
+
+  $internal_broker = generate_rabbitmq_url(Anthill::Location[$internal_broker_location], $environment)
+  $pubsub = generate_rabbitmq_url(Anthill::Location[$pubsub_location], $environment)
+
+
   $args = {
-    "sock_path" => $sock_path,
-    "binaries_path" => $binaries_path,
+    "sock_path" => $sock_directory,
+    "binaries_path" => $binaries_directory,
     "ports_pool_from" => $ports_pool_from,
     "ports_pool_to" => $ports_pool_to,
     "gs_host" => $gs_host,
 
-    "token_cache_host" => $token_cache_host,
-    "token_cache_port" => $token_cache_port,
+    "token_cache_host" => getparam(Anthill::Location[$token_cache_location], "host"),
+    "token_cache_port" => getparam(Anthill::Location[$token_cache_location], "port"),
     "token_cache_max_connections" => $token_cache_max_connections,
-    "token_cache_db" => $token_cache_db
+    "token_cache_db" => $token_cache_db,
   }
 
   $application_environment = {
@@ -77,8 +83,6 @@ define anthill_game_controller::version (
     auth_key_public                             => $auth_key_public,
 
     instances                                   => $instances,
-    use_nginx                                   => $use_nginx,
-    use_supervisor                              => $use_supervisor,
     runtime_location                            => $runtime_location,
     sockets_location                            => $sockets_location,
     application_arguments                       => $application_arguments,
