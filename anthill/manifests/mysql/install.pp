@@ -24,11 +24,14 @@ class anthill::mysql::install inherits anthill::mysql {
 
     class { '::mysql::server':
       package_name            => 'mysql-server',
-      package_ensure          => '5.7.17-1debian8',
+      package_ensure          => $mysql_package,
       root_password           => $mysql_root_password,
       remove_default_accounts => true,
       override_options => {
-        "event_scheduler" => "ON"
+        "event_scheduler" => "ON",
+        "mysqld"          => {
+          "max_connections" => 1000
+        }
       }
     }
 

@@ -74,3 +74,6 @@
 [submodule "openvpn"]
 	path = openvpn
 	url = https://github.com/anthill-utils/puppet-openvpn.git
+[submodule "ulimit"]
+	path = ulimit
+	url = https://github.com/arioch/puppet-ulimit.git

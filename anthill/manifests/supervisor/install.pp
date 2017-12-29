@@ -12,7 +12,9 @@ class anthill::supervisor::install inherits anthill::supervisor {
       inet_http_server => $admin_management,
       inet_http_server_port => $admin_port,
       inet_http_server_username => $admin_username,
-      inet_http_server_password => $admin_password
+      inet_http_server_password => $admin_password,
+
+      supervisord_minfds => $minfds
     }
 
     if ($admin_management) {

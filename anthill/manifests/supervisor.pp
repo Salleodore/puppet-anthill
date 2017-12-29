@@ -6,7 +6,8 @@ class anthill::supervisor (
   $admin_username = $anthill::supervisor::params::admin_username,
   $admin_password = $anthill::supervisor::params::admin_password,
   $user = $anthill::supervisor::params::user,
-  $domain = $anthill::supervisor::params::domain
+  $domain = $anthill::supervisor::params::domain,
+  $minfds = $anthill::supervisor::params::minfds
 
 ) inherits anthill::supervisor::params {
 
