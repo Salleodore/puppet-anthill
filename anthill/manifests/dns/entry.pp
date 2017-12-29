@@ -3,7 +3,7 @@ define anthill::dns::entry (
   $internal_hostname,
 
   $ensure                 = 'present',
-  $internal_ip_address    = $anthill::dns::local_ip_address
+  $internal_ip_address    = anthill::local_ip_address()
 ) {
 
   case $anthill::dns::backend {

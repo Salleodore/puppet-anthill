@@ -1,17 +1,10 @@
 
 class anthill::params {
 
-  $manage_mysql = true
-  $manage_redis = true
-  $manage_nginx = true
-  $manage_rabbitmq = true
-  $manage_supervisor = true
-
   $debug = false
 
   $enable_https = false
   $logging_level = 'info'
-  $protocol = 'http'
 
   $external_domain_name = 'anthillplatform.org'
   $internal_domain_name = 'anthill.internal'

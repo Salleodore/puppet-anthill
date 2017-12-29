@@ -3,8 +3,7 @@ class anthill::rabbitmq::params {
 
   $username = 'anthill'
   $password = 'anthill'
-  $host = $anthill::dns::local_ip_address
-  $port = 5672
+  $listen_port = 5672
 
   $admin_management = true
   $admin_port = 23234

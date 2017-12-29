@@ -1,67 +1,81 @@
 define anthill_login::version (
 
-  $version = $title,
-  $source_commit,
+  String $source_commit,
+  String $version                                     = $title,
 
-  $source_directory = $anthill_login::source_directory,
+  String $source_directory                            = $anthill_login::source_directory,
 
-  $db_host = $anthill_login::db_host,
-  $db_username = $anthill_login::db_username,
-  $db_password = $anthill_login::db_password,
-  $db_name = $anthill_login::db_name,
+  String $db_location                                 = $anthill_login::db_location,
+  String $db_name                                     = $anthill_login::db_name,
 
-  $tokens_host = $anthill_login::tokens_host,
-  $tokens_port = $anthill_login::tokens_port,
-  $tokens_max_connections = $anthill_login::tokens_max_connections,
-  $tokens_db = $anthill_login::tokens_db,
+  String $tokens_location                             = $anthill_login::tokens_location,
+  Integer $tokens_max_connections                     = $anthill_login::tokens_max_connections,
+  Integer $tokens_db                                  = $anthill_login::tokens_db,
 
-  $cache_host = $anthill_login::cache_host,
-  $cache_port = $anthill_login::cache_port,
-  $cache_max_connections = $anthill_login::cache_max_connections,
-  $cache_db = $anthill_login::cache_db,
+  String $token_cache_location                        = $anthill_login::token_cache_location,
+  Integer $token_cache_max_connections                = $anthill_login::token_cache_max_connections,
+  Integer $token_cache_db                             = $anthill_login::token_cache_db,
 
-  $application_keys_secret = $anthill_login::application_keys_secret,
-  $auth_key_private = $anthill_login::auth_key_private,
-  $auth_key_private_passphrase = $anthill_login::auth_key_private_passphrase,
+  String $cache_location                              = $anthill_login::cache_location,
+  Integer $cache_max_connections                      = $anthill_login::cache_max_connections,
+  Integer $cache_db                                   = $anthill_login::cache_db,
 
-  $host = $anthill_login::host,
-  $domain = $anthill_login::domain,
+  String $application_keys_secret                     = $anthill_login::application_keys_secret,
+  String $auth_key_private                            = $anthill_login::auth_key_private,
+  String $auth_key_private_passphrase                 = $anthill_login::auth_key_private_passphrase,
 
-  $internal_broker = $anthill_login::internal_broker,
-  $internal_restrict = $anthill_login::internal_restrict,
-  $internal_max_connections = $anthill_login::internal_max_connections,
+  Optional[String] $host                              = $anthill_login::host,
+  Optional[String] $domain                            = $anthill_login::domain,
 
-  $pubsub = $anthill_login::pubsub,
+  String $internal_broker_location                    = $anthill_login::internal_broker_location,
+  Optional[Array[String]] $internal_restrict          = $anthill_login::internal_restrict,
+  Optional[Integer] $internal_max_connections         = $anthill_login::internal_max_connections,
 
-  $discovery_service = $anthill_login::discovery_service,
-  $auth_key_public = $anthill_login::auth_key_public,
-  $passwords_salt = $anthill_login::passwords_salt,
+  String $pubsub_location                             = $anthill_login::pubsub_location,
+  Optional[String] $discovery_service                 = $anthill_login::discovery_service,
+  Optional[String] $auth_key_public                   = $anthill_login::auth_key_public,
+  String $passwords_salt                              = $anthill_login::passwords_salt,
 
-  $application_arguments = '',
-  $instances = undef,
-  $ensure = undef,
-  $use_nginx = undef,
-  $use_supervisor = undef,
-  $runtime_location = undef,
-  $sockets_location = undef
+  String $application_arguments                       = '',
+  Optional[Integer] $instances                        = undef,
+  Optional[Enum['present', 'absent']] $ensure         = undef,
+  Optional[String] $runtime_location                  = undef,
+  Optional[String] $sockets_location                  = undef
 ) {
 
+  anthill::ensure_location("mysql database", $db_location)
+  anthill::ensure_location("tokens redis", $tokens_location)
+  anthill::ensure_location("token cache redis", $token_cache_location)
+  anthill::ensure_location("cache redis", $cache_location)
+  anthill::ensure_location("internal broker", $internal_broker_location)
+  anthill::ensure_location("pubsub", $pubsub_location)
+
+  $internal_broker = generate_rabbitmq_url(Anthill::Location[$internal_broker_location], $environment)
+  $pubsub = generate_rabbitmq_url(Anthill::Location[$pubsub_location], $environment)
+
   $args = {
-    "db_host" => $db_host,
-    "db_username" => $db_username,
+    "db_host" => getparam(Anthill::Location[$db_location], "host"),
+    "db_username" => getparam(Anthill::Location[$db_location], "username"),
     "db_name" => $db_name,
-    "tokens_host" => $tokens_host,
-    "tokens_port" => $tokens_port,
+
+    "tokens_host" => getparam(Anthill::Location[$tokens_location], "host"),
+    "tokens_port" => getparam(Anthill::Location[$tokens_location], "port"),
     "tokens_max_connections" => $tokens_max_connections,
     "tokens_db" => $tokens_db,
-    "cache_host" => $cache_host,
-    "cache_port" => $cache_port,
+
+    "token_cache_host" => getparam(Anthill::Location[$token_cache_location], "host"),
+    "token_cache_port" => getparam(Anthill::Location[$token_cache_location], "port"),
+    "token_cache_max_connections" => $token_cache_max_connections,
+    "token_cache_db" => $token_cache_db,
+
+    "cache_host" => getparam(Anthill::Location[$cache_location], "host"),
+    "cache_port" => getparam(Anthill::Location[$cache_location], "port"),
     "cache_max_connections" => $cache_max_connections,
     "cache_db" => $cache_db
   }
 
   $application_environment = {
-    "db_password" => $db_password,
+    "db_password" => getparam(Anthill::Location[$db_location], "password"),
     "private_key_password" => $auth_key_private_passphrase,
     "application_keys_secret" => $application_keys_secret,
     "auth_key_private" => $auth_key_private,
@@ -84,16 +98,11 @@ define anthill_login::version (
     internal_restrict                           => $internal_restrict,
     internal_max_connections                    => $internal_max_connections,
 
-    mysql_username                              => $anthill::mysql::mysql_username,
-    mysql_password                              => $anthill::mysql::mysql_password,
-
     pubsub                                      => $pubsub,
     discovery_service                           => $discovery_service,
     auth_key_public                             => $auth_key_public,
 
     instances                                   => $instances,
-    use_nginx                                   => $use_nginx,
-    use_supervisor                              => $use_supervisor,
     runtime_location                            => $runtime_location,
     sockets_location                            => $sockets_location,
     application_arguments                       => $application_arguments,

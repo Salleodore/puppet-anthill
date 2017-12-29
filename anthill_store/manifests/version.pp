@@ -1,54 +1,56 @@
 define anthill_store::version (
 
-  $version = $title,
-  $source_commit,
+  String $source_commit,
+  String $version                                     = $title,
 
-  $source_directory = $anthill_store::source_directory,
+  String $source_directory                            = $anthill_store::source_directory,
 
-  $db_host = $anthill_store::db_host,
-  $db_username = $anthill_store::db_username,
-  $db_password = $anthill_store::db_password,
-  $db_name = $anthill_store::db_name,
+  String $db_location                                 = $anthill_store::db_location,
+  String $db_name                                     = $anthill_store::db_name,
 
-  $token_cache_host = $anthill_store::token_cache_host,
-  $token_cache_port = $anthill_store::token_cache_port,
-  $token_cache_max_connections = $anthill_store::token_cache_max_connections,
-  $token_cache_db = $anthill_store::token_cache_db,
+  String $token_cache_location                        = $anthill_store::token_cache_location,
+  Integer $token_cache_max_connections                = $anthill_store::token_cache_max_connections,
+  Integer $token_cache_db                             = $anthill_store::token_cache_db,
 
-  $host = $anthill_store::host,
-  $domain = $anthill_store::domain,
+  Optional[String] $host                              = $anthill_store::host,
+  Optional[String] $domain                            = $anthill_store::domain,
 
-  $internal_broker = $anthill_store::internal_broker,
-  $internal_restrict = $anthill_store::internal_restrict,
-  $internal_max_connections = $anthill_store::internal_max_connections,
+  String $internal_broker_location                    = $anthill_store::internal_broker_location,
+  Optional[Array[String]] $internal_restrict          = $anthill_store::internal_restrict,
+  Optional[Integer] $internal_max_connections         = $anthill_store::internal_max_connections,
 
-  $pubsub = $anthill_store::pubsub,
+  String $pubsub_location                             = $anthill_store::pubsub_location,
+  Optional[String] $discovery_service                 = $anthill_store::discovery_service,
+  Optional[String] $auth_key_public                   = $anthill_store::auth_key_public,
 
-  $discovery_service = $anthill_store::discovery_service,
-  $auth_key_public = $anthill_store::auth_key_public,
+  String $application_arguments                       = '',
+  Optional[Integer] $instances                        = undef,
+  Optional[Enum['present', 'absent']] $ensure         = undef,
+  Optional[String] $runtime_location                  = undef,
+  Optional[String] $sockets_location                  = undef
 
-  $application_arguments = '',
-  $instances = undef,
-  $ensure = undef,
-  $use_nginx = undef,
-  $use_supervisor = undef,
-  $runtime_location = undef,
-  $sockets_location = undef
 ) {
 
-  $args = {
-    "db_host" => $db_host,
-    "db_username" => $db_username,
-    "db_name" => $db_name,
+  anthill::ensure_location("mysql database", $db_location)
+  anthill::ensure_location("token cache redis", $token_cache_location)
+  anthill::ensure_location("internal broker", $internal_broker_location)
+  anthill::ensure_location("pubsub", $pubsub_location)
 
-    "token_cache_host" => $token_cache_host,
-    "token_cache_port" => $token_cache_port,
+  $internal_broker = generate_rabbitmq_url(Anthill::Location[$internal_broker_location], $environment)
+  $pubsub = generate_rabbitmq_url(Anthill::Location[$pubsub_location], $environment)
+
+  $args = {
+    "db_host" => getparam(Anthill::Location[$db_location], "host"),
+    "db_username" => getparam(Anthill::Location[$db_location], "username"),
+    "db_name" => $db_name,
+    "token_cache_host" => getparam(Anthill::Location[$token_cache_location], "host"),
+    "token_cache_port" => getparam(Anthill::Location[$token_cache_location], "port"),
     "token_cache_max_connections" => $token_cache_max_connections,
     "token_cache_db" => $token_cache_db
   }
 
   $application_environment = {
-    "db_password" => $db_password
+    "db_password" => getparam(Anthill::Location[$db_location], "password")
   }
 
   anthill::service::version { "${anthill_store::service_name}_${version}":
@@ -67,21 +69,17 @@ define anthill_store::version (
     internal_restrict                           => $internal_restrict,
     internal_max_connections                    => $internal_max_connections,
 
-    mysql_username                              => $anthill::mysql::mysql_username,
-    mysql_password                              => $anthill::mysql::mysql_password,
-
     pubsub                                      => $pubsub,
     discovery_service                           => $discovery_service,
     auth_key_public                             => $auth_key_public,
 
     instances                                   => $instances,
-    use_nginx                                   => $use_nginx,
-    use_supervisor                              => $use_supervisor,
     runtime_location                            => $runtime_location,
     sockets_location                            => $sockets_location,
     application_arguments                       => $application_arguments,
     application_environment                     => $application_environment,
 
     require                                     => Anthill::Common::Version[$version]
+
   }
 }
