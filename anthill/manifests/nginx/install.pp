@@ -13,7 +13,8 @@ class anthill::nginx::install inherits anthill::nginx {
     daemon_group => $anthill::applications_group,
     worker_processes => 8,
     worker_connections => 2096,
-    worker_rlimit_nofile => 200000
+    worker_rlimit_nofile => 200000,
+    proxy_http_version => '1.1'
   }
 
 }

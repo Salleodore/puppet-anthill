@@ -130,11 +130,12 @@ define anthill::service (
     ssl_key              => $anthill::nginx::ssl_key,
 
     locations            => $nginx_locations,
+    proxy_http_version => '1.1',
 
     use_default_location => false,
     index_files          => [],
 
-    client_max_body_size => $nginx_max_body_size,
+    client_max_body_size => $nginx_max_body_size
   }
 
   $headers = [

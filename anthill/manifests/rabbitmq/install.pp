@@ -1,7 +1,7 @@
 
 class anthill::rabbitmq::install inherits anthill::rabbitmq {
 
-  $host = "localhost"
+  $host = anthill::local_ip_address()
 
   if ($::operatingsystem == 'Debian' and $::operatingsystemmajrelease == '8')
   {
@@ -23,8 +23,8 @@ class anthill::rabbitmq::install inherits anthill::rabbitmq {
 
   class { ::rabbitmq:
     port              => $listen_port,
-    node_ip_address   => anthill::local_ip_address(),
-    management_ip_address => anthill::local_ip_address(),
+    node_ip_address   => $host,
+    management_ip_address => $host,
     management_port   => $admin_port,
     management_ssl    => false,
     admin_enable      => $admin_management,
@@ -82,7 +82,8 @@ class anthill::rabbitmq::install inherits anthill::rabbitmq {
       ssl_key              => $anthill::nginx::ssl_key,
 
       use_default_location => false,
-      index_files          => []
+      index_files          => [],
+      proxy_http_version => '1.1'
     }
 
     nginx::resource::location { "${environment}_rabbitmq/":

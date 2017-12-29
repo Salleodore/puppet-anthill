@@ -45,7 +45,8 @@ class anthill::supervisor::install inherits anthill::supervisor {
         ssl_key              => $anthill::nginx::ssl_key,
 
         use_default_location => false,
-        index_files          => []
+        index_files          => [],
+        proxy_http_version => '1.1'
       }
 
       nginx::resource::location { "${environment}_supervisor/":
@@ -56,7 +57,8 @@ class anthill::supervisor::install inherits anthill::supervisor {
         proxy                => "http://127.0.0.1:${admin_port}",
         proxy_buffering      => 'off',
 
-        ssl => $anthill::nginx::ssl
+        ssl => $anthill::nginx::ssl,
+        proxy_http_version => '1.1'
       }
     }
     else
