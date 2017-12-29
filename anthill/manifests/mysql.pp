@@ -7,7 +7,7 @@ class anthill::mysql (
   String $listen_port                       = $anthill::mysql::params::listen_port,
   String $root_password                     = $anthill::mysql::params::root_password,
   String $username                          = $anthill::mysql::params::username,
-  String $password                          = $anthill::mysql::params::password
+  String $password                          = $anthill::mysql::params::password,
 
   String $mysql_package                     = $anthill::mysql::params::mysql_package
 
