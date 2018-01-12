@@ -14,7 +14,8 @@ class anthill::nginx::install inherits anthill::nginx {
     worker_processes => 8,
     worker_connections => 2096,
     worker_rlimit_nofile => 200000,
-    proxy_http_version => '1.1'
+    proxy_http_version => '1.1',
+    client_max_body_size => '400m'
   }
 
 }
