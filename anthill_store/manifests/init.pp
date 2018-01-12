@@ -1,4 +1,3 @@
-
 class anthill_store (
 
   String $default_version,
@@ -16,6 +15,10 @@ class anthill_store (
   String $token_cache_location                  = $anthill_store::params::token_cache_location,
   Integer $token_cache_db                       = $anthill_store::params::token_cache_db,
   Integer $token_cache_max_connections          = $anthill_store::params::token_cache_max_connections,
+
+  String $cache_location                        = $anthill_store::params::cache_location,
+  Integer $cache_db                             = $anthill_store::params::cache_db,
+  Integer $cache_max_connections                = $anthill_store::params::cache_max_connections,
 
   String $internal_broker_location              = $anthill_store::params::internal_broker_location,
   String $pubsub_location                       = $anthill_store::params::pubsub_location,

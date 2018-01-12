@@ -1,4 +1,3 @@
-
 class anthill_store::params {
 
   $service_name = "store"
@@ -12,6 +11,10 @@ class anthill_store::params {
   $token_cache_location = "redis-${hostname}"
   $token_cache_max_connections = $anthill::redis_default_max_connections
   $token_cache_db = 4
+
+  $cache_location = "redis-${hostname}"
+  $cache_max_connections = $anthill::redis_default_max_connections
+  $cache_db = 2
 
   $internal_broker_location = "rabbitmq-${hostname}"
   $pubsub_location = "rabbitmq-${hostname}"
