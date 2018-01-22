@@ -5,7 +5,7 @@ class anthill::monitoring::collectd::plugins inherits anthill::monitoring::colle
     ensure => $ensure,
   }
 
-  $influxdb = anthill::ensure_location("influxdb", $influxdb_location, true)
+  $influxdb = anthill::ensure_location_new("influxdb", $influxdb_location, true)
 
   $influxdb_host = $influxdb["host"]
 

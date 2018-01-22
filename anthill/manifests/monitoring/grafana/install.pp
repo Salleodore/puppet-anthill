@@ -3,7 +3,7 @@ class anthill::monitoring::grafana::install inherits anthill::monitoring::grafan
 
   if ($redis_backend_location)
   {
-    $redis_backend = anthill::ensure_location("redis backend", $redis_backend_location, false)
+    $redis_backend = anthill::ensure_location_new("redis backend", $redis_backend_location, false)
 
     if ($redis_backend) {
       $redis_backend_host = $redis_backend["host"]
@@ -21,7 +21,7 @@ class anthill::monitoring::grafana::install inherits anthill::monitoring::grafan
     $session = {}
   }
 
-  $mysql_backend = anthill::ensure_location("mysql backend", $mysql_backend_location, true)
+  $mysql_backend = anthill::ensure_location_new("mysql backend", $mysql_backend_location, true)
 
   $mysql_backend_host = $mysql_backend["host"]
   $mysql_backend_port = $mysql_backend["port"]

@@ -86,3 +86,6 @@
 [submodule "influxdb"]
 	path = influxdb
 	url = https://github.com/anthill-utils/golja-influxdb.git
+[submodule "puppetdbquery"]
+	path = puppetdbquery
+	url = https://github.com/dalen/puppet-puppetdbquery.git

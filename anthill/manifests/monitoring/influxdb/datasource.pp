@@ -2,7 +2,7 @@
 class anthill::monitoring::influxdb::datasource inherits anthill::monitoring::influxdb {
 
   if ($export_grafana_datasource) {
-    $grafana = anthill::ensure_location("grafana location", $grafana_location, true)
+    $grafana = anthill::ensure_location_new("grafana location", $grafana_location, true)
 
     $grafana_host = $grafana["host"]
     $grafana_port = $grafana["port"]
