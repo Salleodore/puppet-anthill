@@ -12,6 +12,9 @@ class anthill_store::params {
   $token_cache_max_connections = $anthill::redis_default_max_connections
   $token_cache_db = 4
 
+  $enable_monitoring = $anthill::services_enable_monitoring
+  $monitoring_location = "influxdb-${hostname}"
+
   $cache_location = "redis-${hostname}"
   $cache_max_connections = $anthill::redis_default_max_connections
   $cache_db = 2

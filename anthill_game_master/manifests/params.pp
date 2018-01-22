@@ -19,6 +19,9 @@ class anthill_game_master::params {
   $cache_max_connections = $anthill::redis_default_max_connections
   $cache_db = 2
 
+  $enable_monitoring = $anthill::services_enable_monitoring
+  $monitoring_location = "influxdb-${hostname}"
+
   $internal_broker_location = "rabbitmq-${hostname}"
   $pubsub_location = "rabbitmq-${hostname}"
 

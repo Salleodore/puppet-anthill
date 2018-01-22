@@ -17,7 +17,14 @@ define anthill_game_master::version (
   Integer $cache_max_connections                      = $anthill_game_master::cache_max_connections,
   Integer $cache_db                                   = $anthill_game_master::cache_db,
 
+  String $rate_cache_location                         = $cache_location,
+  Integer $rate_cache_max_connections                 = $cache_max_connections,
+  Integer $rate_cache_db                              = $cache_db,
+
   String $party_broker_location                       = $anthill_game_master::party_broker_location,
+
+  Boolean $enable_monitoring                          = $anthill_game_master::enable_monitoring,
+  String $monitoring_location                         = $anthill_game_master::monitoring_location,
 
   Optional[String] $host                              = $anthill_game_master::host,
   Optional[String] $domain                            = $anthill_game_master::domain,
@@ -53,14 +60,21 @@ define anthill_game_master::version (
     "db_host" => getparam(Anthill::Location[$db_location], "host"),
     "db_username" => getparam(Anthill::Location[$db_location], "username"),
     "db_name" => $db_name,
+
     "token_cache_host" => getparam(Anthill::Location[$token_cache_location], "host"),
     "token_cache_port" => getparam(Anthill::Location[$token_cache_location], "port"),
     "token_cache_max_connections" => $token_cache_max_connections,
     "token_cache_db" => $token_cache_db,
+
     "cache_host" => getparam(Anthill::Location[$cache_location], "host"),
     "cache_port" => getparam(Anthill::Location[$cache_location], "port"),
     "cache_max_connections" => $cache_max_connections,
     "cache_db" => $cache_db,
+
+    "rate_cache_host" => getparam(Anthill::Location[$rate_cache_location], "host"),
+    "rate_cache_port" => getparam(Anthill::Location[$rate_cache_location], "port"),
+    "rate_cache_max_connections" => $rate_cache_max_connections,
+    "rate_cache_db" => $rate_cache_db,
 
     "party_broker" => $party_broker,
     "deployments_location" => $deployments_directory
@@ -81,6 +95,9 @@ define anthill_game_master::version (
     host                                        => $host,
     domain                                      => $domain,
     ensure                                      => $ensure,
+
+    enable_monitoring                           => $enable_monitoring,
+    monitoring_location                         => $monitoring_location,
 
     internal_broker                             => $internal_broker,
     internal_restrict                           => $internal_restrict,

@@ -19,6 +19,9 @@ define anthill_report::version (
   Optional[Array[String]] $internal_restrict          = $anthill_report::internal_restrict,
   Optional[Integer] $internal_max_connections         = $anthill_report::internal_max_connections,
 
+  Boolean $enable_monitoring                          = $anthill_report::enable_monitoring,
+  String $monitoring_location                         = $anthill_report::monitoring_location,
+
   String $pubsub_location                             = $anthill_report::pubsub_location,
   Optional[String] $discovery_service                 = $anthill_report::discovery_service,
   Optional[String] $auth_key_public                   = $anthill_report::auth_key_public,
@@ -64,6 +67,9 @@ define anthill_report::version (
     host                                        => $host,
     domain                                      => $domain,
     ensure                                      => $ensure,
+
+    enable_monitoring                           => $enable_monitoring,
+    monitoring_location                         => $monitoring_location,
 
     internal_broker                             => $internal_broker,
     internal_restrict                           => $internal_restrict,

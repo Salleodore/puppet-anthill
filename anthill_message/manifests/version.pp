@@ -19,6 +19,9 @@ define anthill_message::version (
   Optional[Array[String]] $internal_restrict          = $anthill_message::internal_restrict,
   Optional[Integer] $internal_max_connections         = $anthill_message::internal_max_connections,
 
+  Boolean $enable_monitoring                          = $anthill_message::enable_monitoring,
+  String $monitoring_location                         = $anthill_message::monitoring_location,
+
   String $pubsub_location                             = $anthill_message::pubsub_location,
   Optional[String] $discovery_service                 = $anthill_message::discovery_service,
   Optional[String] $auth_key_public                   = $anthill_message::auth_key_public,
@@ -72,6 +75,9 @@ define anthill_message::version (
     host                                        => $host,
     domain                                      => $domain,
     ensure                                      => $ensure,
+
+    enable_monitoring                           => $enable_monitoring,
+    monitoring_location                         => $monitoring_location,
 
     internal_broker                             => $internal_broker,
     internal_restrict                           => $internal_restrict,
