@@ -2,13 +2,12 @@
 class anthill::monitoring::influxdb::datasource inherits anthill::monitoring::influxdb {
 
   if ($export_grafana_datasource) {
-    $grafana = anthill::ensure_location_new("grafana location", $grafana_location, true)
+    anthill::ensure_location("grafana location", $grafana_location)
 
-    $grafana_host = $grafana["host"]
-    $grafana_port = $grafana["port"]
-
-    $grafana_admin_username = $grafana["admin_username"]
-    $grafana_admin_password = $grafana["admin_password"]
+    $grafana_host = getparam(Anthill::Location[$grafana_location], "host")
+    $grafana_port = getparam(Anthill::Location[$grafana_location], "port")
+    $grafana_admin_username = getparam(Anthill::Location[$grafana_location], "admin_username")
+    $grafana_admin_password = getparam(Anthill::Location[$grafana_location], "admin_password")
 
     @@grafana_datasource { 'influxdb':
       grafana_url      => "http://${grafana_host}:${grafana_port}",

@@ -23,9 +23,9 @@ class anthill::rabbitmq::install inherits anthill::rabbitmq {
 
   class { ::rabbitmq:
     port              => $listen_port,
-    node_ip_address   => $host,
-    management_ip_address => $host,
-    management_port   => $admin_port,
+    node_ip_address   => $listen_host,
+    management_ip_address => $admin_listen_host,
+    management_port   => $admin_listen_port,
     management_ssl    => false,
     admin_enable      => $admin_management,
     delete_guest_user => true,

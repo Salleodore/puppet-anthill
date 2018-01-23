@@ -3,12 +3,12 @@ class anthill::monitoring::grafana::install inherits anthill::monitoring::grafan
 
   if ($redis_backend_location)
   {
-    $redis_backend = anthill::ensure_location_new("redis backend", $redis_backend_location, false)
+    anthill::ensure_location("redis backend", $redis_backend_location)
 
-    if ($redis_backend) {
-      $redis_backend_host = $redis_backend["host"]
-      $redis_backend_port = $redis_backend["port"]
+    $redis_backend_host = getparam(Anthill::Location[$redis_backend_location], "host")
+    $redis_backend_port = getparam(Anthill::Location[$redis_backend_location], "port")
 
+    if ($redis_backend_host and $redis_backend_port) {
       $session = {
         provider        => "redis",
         provider_config => "addr=${redis_backend_host}:${redis_backend_port},pool_size=100,prefix=grafana"
@@ -21,10 +21,10 @@ class anthill::monitoring::grafana::install inherits anthill::monitoring::grafan
     $session = {}
   }
 
-  $mysql_backend = anthill::ensure_location_new("mysql backend", $mysql_backend_location, true)
+  anthill::ensure_location("mysql backend", $mysql_backend_location)
 
-  $mysql_backend_host = $mysql_backend["host"]
-  $mysql_backend_port = $mysql_backend["port"]
+  $mysql_backend_host = getparam(Anthill::Location[$mysql_backend_location], "host")
+  $mysql_backend_port = getparam(Anthill::Location[$mysql_backend_location], "port")
 
   class { ::grafana:
     cfg => {

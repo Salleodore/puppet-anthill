@@ -5,9 +5,9 @@ class anthill::monitoring::collectd::plugins inherits anthill::monitoring::colle
     ensure => $ensure,
   }
 
-  $influxdb = anthill::ensure_location_new("influxdb", $influxdb_location, true)
+  anthill::ensure_location("influxdb", $influxdb_location)
 
-  $influxdb_host = $influxdb["host"]
+  $influxdb_host = getparam(Anthill::Location[$influxdb_location], "host")
 
   collectd::plugin::network::server { $influxdb_host:
     ensure => $ensure,
@@ -91,7 +91,7 @@ class anthill::monitoring::collectd::plugins inherits anthill::monitoring::colle
           'Username' => $anthill::rabbitmq::admin_username,
           'Password' => $anthill::rabbitmq::admin_password,
           'Scheme'   => 'http',
-          'Port'     => "${anthill::rabbitmq::admin_listen_port}",
+          'Port'     => "$anthill::rabbitmq::admin_listen_port",
           'Host'     => $anthill::rabbitmq::admin_listen_host,
           'Realm'    => '"RabbitMQ Management"',
         },
