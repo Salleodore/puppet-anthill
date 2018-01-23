@@ -16,9 +16,6 @@ define anthill_dlc::version (
   Integer $cache_max_connections                      = $anthill_dlc::cache_max_connections,
   Integer $cache_db                                   = $anthill_dlc::cache_db,
 
-  Boolean $enable_monitoring                          = $anthill_dlc::enable_monitoring,
-  String $monitoring_location                         = $anthill_dlc::monitoring_location,
-
   String $data_location                               = $anthill_dlc::data_location,
   String $data_host_location                          = $anthill_dlc::data_host_location,
 
@@ -81,9 +78,6 @@ define anthill_dlc::version (
     host                                        => $host,
     domain                                      => $domain,
     ensure                                      => $ensure,
-
-    enable_monitoring                           => $enable_monitoring,
-    monitoring_location                         => $monitoring_location,
 
     internal_broker                             => $internal_broker,
     internal_restrict                           => $internal_restrict,

@@ -21,9 +21,6 @@ class anthill_dlc (
   Integer $cache_db                             = $anthill_dlc::params::cache_db,
   Integer $cache_max_connections                = $anthill_dlc::params::cache_max_connections,
 
-  Boolean $enable_monitoring                    = $anthill_dlc::params::enable_monitoring,
-  String $monitoring_location                   = $anthill_dlc::params::monitoring_location,
-
   String $internal_broker_location              = $anthill_dlc::params::internal_broker_location,
   String $pubsub_location                       = $anthill_dlc::params::pubsub_location,
 

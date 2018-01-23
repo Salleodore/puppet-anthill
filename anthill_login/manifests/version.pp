@@ -20,9 +20,6 @@ define anthill_login::version (
   Integer $cache_max_connections                      = $anthill_login::cache_max_connections,
   Integer $cache_db                                   = $anthill_login::cache_db,
 
-  Boolean $enable_monitoring                          = $anthill_login::enable_monitoring,
-  String $monitoring_location                         = $anthill_login::monitoring_location,
-
   String $application_keys_secret                     = $anthill_login::application_keys_secret,
   String $auth_key_private                            = $anthill_login::auth_key_private,
   String $auth_key_private_passphrase                 = $anthill_login::auth_key_private_passphrase,
@@ -96,9 +93,6 @@ define anthill_login::version (
     host                                        => $host,
     domain                                      => $domain,
     ensure                                      => $ensure,
-
-    enable_monitoring                           => $enable_monitoring,
-    monitoring_location                         => $monitoring_location,
 
     internal_broker                             => $internal_broker,
     internal_restrict                           => $internal_restrict,

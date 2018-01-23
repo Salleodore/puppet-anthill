@@ -17,9 +17,6 @@ class anthill_profile (
   Integer $token_cache_db                       = $anthill_profile::params::token_cache_db,
   Integer $token_cache_max_connections          = $anthill_profile::params::token_cache_max_connections,
 
-  Boolean $enable_monitoring                    = $anthill_profile::params::enable_monitoring,
-  String $monitoring_location                   = $anthill_profile::params::monitoring_location,
-
   String $internal_broker_location              = $anthill_profile::params::internal_broker_location,
   String $pubsub_location                       = $anthill_profile::params::pubsub_location,
 

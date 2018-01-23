@@ -25,9 +25,6 @@ class anthill_login (
   Integer $cache_db                             = $anthill_login::params::cache_db,
   Integer $cache_max_connections                = $anthill_login::params::cache_max_connections,
 
-  Boolean $enable_monitoring                    = $anthill_login::params::enable_monitoring,
-  String $monitoring_location                   = $anthill_login::params::monitoring_location,
-
   String $application_keys_secret               = $anthill_login::params::application_keys_secret,
   String $auth_key_private                      = $anthill_login::params::auth_key_private,
   String $auth_key_private_passphrase           = $anthill_login::params::auth_key_private_passphrase,

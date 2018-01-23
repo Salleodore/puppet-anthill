@@ -15,9 +15,6 @@ class anthill_game_controller::params {
   $token_cache_max_connections = $anthill::redis_default_max_connections
   $token_cache_db = 4
 
-  $enable_monitoring = $anthill::services_enable_monitoring
-  $monitoring_location = "influxdb-${hostname}"
-
   $gs_host = "${service_name}-${environment}.${anthill::external_domain_name}"
 
   $internal_broker_location = "rabbitmq-${hostname}"

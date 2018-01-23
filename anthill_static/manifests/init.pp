@@ -21,9 +21,6 @@ class anthill_static (
   Integer $rate_cache_db                        = $anthill_static::params::rate_cache_db,
   Integer $rate_cache_max_connections           = $anthill_static::params::rate_cache_max_connections,
 
-  Boolean $enable_monitoring                    = $anthill_static::params::enable_monitoring,
-  String $monitoring_location                   = $anthill_static::params::monitoring_location,
-
   String $internal_broker_location              = $anthill_static::params::internal_broker_location,
   String $pubsub_location                       = $anthill_static::params::pubsub_location,
 
