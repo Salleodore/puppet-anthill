@@ -3,7 +3,7 @@ class anthill_market::params {
 
   $service_name = "market"
 
-  $repository_remote_url = "https://github.com/Salleodore/BFServer-anthill-market.git"
+  $repository_remote_url = "https://github.com/anthill-platform/anthill-market.git"
   $source_directory = "${anthill::sources_location}/${service_name}"
 
   $db_location = "mysql-${hostname}"
@@ -16,9 +16,6 @@ class anthill_market::params {
   $cache_location = "redis-${hostname}"
   $cache_max_connections = $anthill::redis_default_max_connections
   $cache_db = 2
-
-  $enable_monitoring = $anthill::services_enable_monitoring
-  $monitoring_location = "influxdb-${hostname}"
 
   $internal_broker_location = "rabbitmq-${hostname}"
   $pubsub_location = "rabbitmq-${hostname}"

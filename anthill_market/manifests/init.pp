@@ -21,9 +21,6 @@ class anthill_market (
   Integer $cache_db                             = $anthill_market::params::cache_db,
   Integer $cache_max_connections                = $anthill_market::params::cache_max_connections,
 
-  Boolean $enable_monitoring                    = $anthill_market::params::enable_monitoring,
-  String $monitoring_location                   = $anthill_market::params::monitoring_location,
-
   String $internal_broker_location              = $anthill_market::params::internal_broker_location,
   String $pubsub_location                       = $anthill_market::params::pubsub_location,
 
