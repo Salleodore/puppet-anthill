@@ -21,6 +21,9 @@ class anthill_admin (
   Integer $cache_db                             = $anthill_admin::params::cache_db,
   Integer $cache_max_connections                = $anthill_admin::params::cache_max_connections,
 
+  Boolean $enable_monitoring                    = $anthill_admin::params::enable_monitoring,
+  String $monitoring_location                   = $anthill_admin::params::monitoring_location,
+
   String $internal_broker_location              = $anthill_admin::params::internal_broker_location,
   String $pubsub_location                       = $anthill_admin::params::pubsub_location,
 

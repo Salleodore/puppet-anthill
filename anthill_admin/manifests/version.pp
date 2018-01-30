@@ -16,6 +16,9 @@ define anthill_admin::version (
   Integer $cache_max_connections                      = $anthill_admin::cache_max_connections,
   Integer $cache_db                                   = $anthill_admin::cache_db,
 
+  Boolean $enable_monitoring                          = $anthill_admin::enable_monitoring,
+  String $monitoring_location                         = $anthill_admin::monitoring_location,
+
   Optional[String] $host                              = $anthill_admin::host,
   Optional[String] $domain                            = $anthill_admin::domain,
 
@@ -73,6 +76,9 @@ define anthill_admin::version (
     host                                        => $host,
     domain                                      => $domain,
     ensure                                      => $ensure,
+
+    enable_monitoring                           => $enable_monitoring,
+    monitoring_location                         => $monitoring_location,
 
     internal_broker                             => $internal_broker,
     internal_restrict                           => $internal_restrict,
