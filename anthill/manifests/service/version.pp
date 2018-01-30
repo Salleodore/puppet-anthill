@@ -119,11 +119,12 @@ define anthill::service::version (
 
   if ($enable_monitoring) {
      anthill::ensure_location("influxdb location", $monitoring_location)
+
      $monitoring_host = getparam(Anthill::Location[$monitoring_location], "host")
      $monitoring_port = getparam(Anthill::Location[$monitoring_location], "port")
      $monitoring_username = getparam(Anthill::Location[$monitoring_location], "username")
      $monitoring_password = getparam(Anthill::Location[$monitoring_location], "password")
-     $monitoring_db = getparam(Anthill::Location[$monitoring_location], "other")["db"]
+     $monitoring_db = getparam(Anthill::Location[$monitoring_location], "db")
    } else {
      $monitoring_host = ""
      $monitoring_port = "0"
