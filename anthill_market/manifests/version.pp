@@ -16,6 +16,9 @@ define anthill_market::version (
   Integer $cache_max_connections                      = $anthill_market::cache_max_connections,
   Integer $cache_db                                   = $anthill_market::cache_db,
 
+  Boolean $enable_monitoring                          = $anthill_market::enable_monitoring,
+  String $monitoring_location                         = $anthill_market::monitoring_location,
+
   Optional[String] $host                              = $anthill_market::host,
   Optional[String] $domain                            = $anthill_market::domain,
 
@@ -73,6 +76,9 @@ define anthill_market::version (
     host                                        => $host,
     domain                                      => $domain,
     ensure                                      => $ensure,
+
+    enable_monitoring                           => $enable_monitoring,
+    monitoring_location                         => $monitoring_location,
 
     internal_broker                             => $internal_broker,
     internal_restrict                           => $internal_restrict,

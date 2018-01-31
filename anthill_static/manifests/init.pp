@@ -27,6 +27,9 @@ class anthill_static (
   Array[Integer] $rate_file_upload              = $anthill_static::params::rate_file_upload,
   Integer $max_file_size                        = $anthill_static::params::max_file_size,
 
+  Boolean $enable_monitoring                    = $anthill_static::params::enable_monitoring,
+  String $monitoring_location                   = $anthill_static::params::monitoring_location,
+
   Optional[String] $discovery_service           = undef,
   Optional[String] $host                        = undef,
   Optional[String] $domain                      = undef,

@@ -22,6 +22,9 @@ define anthill_static::version (
   Optional[String] $host                              = $anthill_static::host,
   Optional[String] $domain                            = $anthill_static::domain,
 
+  Boolean $enable_monitoring                          = $anthill_static::enable_monitoring,
+  String $monitoring_location                         = $anthill_static::monitoring_location,
+
   String $internal_broker_location                    = $anthill_static::internal_broker_location,
   Optional[Array[String]] $internal_restrict          = $anthill_static::internal_restrict,
   Optional[Integer] $internal_max_connections         = $anthill_static::internal_max_connections,
@@ -81,6 +84,9 @@ define anthill_static::version (
     host                                        => $host,
     domain                                      => $domain,
     ensure                                      => $ensure,
+
+    enable_monitoring                           => $enable_monitoring,
+    monitoring_location                         => $monitoring_location,
 
     internal_broker                             => $internal_broker,
     internal_restrict                           => $internal_restrict,

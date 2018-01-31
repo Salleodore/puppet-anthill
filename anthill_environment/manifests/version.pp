@@ -15,6 +15,9 @@ define anthill_environment::version (
   Optional[String] $host                              = $anthill_environment::host,
   Optional[String] $domain                            = $anthill_environment::domain,
 
+  Boolean $enable_monitoring                          = $anthill_environment::enable_monitoring,
+  String $monitoring_location                         = $anthill_environment::monitoring_location,
+
   String $internal_broker_location                    = $anthill_environment::internal_broker_location,
   Optional[Array[String]] $internal_restrict          = $anthill_environment::internal_restrict,
   Optional[Integer] $internal_max_connections         = $anthill_environment::internal_max_connections,
@@ -64,6 +67,9 @@ define anthill_environment::version (
     host                                        => $host,
     domain                                      => $domain,
     ensure                                      => $ensure,
+
+    enable_monitoring                           => $enable_monitoring,
+    monitoring_location                         => $monitoring_location,
 
     internal_broker                             => $internal_broker,
     internal_restrict                           => $internal_restrict,

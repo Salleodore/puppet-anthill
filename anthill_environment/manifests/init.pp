@@ -17,6 +17,9 @@ class anthill_environment (
   Integer $token_cache_db                       = $anthill_environment::params::token_cache_db,
   Integer $token_cache_max_connections          = $anthill_environment::params::token_cache_max_connections,
 
+  Boolean $enable_monitoring                    = $anthill_environment::params::enable_monitoring,
+  String $monitoring_location                   = $anthill_environment::params::monitoring_location,
+
   String $internal_broker_location              = $anthill_environment::params::internal_broker_location,
   String $pubsub_location                       = $anthill_environment::params::pubsub_location,
 

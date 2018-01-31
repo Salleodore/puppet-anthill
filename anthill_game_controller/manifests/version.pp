@@ -15,6 +15,9 @@ define anthill_game_controller::version (
   Integer $token_cache_max_connections                = $anthill_game_controller::token_cache_max_connections,
   Integer $token_cache_db                             = $anthill_game_controller::token_cache_db,
 
+  Boolean $enable_monitoring                          = $anthill_game_controller::enable_monitoring,
+  String $monitoring_location                         = $anthill_game_controller::monitoring_location,
+
   Optional[String] $host                              = $anthill_game_controller::host,
   Optional[String] $domain                            = $anthill_game_controller::domain,
 
@@ -73,6 +76,9 @@ define anthill_game_controller::version (
     host                                        => $host,
     domain                                      => $domain,
     ensure                                      => $ensure,
+
+    enable_monitoring                           => $enable_monitoring,
+    monitoring_location                         => $monitoring_location,
 
     internal_broker                             => $internal_broker,
     internal_restrict                           => $internal_restrict,
