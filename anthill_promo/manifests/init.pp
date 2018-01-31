@@ -17,9 +17,6 @@ class anthill_promo (
   Integer $token_cache_db                       = $anthill_promo::params::token_cache_db,
   Integer $token_cache_max_connections          = $anthill_promo::params::token_cache_max_connections,
 
-  Boolean $enable_monitoring                    = $anthill_promo::params::enable_monitoring,
-  String $monitoring_location                   = $anthill_promo::params::monitoring_location,
-
   String $internal_broker_location              = $anthill_promo::params::internal_broker_location,
   String $pubsub_location                       = $anthill_promo::params::pubsub_location,
 

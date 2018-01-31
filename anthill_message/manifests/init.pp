@@ -17,9 +17,6 @@ class anthill_message (
   Integer $token_cache_db                       = $anthill_message::params::token_cache_db,
   Integer $token_cache_max_connections          = $anthill_message::params::token_cache_max_connections,
 
-  Boolean $enable_monitoring                    = $anthill_message::params::enable_monitoring,
-  String $monitoring_location                   = $anthill_message::params::monitoring_location,
-
   String $internal_broker_location              = $anthill_message::params::internal_broker_location,
   String $pubsub_location                       = $anthill_message::params::pubsub_location,
   String $message_broker_location               = $anthill_message::params::message_broker_location,

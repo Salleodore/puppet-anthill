@@ -19,9 +19,6 @@ define anthill_game_master::version (
 
   String $party_broker_location                       = $anthill_game_master::party_broker_location,
 
-  Boolean $enable_monitoring                          = $anthill_game_master::enable_monitoring,
-  String $monitoring_location                         = $anthill_game_master::monitoring_location,
-
   Optional[String] $host                              = $anthill_game_master::host,
   Optional[String] $domain                            = $anthill_game_master::domain,
 
@@ -84,9 +81,6 @@ define anthill_game_master::version (
     host                                        => $host,
     domain                                      => $domain,
     ensure                                      => $ensure,
-
-    enable_monitoring                           => $enable_monitoring,
-    monitoring_location                         => $monitoring_location,
 
     internal_broker                             => $internal_broker,
     internal_restrict                           => $internal_restrict,

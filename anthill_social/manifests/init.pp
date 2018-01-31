@@ -21,9 +21,6 @@ class anthill_social (
   Integer $cache_db                             = $anthill_social::params::cache_db,
   Integer $cache_max_connections                = $anthill_social::params::cache_max_connections,
 
-  Boolean $enable_monitoring                    = $anthill_social::params::enable_monitoring,
-  String $monitoring_location                   = $anthill_social::params::monitoring_location,
-
   String $internal_broker_location              = $anthill_social::params::internal_broker_location,
   String $pubsub_location                       = $anthill_social::params::pubsub_location,
 

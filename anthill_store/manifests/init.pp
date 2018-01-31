@@ -20,9 +20,6 @@ class anthill_store (
   Integer $cache_db                             = $anthill_store::params::cache_db,
   Integer $cache_max_connections                = $anthill_store::params::cache_max_connections,
 
-  Boolean $enable_monitoring                    = $anthill_store::params::enable_monitoring,
-  String $monitoring_location                   = $anthill_store::params::monitoring_location,
-
   String $internal_broker_location              = $anthill_store::params::internal_broker_location,
   String $pubsub_location                       = $anthill_store::params::pubsub_location,
 

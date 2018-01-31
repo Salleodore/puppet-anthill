@@ -16,9 +16,6 @@ define anthill_event::version (
   Integer $cache_max_connections                      = $anthill_event::cache_max_connections,
   Integer $cache_db                                   = $anthill_event::cache_db,
 
-  Boolean $enable_monitoring                          = $anthill_event::enable_monitoring,
-  String $monitoring_location                         = $anthill_event::monitoring_location,
-
   Optional[String] $host                              = $anthill_event::host,
   Optional[String] $domain                            = $anthill_event::domain,
 
@@ -76,9 +73,6 @@ define anthill_event::version (
     host                                        => $host,
     domain                                      => $domain,
     ensure                                      => $ensure,
-
-    enable_monitoring                           => $enable_monitoring,
-    monitoring_location                         => $monitoring_location,
 
     internal_broker                             => $internal_broker,
     internal_restrict                           => $internal_restrict,

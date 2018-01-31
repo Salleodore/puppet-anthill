@@ -14,9 +14,6 @@ define anthill_discovery::version (
   Integer $token_cache_max_connections                = $anthill_discovery::token_cache_max_connections,
   Integer $token_cache_db                             = $anthill_discovery::token_cache_db,
 
-  Boolean $enable_monitoring                          = $anthill_discovery::enable_monitoring,
-  String $monitoring_location                         = $anthill_discovery::monitoring_location,
-
   Optional[String] $host                              = $anthill_discovery::host,
   Optional[String] $domain                            = $anthill_discovery::domain,
 
@@ -67,9 +64,6 @@ define anthill_discovery::version (
     host                                        => $host,
     domain                                      => $domain,
     ensure                                      => $ensure,
-
-    enable_monitoring                           => $enable_monitoring,
-    monitoring_location                         => $monitoring_location,
 
     internal_broker                             => $internal_broker,
     internal_restrict                           => $internal_restrict,
