@@ -19,6 +19,9 @@ define anthill_exec::version (
   String $js_source_path                              = $anthill_exec::js_source_path,
   Integer $js_call_timeout                            = $anthill_exec::js_call_timeout,
 
+  Boolean $enable_monitoring                          = $anthill_exec::enable_monitoring,
+  String $monitoring_location                         = $anthill_exec::monitoring_location,
+
   Optional[String] $host                              = $anthill_exec::host,
   Optional[String] $domain                            = $anthill_exec::domain,
 
@@ -79,6 +82,9 @@ define anthill_exec::version (
     host                                        => $host,
     domain                                      => $domain,
     ensure                                      => $ensure,
+
+    enable_monitoring                           => $enable_monitoring,
+    monitoring_location                         => $monitoring_location,
 
     internal_broker                             => $internal_broker,
     internal_restrict                           => $internal_restrict,

@@ -17,6 +17,9 @@ class anthill_leaderboard (
   Integer $token_cache_db                       = $anthill_leaderboard::params::token_cache_db,
   Integer $token_cache_max_connections          = $anthill_leaderboard::params::token_cache_max_connections,
 
+  Boolean $enable_monitoring                    = $anthill_leaderboard::params::enable_monitoring,
+  String $monitoring_location                   = $anthill_leaderboard::params::monitoring_location,
+
   String $internal_broker_location              = $anthill_leaderboard::params::internal_broker_location,
   String $pubsub_location                       = $anthill_leaderboard::params::pubsub_location,
 

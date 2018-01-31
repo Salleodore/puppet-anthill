@@ -17,6 +17,9 @@ class anthill_report (
   Integer $token_cache_db                       = $anthill_report::params::token_cache_db,
   Integer $token_cache_max_connections          = $anthill_report::params::token_cache_max_connections,
 
+  Boolean $enable_monitoring                    = $anthill_report::params::enable_monitoring,
+  String $monitoring_location                   = $anthill_report::params::monitoring_location,
+
   String $internal_broker_location              = $anthill_report::params::internal_broker_location,
   String $pubsub_location                       = $anthill_report::params::pubsub_location,
 

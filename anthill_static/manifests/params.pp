@@ -17,6 +17,9 @@ class anthill_static::params {
   $rate_cache_max_connections = $anthill::redis_default_max_connections
   $rate_cache_db = 5
 
+  $enable_monitoring = $anthill::services_enable_monitoring
+  $monitoring_location = $anthill::services_monitoring_location
+
   $internal_broker_location = "rabbitmq-${hostname}"
   $pubsub_location = "rabbitmq-${hostname}"
 

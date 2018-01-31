@@ -23,6 +23,9 @@ class anthill_game_master (
   Integer $cache_db                             = $anthill_game_master::params::cache_db,
   Integer $cache_max_connections                = $anthill_game_master::params::cache_max_connections,
 
+  Boolean $enable_monitoring                    = $anthill_game_master::params::enable_monitoring,
+  String $monitoring_location                   = $anthill_game_master::params::monitoring_location,
+
   String $party_broker_location                 = $anthill_game_master::params::party_broker_location,
 
   String $internal_broker_location              = $anthill_game_master::params::internal_broker_location,
