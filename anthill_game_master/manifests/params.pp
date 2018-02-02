@@ -19,6 +19,10 @@ class anthill_game_master::params {
   $cache_max_connections = $anthill::redis_default_max_connections
   $cache_db = 2
 
+  $rate_cache_location = "redis-${hostname}"
+  $rate_cache_max_connections = $anthill::redis_default_max_connections
+  $rate_cache_db = 5
+
   $enable_monitoring = $anthill::services_enable_monitoring
   $monitoring_location = $anthill::services_monitoring_location
 

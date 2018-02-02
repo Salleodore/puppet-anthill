@@ -23,6 +23,10 @@ class anthill_game_master (
   Integer $cache_db                             = $anthill_game_master::params::cache_db,
   Integer $cache_max_connections                = $anthill_game_master::params::cache_max_connections,
 
+  String $rate_cache_location                   = $anthill_game_master::params::rate_cache_location,
+  Integer $rate_cache_db                        = $anthill_game_master::params::rate_cache_db,
+  Integer $rate_cache_max_connections           = $anthill_game_master::params::rate_cache_max_connections,
+
   Boolean $enable_monitoring                    = $anthill_game_master::params::enable_monitoring,
   String $monitoring_location                   = $anthill_game_master::params::monitoring_location,
 

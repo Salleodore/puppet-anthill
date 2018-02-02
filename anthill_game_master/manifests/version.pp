@@ -17,6 +17,10 @@ define anthill_game_master::version (
   Integer $cache_max_connections                      = $anthill_game_master::cache_max_connections,
   Integer $cache_db                                   = $anthill_game_master::cache_db,
 
+  String $rate_cache_location                         = $anthill_static::rate_cache_location,
+  Integer $rate_cache_max_connections                 = $anthill_static::rate_cache_max_connections,
+  Integer $rate_cache_db                              = $anthill_static::rate_cache_db,
+
   String $party_broker_location                       = $anthill_game_master::party_broker_location,
 
   Boolean $enable_monitoring                          = $anthill_game_master::enable_monitoring,
@@ -44,6 +48,7 @@ define anthill_game_master::version (
   anthill::ensure_location("mysql database", $db_location)
   anthill::ensure_location("token cache redis", $token_cache_location)
   anthill::ensure_location("cache redis", $cache_location)
+  anthill::ensure_location("rate limits redis", $rate_cache_location)
   anthill::ensure_location("internal broker", $internal_broker_location)
   anthill::ensure_location("party broker", $party_broker_location)
   anthill::ensure_location("pubsub", $pubsub_location)
@@ -56,14 +61,21 @@ define anthill_game_master::version (
     "db_host" => getparam(Anthill::Location[$db_location], "host"),
     "db_username" => getparam(Anthill::Location[$db_location], "username"),
     "db_name" => $db_name,
+
     "token_cache_host" => getparam(Anthill::Location[$token_cache_location], "host"),
     "token_cache_port" => getparam(Anthill::Location[$token_cache_location], "port"),
     "token_cache_max_connections" => $token_cache_max_connections,
     "token_cache_db" => $token_cache_db,
+
     "cache_host" => getparam(Anthill::Location[$cache_location], "host"),
     "cache_port" => getparam(Anthill::Location[$cache_location], "port"),
     "cache_max_connections" => $cache_max_connections,
     "cache_db" => $cache_db,
+
+    "rate_cache_host" => getparam(Anthill::Location[$rate_cache_location], "host"),
+    "rate_cache_port" => getparam(Anthill::Location[$rate_cache_location], "port"),
+    "rate_cache_max_connections" => $rate_cache_max_connections,
+    "rate_cache_db" => $rate_cache_db,
 
     "party_broker" => $party_broker,
     "deployments_location" => $deployments_directory
