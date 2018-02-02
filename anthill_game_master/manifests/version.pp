@@ -17,9 +17,9 @@ define anthill_game_master::version (
   Integer $cache_max_connections                      = $anthill_game_master::cache_max_connections,
   Integer $cache_db                                   = $anthill_game_master::cache_db,
 
-  String $rate_cache_location                         = $anthill_static::rate_cache_location,
-  Integer $rate_cache_max_connections                 = $anthill_static::rate_cache_max_connections,
-  Integer $rate_cache_db                              = $anthill_static::rate_cache_db,
+  String $rate_cache_location                         = $anthill_game_master::rate_cache_location,
+  Integer $rate_cache_max_connections                 = $anthill_game_master::rate_cache_max_connections,
+  Integer $rate_cache_db                              = $anthill_game_master::rate_cache_db,
 
   String $party_broker_location                       = $anthill_game_master::party_broker_location,
 
