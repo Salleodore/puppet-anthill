@@ -21,6 +21,10 @@ class anthill_game_controller (
   Integer $token_cache_db                       = $anthill_game_controller::params::token_cache_db,
   Integer $token_cache_max_connections          = $anthill_game_controller::params::token_cache_max_connections,
 
+  String $cache_location                        = $anthill_game_controller::params::cache_location,
+  Integer $cache_db                             = $anthill_game_controller::params::cache_db,
+  Integer $cache_max_connections                = $anthill_game_controller::params::cache_max_connections,
+
   Boolean $enable_monitoring                    = $anthill_game_controller::params::enable_monitoring,
   String $monitoring_location                   = $anthill_game_controller::params::monitoring_location,
 

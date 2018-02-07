@@ -15,6 +15,10 @@ define anthill_game_controller::version (
   Integer $token_cache_max_connections                = $anthill_game_controller::token_cache_max_connections,
   Integer $token_cache_db                             = $anthill_game_controller::token_cache_db,
 
+  String $cache_location                              = $anthill_store::cache_location,
+  Integer $cache_max_connections                      = $anthill_store::cache_max_connections,
+  Integer $cache_db                                   = $anthill_store::cache_db,
+
   Boolean $enable_monitoring                          = $anthill_game_controller::enable_monitoring,
   String $monitoring_location                         = $anthill_game_controller::monitoring_location,
 
@@ -42,6 +46,7 @@ define anthill_game_controller::version (
   }
 
   anthill::ensure_location("token cache redis", $token_cache_location)
+  anthill::ensure_location("cache redis", $cache_location)
   anthill::ensure_location("internal broker", $internal_broker_location)
   anthill::ensure_location("pubsub", $pubsub_location)
 
@@ -60,6 +65,11 @@ define anthill_game_controller::version (
     "token_cache_port" => getparam(Anthill::Location[$token_cache_location], "port"),
     "token_cache_max_connections" => $token_cache_max_connections,
     "token_cache_db" => $token_cache_db,
+
+    "cache_host" => getparam(Anthill::Location[$cache_location], "host"),
+    "cache_port" => getparam(Anthill::Location[$cache_location], "port"),
+    "cache_max_connections" => $cache_max_connections,
+    "cache_db" => $cache_db
   }
 
   $application_environment = {
