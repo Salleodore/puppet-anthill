@@ -1,7 +1,7 @@
 
 class anthill::monitoring::collectd (
 
-  Enum[present, absent] $ensure                       = present,
+  Enum[present, absent]$ensure                        = present,
   String $influxdb_location                           = $anthill::monitoring::collectd::params::influxdb_location,
   Integer $influxdb_collectd_port                     = $anthill::monitoring::collectd::params::influxdb_collectd_port,
 

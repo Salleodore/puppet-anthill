@@ -8,16 +8,12 @@ class anthill::monitoring::grafana::install inherits anthill::monitoring::grafan
     $redis_backend_host = getparam(Anthill::Location[$redis_backend_location], "host")
     $redis_backend_port = getparam(Anthill::Location[$redis_backend_location], "port")
 
-    if ($redis_backend_host and $redis_backend_port) {
-      $session = {
-        provider        => "redis",
-        provider_config => "addr=${redis_backend_host}:${redis_backend_port},pool_size=100,prefix=grafana"
-      }
-    } else {
-      $session = {}
+    $session = {
+      provider => "redis",
+      provider_config => "addr=${redis_backend_host}:${redis_backend_port},pool_size=100,prefix=grafana"
     }
-
-  } else {
+  }
+  else {
     $session = {}
   }
 
@@ -32,7 +28,6 @@ class anthill::monitoring::grafana::install inherits anthill::monitoring::grafan
       server   => {
         http_addr     => $listen_host,
         http_port     => $listen_port,
-        root_url => "${anthill::protocol}://grafana-${environment}.${anthill::external_domain_name}"
       },
       database => {
         url => "mysql://${mysql_backend_username}:${mysql_backend_password}@${mysql_backend_host}:${mysql_backend_port}/${mysql_backend_db}"

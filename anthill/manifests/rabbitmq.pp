@@ -11,11 +11,8 @@ class anthill::rabbitmq (
   String $password                          = $anthill::rabbitmq::params::password,
 
   Boolean $admin_management                 = $anthill::rabbitmq::params::admin_management,
-
-  Integer $admin_port                       = $anthill::rabbitmq::params::admin_port,
   String $admin_listen_host                 = $anthill::rabbitmq::params::admin_listen_host,
   Integer $admin_listen_port                = $anthill::rabbitmq::params::admin_listen_port,
-
   String $admin_username                    = $anthill::rabbitmq::params::admin_username,
   String $admin_password                    = $anthill::rabbitmq::params::admin_password
 

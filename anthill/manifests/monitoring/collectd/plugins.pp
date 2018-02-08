@@ -16,7 +16,7 @@ class anthill::monitoring::collectd::plugins inherits anthill::monitoring::colle
 
   class { collectd::plugin::memory:
     ensure => $report_memory ? { true => present, default => absent },
-    valuesabsolute => false,
+    valuesabsolute => true,
     valuespercentage => true
   }
 
@@ -91,7 +91,7 @@ class anthill::monitoring::collectd::plugins inherits anthill::monitoring::colle
           'Username' => $anthill::rabbitmq::admin_username,
           'Password' => $anthill::rabbitmq::admin_password,
           'Scheme'   => 'http',
-          'Port'     => "$anthill::rabbitmq::admin_listen_port",
+          'Port'     => "${anthill::rabbitmq::admin_listen_port}",
           'Host'     => $anthill::rabbitmq::admin_listen_host,
           'Realm'    => '"RabbitMQ Management"',
         },

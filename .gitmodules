@@ -25,7 +25,6 @@
 [submodule "git"]
 	path = git
 	url = https://github.com/puppetlabs/puppetlabs-git.git
-
 [submodule "hash_resources"]
 	path = hash_resources
 	url = https://github.com/stbenjam/puppet-hash_resources.git
@@ -74,18 +73,15 @@
 [submodule "ulimit"]
 	path = ulimit
 	url = https://github.com/arioch/puppet-ulimit.git
-[submodule "mysql"]
-	path = mysql
-	url = https://github.com/anthill-utils/puppetlabs-mysql.git
 [submodule "grafana"]
 	path = grafana
 	url = https://github.com/voxpupuli/puppet-grafana.git
+[submodule "mysql"]
+	path = mysql
+	url = https://github.com/anthill-utils/puppetlabs-mysql.git
 [submodule "collectd"]
 	path = collectd
 	url = https://github.com/voxpupuli/puppet-collectd.git
 [submodule "influxdb"]
 	path = influxdb
 	url = https://github.com/anthill-utils/golja-influxdb.git
-[submodule "puppetdbquery"]
-	path = puppetdbquery
-	url = https://github.com/dalen/puppet-puppetdbquery.git

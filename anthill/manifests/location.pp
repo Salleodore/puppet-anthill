@@ -5,7 +5,7 @@ define anthill::location (
   $username = undef,
   $password = undef,
   $environment = undef,
-  $db = undef
+  $other = {}
 ) {
 
 }

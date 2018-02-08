@@ -1,8 +1,6 @@
 
 class anthill::rabbitmq::install inherits anthill::rabbitmq {
 
-  $host = anthill::local_ip_address()
-
   if ($::operatingsystem == 'Debian' and $::operatingsystemmajrelease == '8')
   {
     apt::source { 'debian_8_erlang':
@@ -91,7 +89,7 @@ class anthill::rabbitmq::install inherits anthill::rabbitmq {
       location             => "/",
       server               => "${environment}_rabbitmq",
       rewrite_rules        => [],
-      proxy                => "http://${host}:${admin_port}",
+      proxy                => "http://${admin_listen_host}:${admin_listen_port}",
       proxy_buffering      => 'off',
 
       ssl => $anthill::nginx::ssl

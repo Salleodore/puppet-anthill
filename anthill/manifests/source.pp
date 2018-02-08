@@ -24,12 +24,15 @@ define anthill::source (
     force => true,
     trust_server_cert => true,
     identity => $ssh_identity
-  } -> exec { "update_source_${repository_local_directory}":
+  }
+
+  exec { "update_source_${repository_local_directory}":
     command => "${git_update_environment} /usr/bin/git remote update --prune",
     cwd => $repository_local_directory,
     timeout => 1800,
     user => $anthill::applications_user,
-    provider => shell
+    provider => shell,
+    refreshonly => true
   }
 
   if ($anthill::keys::ssh_private_key) {
@@ -63,17 +66,24 @@ define anthill::checkout_version (
       group  => $anthill::applications_group,
       mode   => '0760'
       # check out the source in version-specific directory, but only of the commit has changed
-    } -> exec { "checkout_version_${version_directory}":
+    } -> exec { "check_version_${version_directory}":
+      command   => "/bin/true",
+      user      => $anthill::applications_user,
+      onlyif    => $test_condition
+    }
+
+    exec { "checkout_version_${version_directory}":
       command   => "/usr/bin/git --work-tree=\"${version_directory}/\" checkout ${source_commit} -- .",
       user      => $anthill::applications_user,
       cwd       => $source_directory,
-      onlyif    => $test_condition,
-      logoutput => 'on_failure',
-      require   => Anthill::Source["${environment}_${directory_name}"],
+      refreshonly => true
     } -> file { "${version_directory}/.revision":
       ensure  => file,
       content => $source_commit
     }
+
+    Exec["check_version_${version_directory}"] ~> Anthill::Source["${environment}_${directory_name}"] ~>
+      Exec["checkout_version_${version_directory}"]
   }
   else
   {
