@@ -16,7 +16,7 @@ define anthill_static::version (
   Integer $rate_cache_max_connections                 = $anthill_static::rate_cache_max_connections,
   Integer $rate_cache_db                              = $anthill_static::rate_cache_db,
 
-  Array[Integer] $rate_file_upload                    = $anthill_static::rate_file_upload,
+  String $rate_file_upload                            = $anthill_static::rate_file_upload,
   Integer $max_file_size                              = $anthill_static::max_file_size,
 
   Optional[String] $host                              = $anthill_static::host,
@@ -24,6 +24,8 @@ define anthill_static::version (
 
   Boolean $enable_monitoring                          = $anthill_static::enable_monitoring,
   String $monitoring_location                         = $anthill_static::monitoring_location,
+
+  Boolean $debug                                      = $anthill_static::debug,
 
   String $internal_broker_location                    = $anthill_static::internal_broker_location,
   Optional[Array[String]] $internal_restrict          = $anthill_static::internal_restrict,
@@ -41,27 +43,24 @@ define anthill_static::version (
 
 ) {
 
-  anthill::ensure_location("mysql database", $db_location)
-  anthill::ensure_location("token cache redis", $token_cache_location)
-  anthill::ensure_location("rate limits redis", $rate_cache_location)
-  anthill::ensure_location("internal broker", $internal_broker_location)
-  anthill::ensure_location("pubsub", $pubsub_location)
-
-  $internal_broker = generate_rabbitmq_url(Anthill::Location[$internal_broker_location], $environment)
-  $pubsub = generate_rabbitmq_url(Anthill::Location[$pubsub_location], $environment)
+  $db = anthill::ensure_location("mysql database", $db_location, true)
+  $token_cache = anthill::ensure_location("token cache redis", $token_cache_location, true)
+  $rate_cache = anthill::ensure_location("rate limits redis", $rate_cache_location, true)
+  $internal_broker = generate_rabbitmq_url(anthill::ensure_location("internal broker", $internal_broker_location, true), $environment)
+  $pubsub = generate_rabbitmq_url(anthill::ensure_location("pubsub", $pubsub_location, true), $environment)
 
   $args = {
-    "db_host" => getparam(Anthill::Location[$db_location], "host"),
-    "db_username" => getparam(Anthill::Location[$db_location], "username"),
+    "db_host" => $db["host"],
+    "db_username" => $db["username"],
     "db_name" => $db_name,
 
-    "token_cache_host" => getparam(Anthill::Location[$token_cache_location], "host"),
-    "token_cache_port" => getparam(Anthill::Location[$token_cache_location], "port"),
+    "token_cache_host" => $token_cache["host"],
+    "token_cache_port" => $token_cache["port"],
     "token_cache_max_connections" => $token_cache_max_connections,
     "token_cache_db" => $token_cache_db,
 
-    "rate_cache_host" => getparam(Anthill::Location[$rate_cache_location], "host"),
-    "rate_cache_port" => getparam(Anthill::Location[$rate_cache_location], "port"),
+    "rate_cache_host" => $rate_cache["host"],
+    "rate_cache_port" => $rate_cache["port"],
     "rate_cache_max_connections" => $rate_cache_max_connections,
     "rate_cache_db" => $rate_cache_db,
 
@@ -70,7 +69,7 @@ define anthill_static::version (
   }
 
   $application_environment = {
-    "db_password" => getparam(Anthill::Location[$db_location], "password")
+    "db_password" => $db["password"]
   }
 
   anthill::service::version { "${anthill_static::service_name}_${version}":
@@ -87,6 +86,7 @@ define anthill_static::version (
 
     enable_monitoring                           => $enable_monitoring,
     monitoring_location                         => $monitoring_location,
+    debug                                       => $debug,
 
     internal_broker                             => $internal_broker,
     internal_restrict                           => $internal_restrict,

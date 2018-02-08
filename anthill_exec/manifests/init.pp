@@ -1,7 +1,7 @@
 
 class anthill_exec (
 
-  String $default_version,
+  String $default_version                       = $anthill::default_version,
 
   Enum['present', 'absent'] $ensure             = 'present',
   String $service_name                          = $anthill_exec::params::service_name,
@@ -24,6 +24,8 @@ class anthill_exec (
   Boolean $enable_monitoring                    = $anthill_exec::params::enable_monitoring,
   String $monitoring_location                   = $anthill_exec::params::monitoring_location,
 
+  Boolean $debug                                = $anthill::debug,
+
   String $internal_broker_location              = $anthill_exec::params::internal_broker_location,
   String $pubsub_location                       = $anthill_exec::params::pubsub_location,
 
@@ -42,6 +44,16 @@ class anthill_exec (
   Optional[Array[String]] $whitelist            = undef
 
 ) inherits anthill_exec::params {
+  
+  python::pip { 'v8py':
+    virtualenv => "${anthill::virtualenv_location}/${environment}",
+    url => "git+https://github.com/anthill-utils/v8py.git",
+    timeout => 3600,
+    require => [
+      Python::Virtualenv["${anthill::virtualenv_location}/${environment}"],
+      Package['curl']
+    ]
+  }
 
   require anthill::common
 

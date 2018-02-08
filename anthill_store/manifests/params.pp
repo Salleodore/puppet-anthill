@@ -1,3 +1,4 @@
+
 class anthill_store::params {
 
   $service_name = "store"

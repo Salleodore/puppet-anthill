@@ -1,7 +1,7 @@
 
 class anthill_social (
 
-  String $default_version,
+  String $default_version                       = $anthill::default_version,
 
   Enum['present', 'absent'] $ensure             = 'present',
   String $service_name                          = $anthill_social::params::service_name,
@@ -23,6 +23,8 @@ class anthill_social (
 
   Boolean $enable_monitoring                    = $anthill_social::params::enable_monitoring,
   String $monitoring_location                   = $anthill_social::params::monitoring_location,
+
+  Boolean $debug                                = $anthill::debug,
 
   String $internal_broker_location              = $anthill_social::params::internal_broker_location,
   String $pubsub_location                       = $anthill_social::params::pubsub_location,

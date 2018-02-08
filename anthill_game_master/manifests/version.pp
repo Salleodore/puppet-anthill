@@ -21,10 +21,14 @@ define anthill_game_master::version (
   Integer $rate_cache_max_connections                 = $anthill_game_master::rate_cache_max_connections,
   Integer $rate_cache_db                              = $anthill_game_master::rate_cache_db,
 
+  String $rate_create_room                            = $anthill_game_master::rate_create_room,
+
   String $party_broker_location                       = $anthill_game_master::party_broker_location,
 
   Boolean $enable_monitoring                          = $anthill_game_master::enable_monitoring,
   String $monitoring_location                         = $anthill_game_master::monitoring_location,
+
+  Boolean $debug                                      = $anthill_game_master::debug,
 
   Optional[String] $host                              = $anthill_game_master::host,
   Optional[String] $domain                            = $anthill_game_master::domain,
@@ -45,44 +49,42 @@ define anthill_game_master::version (
 
 ) {
 
-  anthill::ensure_location("mysql database", $db_location)
-  anthill::ensure_location("token cache redis", $token_cache_location)
-  anthill::ensure_location("cache redis", $cache_location)
-  anthill::ensure_location("rate limits redis", $rate_cache_location)
-  anthill::ensure_location("internal broker", $internal_broker_location)
-  anthill::ensure_location("party broker", $party_broker_location)
-  anthill::ensure_location("pubsub", $pubsub_location)
-
-  $internal_broker = generate_rabbitmq_url(Anthill::Location[$internal_broker_location], $environment)
-  $pubsub = generate_rabbitmq_url(Anthill::Location[$pubsub_location], $environment)
-  $party_broker = generate_rabbitmq_url(Anthill::Location[$party_broker_location], $environment)
+  $db = anthill::ensure_location("mysql database", $db_location, true)
+  $token_cache = anthill::ensure_location("token cache redis", $token_cache_location, true)
+  $cache = anthill::ensure_location("cache redis", $cache_location, true)
+  $rate_cache = anthill::ensure_location("ratelimit cache redis", $rate_cache_location, true)
+  $internal_broker = generate_rabbitmq_url(anthill::ensure_location("internal broker", $internal_broker_location, true), $environment)
+  $party_broker = generate_rabbitmq_url(anthill::ensure_location("party broker", $party_broker_location, true), $environment)
+  $pubsub = generate_rabbitmq_url(anthill::ensure_location("pubsub", $pubsub_location, true), $environment)
 
   $args = {
-    "db_host" => getparam(Anthill::Location[$db_location], "host"),
-    "db_username" => getparam(Anthill::Location[$db_location], "username"),
+    "db_host" => $db["host"],
+    "db_username" => $db["username"],
     "db_name" => $db_name,
 
-    "token_cache_host" => getparam(Anthill::Location[$token_cache_location], "host"),
-    "token_cache_port" => getparam(Anthill::Location[$token_cache_location], "port"),
+    "token_cache_host" => $token_cache["host"],
+    "token_cache_port" => $token_cache["port"],
     "token_cache_max_connections" => $token_cache_max_connections,
     "token_cache_db" => $token_cache_db,
 
-    "cache_host" => getparam(Anthill::Location[$cache_location], "host"),
-    "cache_port" => getparam(Anthill::Location[$cache_location], "port"),
+    "cache_host" => $cache["host"],
+    "cache_port" => $cache["port"],
     "cache_max_connections" => $cache_max_connections,
     "cache_db" => $cache_db,
 
-    "rate_cache_host" => getparam(Anthill::Location[$rate_cache_location], "host"),
-    "rate_cache_port" => getparam(Anthill::Location[$rate_cache_location], "port"),
+    "rate_cache_host" => $rate_cache["host"],
+    "rate_cache_port" => $rate_cache["port"],
     "rate_cache_max_connections" => $rate_cache_max_connections,
     "rate_cache_db" => $rate_cache_db,
+
+    "rate_create_room" => $rate_create_room,
 
     "party_broker" => $party_broker,
     "deployments_location" => $deployments_directory
   }
 
   $application_environment = {
-    "db_password" => getparam(Anthill::Location[$db_location], "password")
+    "db_password" => $db["password"]
   }
 
   anthill::service::version { "${anthill_game_master::service_name}_${version}":
@@ -99,6 +101,7 @@ define anthill_game_master::version (
 
     enable_monitoring                           => $enable_monitoring,
     monitoring_location                         => $monitoring_location,
+    debug                                       => $debug,
 
     internal_broker                             => $internal_broker,
     internal_restrict                           => $internal_restrict,

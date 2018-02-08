@@ -9,7 +9,7 @@
 module Puppet::Parser::Functions
   newfunction(:generate_rabbitmq_url, :type => :rvalue) do |args|
 
-    resource = findresource(args[0].to_s)
+    resource = args[0]
 
     username = resource['username']
     password = resource['password']

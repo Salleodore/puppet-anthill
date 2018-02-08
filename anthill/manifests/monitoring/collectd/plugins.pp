@@ -5,9 +5,9 @@ class anthill::monitoring::collectd::plugins inherits anthill::monitoring::colle
     ensure => $ensure,
   }
 
-  anthill::ensure_location("influxdb", $influxdb_location)
+  $influxdb = anthill::ensure_location("influxdb", $influxdb_location, true)
 
-  $influxdb_host = getparam(Anthill::Location[$influxdb_location], "host")
+  $influxdb_host = $influxdb["host"]
 
   collectd::plugin::network::server { $influxdb_host:
     ensure => $ensure,
@@ -16,7 +16,7 @@ class anthill::monitoring::collectd::plugins inherits anthill::monitoring::colle
 
   class { collectd::plugin::memory:
     ensure => $report_memory ? { true => present, default => absent },
-    valuesabsolute => true,
+    valuesabsolute => false,
     valuespercentage => true
   }
 

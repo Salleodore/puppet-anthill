@@ -1,7 +1,7 @@
 
 class anthill_admin (
 
-  String $default_version,
+  String $default_version                       = $anthill::default_version,
 
   Enum['present', 'absent'] $ensure             = 'present',
   String $service_name                          = $anthill_admin::params::service_name,
@@ -24,8 +24,12 @@ class anthill_admin (
   Boolean $enable_monitoring                    = $anthill_admin::params::enable_monitoring,
   String $monitoring_location                   = $anthill_admin::params::monitoring_location,
 
+  Boolean $debug                                = $anthill::debug,
+
   String $internal_broker_location              = $anthill_admin::params::internal_broker_location,
   String $pubsub_location                       = $anthill_admin::params::pubsub_location,
+
+  String $nginx_max_body_size                   = $anthill_admin::params::nginx_max_body_size,
 
   Optional[String] $discovery_service           = undef,
   Optional[String] $host                        = undef,
@@ -52,7 +56,9 @@ class anthill_admin (
     external_domain_name => $external_domain_name,
     internal_domain_name => $internal_domain_name,
     internal_broker_location => $internal_broker_location,
-    whitelist => $whitelist
+    whitelist => $whitelist,
+
+    nginx_max_body_size => $nginx_max_body_size
   }
 
   if ($manage_db)

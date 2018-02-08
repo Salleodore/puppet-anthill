@@ -1,7 +1,7 @@
 
 class anthill_report (
 
-  String $default_version,
+  String $default_version                       = $anthill::default_version,
 
   Enum['present', 'absent'] $ensure             = 'present',
   String $service_name                          = $anthill_report::params::service_name,
@@ -17,8 +17,16 @@ class anthill_report (
   Integer $token_cache_db                       = $anthill_report::params::token_cache_db,
   Integer $token_cache_max_connections          = $anthill_report::params::token_cache_max_connections,
 
+  String $rate_cache_location                   = $anthill_report::params::rate_cache_location,
+  Integer $rate_cache_db                        = $anthill_report::params::rate_cache_db,
+  Integer $rate_cache_max_connections           = $anthill_report::params::rate_cache_max_connections,
+
+  String $rate_report_upload                      = $anthill_report::params::rate_report_upload,
+
   Boolean $enable_monitoring                    = $anthill_report::params::enable_monitoring,
   String $monitoring_location                   = $anthill_report::params::monitoring_location,
+
+  Boolean $debug                                = $anthill::debug,
 
   String $internal_broker_location              = $anthill_report::params::internal_broker_location,
   String $pubsub_location                       = $anthill_report::params::pubsub_location,

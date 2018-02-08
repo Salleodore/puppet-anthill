@@ -1,5 +1,7 @@
 
 class anthill (
+  # Default version for all Anthill Services (unless explicitly defined in an corresponding classes)
+  String $default_version                                             = $anthill::params::default_version,
   # External domain name, used to give it them to the users (e.g. example.com)
   String $external_domain_name                                        = $anthill::params::external_domain_name,
   # Used for internal commications and DNS resolution, e.g. example.internal

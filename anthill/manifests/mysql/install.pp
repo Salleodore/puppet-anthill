@@ -21,11 +21,14 @@ class anthill::mysql::install inherits anthill::mysql {
     package_ensure          => $mysql_package,
     root_password           => $root_password,
     remove_default_accounts => true,
-    override_options => {
+    purge_conf_dir          => true,
+    includedir              => '/etc/mysql/mysql.conf.d',
+    restart                 => true,
+    override_options        => {
       "mysqld" => {
         "event_scheduler" => "ON",
         "port"            => $listen_port,
-        "bind-address"    => anthill::local_ip_address()
+        "bind-address"    => $anthill::internal_fqdn
       }
     }
   }

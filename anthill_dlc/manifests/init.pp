@@ -1,7 +1,7 @@
 
 class anthill_dlc (
 
-  String $default_version,
+  String $default_version                       = $anthill::default_version,
 
   Enum['present', 'absent'] $ensure             = 'present',
   String $service_name                          = $anthill_dlc::params::service_name,
@@ -24,11 +24,15 @@ class anthill_dlc (
   Boolean $enable_monitoring                    = $anthill_dlc::params::enable_monitoring,
   String $monitoring_location                   = $anthill_dlc::params::monitoring_location,
 
+  Boolean $debug                                = $anthill::debug,
+
   String $internal_broker_location              = $anthill_dlc::params::internal_broker_location,
   String $pubsub_location                       = $anthill_dlc::params::pubsub_location,
 
   String $data_location                         = $anthill_dlc::params::data_location,
   String $data_host_location                    = $anthill_dlc::params::data_host_location,
+
+  String $nginx_max_body_size                   = $anthill_dlc::params::nginx_max_body_size,
 
   Optional[String] $discovery_service           = undef,
   Optional[String] $host                        = undef,
@@ -55,7 +59,9 @@ class anthill_dlc (
     external_domain_name => $external_domain_name,
     internal_domain_name => $internal_domain_name,
     internal_broker_location => $internal_broker_location,
-    whitelist => $whitelist
+    whitelist => $whitelist,
+
+    nginx_max_body_size => $nginx_max_body_size
   }
 
   if ($manage_db)

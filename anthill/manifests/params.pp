@@ -30,5 +30,7 @@ class anthill::params {
   $ssh_keys_user = 'anthillkeys'
   $ssh_keys_group = 'anthillkeys'
 
+  $default_version = '0.2'
+
   $redis_default_max_connections = 500
 }

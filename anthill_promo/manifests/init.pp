@@ -1,7 +1,7 @@
 
 class anthill_promo (
 
-  String $default_version,
+  String $default_version                       = $anthill::default_version,
 
   Enum['present', 'absent'] $ensure             = 'present',
   String $service_name                          = $anthill_promo::params::service_name,
@@ -19,6 +19,8 @@ class anthill_promo (
 
   Boolean $enable_monitoring                    = $anthill_promo::params::enable_monitoring,
   String $monitoring_location                   = $anthill_promo::params::monitoring_location,
+
+  Boolean $debug                                = $anthill::debug,
 
   String $internal_broker_location              = $anthill_promo::params::internal_broker_location,
   String $pubsub_location                       = $anthill_promo::params::pubsub_location,

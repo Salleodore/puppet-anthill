@@ -19,7 +19,7 @@ define anthill::service (
   Boolean $dns_first_record                       = false,
 
   Boolean $nginx_serve_static                     = true,
-  Optional[Integer] $nginx_max_body_size          = undef,
+  Optional[String] $nginx_max_body_size          = undef,
   Hash $nginx_locations                           = {}
 
 ) {
@@ -67,9 +67,7 @@ define anthill::service (
   # internal network is http-only
   $internal_location = "http://${full_domain}${internal_domain_name}"
 
-  anthill::ensure_location("internal broker", $internal_broker_location)
-
-  $internal_broker = generate_rabbitmq_url(Anthill::Location[$internal_broker_location])
+  $internal_broker = generate_rabbitmq_url(anthill::ensure_location("internal broker", $internal_broker_location, true))
 
   if ($internal_broker) {
     $real_dns_locations = {
@@ -93,7 +91,7 @@ define anthill::service (
     }
   }
 
-  @@anthill::dns::entry { $service_name:
+  @@anthill::dns::entry { "${full_domain}${internal_domain_name}":
     internal_hostname => "${full_domain}${internal_domain_name}",
     ensure => $ensure,
     tag => "internal"

@@ -1,7 +1,7 @@
 
 class anthill_login (
 
-  String $default_version,
+  String $default_version                       = $anthill::default_version,
 
   Enum['present', 'absent'] $ensure             = 'present',
   String $service_name                          = $anthill_login::params::service_name,
@@ -27,6 +27,8 @@ class anthill_login (
 
   Boolean $enable_monitoring                    = $anthill_login::params::enable_monitoring,
   String $monitoring_location                   = $anthill_login::params::monitoring_location,
+
+  Boolean $debug                                = $anthill::debug,
 
   String $application_keys_secret               = $anthill_login::params::application_keys_secret,
   String $auth_key_private                      = $anthill_login::params::auth_key_private,

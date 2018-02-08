@@ -56,6 +56,7 @@ class anthill::python inherits anthill {
   python::pip { 'cffi': virtualenv => $venv, require => Python::Virtualenv[$venv] }
   python::pip { 'cryptography': virtualenv => $venv, require => Python::Virtualenv[$venv] }
   python::pip { 'futures': virtualenv => $venv, require => Python::Virtualenv[$venv] }
+  python::pip { 'pympler': virtualenv => $venv, require => Python::Virtualenv[$venv] }
   python::pip { 'ipgetter': virtualenv => $venv, require => Python::Virtualenv[$venv] }
   python::pip { 'expiringdict': virtualenv => $venv, require => Python::Virtualenv[$venv] }
   python::pip { 'python-geoip': virtualenv => $venv, require => Python::Virtualenv[$venv] }

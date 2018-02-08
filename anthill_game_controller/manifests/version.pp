@@ -18,6 +18,8 @@ define anthill_game_controller::version (
   Boolean $enable_monitoring                          = $anthill_game_controller::enable_monitoring,
   String $monitoring_location                         = $anthill_game_controller::monitoring_location,
 
+  Boolean $debug                                      = $anthill_game_controller::debug,
+
   Optional[String] $host                              = $anthill_game_controller::host,
   Optional[String] $domain                            = $anthill_game_controller::domain,
 
@@ -41,12 +43,12 @@ define anthill_game_controller::version (
     fail("anthill_game:version { \"${version}\": } is not defined. Please define it with appropriate commit")
   }
 
-  anthill::ensure_location("token cache redis", $token_cache_location)
-  anthill::ensure_location("internal broker", $internal_broker_location)
-  anthill::ensure_location("pubsub", $pubsub_location)
+  $token_cache = anthill::ensure_location("token cache redis", $token_cache_location, true)
+  $internal_broker = generate_rabbitmq_url(anthill::ensure_location("internal broker", $internal_broker_location, true), $environment)
+  $pubsub = generate_rabbitmq_url(anthill::ensure_location("pubsub", $pubsub_location, true), $environment)
 
-  $internal_broker = generate_rabbitmq_url(Anthill::Location[$internal_broker_location], $environment)
-  $pubsub = generate_rabbitmq_url(Anthill::Location[$pubsub_location], $environment)
+
+
 
 
   $args = {
@@ -56,8 +58,8 @@ define anthill_game_controller::version (
     "ports_pool_to" => $ports_pool_to,
     "gs_host" => $gs_host,
 
-    "token_cache_host" => getparam(Anthill::Location[$token_cache_location], "host"),
-    "token_cache_port" => getparam(Anthill::Location[$token_cache_location], "port"),
+    "token_cache_host" => $token_cache["host"],
+    "token_cache_port" => $token_cache["port"],
     "token_cache_max_connections" => $token_cache_max_connections,
     "token_cache_db" => $token_cache_db,
   }
@@ -79,6 +81,7 @@ define anthill_game_controller::version (
 
     enable_monitoring                           => $enable_monitoring,
     monitoring_location                         => $monitoring_location,
+    debug                                       => $debug,
 
     internal_broker                             => $internal_broker,
     internal_restrict                           => $internal_restrict,

@@ -1,7 +1,7 @@
 
 class anthill_game_master (
 
-  String $default_version,
+  String $default_version                       = $anthill::default_version,
 
   Enum['present', 'absent'] $ensure             = 'present',
   String $service_name                          = $anthill_game_master::params::service_name,
@@ -27,13 +27,19 @@ class anthill_game_master (
   Integer $rate_cache_db                        = $anthill_game_master::params::rate_cache_db,
   Integer $rate_cache_max_connections           = $anthill_game_master::params::rate_cache_max_connections,
 
+  String $rate_create_room                      = $anthill_game_master::params::rate_create_room,
+
   Boolean $enable_monitoring                    = $anthill_game_master::params::enable_monitoring,
   String $monitoring_location                   = $anthill_game_master::params::monitoring_location,
+
+  Boolean $debug                                = $anthill::debug,
 
   String $party_broker_location                 = $anthill_game_master::params::party_broker_location,
 
   String $internal_broker_location              = $anthill_game_master::params::internal_broker_location,
   String $pubsub_location                       = $anthill_game_master::params::pubsub_location,
+
+  String $nginx_max_body_size                   = $anthill_game_master::params::nginx_max_body_size,
 
   Optional[String] $discovery_service           = undef,
   Optional[String] $host                        = undef,
@@ -60,7 +66,9 @@ class anthill_game_master (
     external_domain_name => $external_domain_name,
     internal_domain_name => $internal_domain_name,
     internal_broker_location => $internal_broker_location,
-    whitelist => $whitelist
+    whitelist => $whitelist,
+
+    nginx_max_body_size => $nginx_max_body_size
   }
 
   if ($manage_db)

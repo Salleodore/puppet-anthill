@@ -1,7 +1,7 @@
 
 class anthill_discovery (
 
-  String $default_version,
+  String $default_version                       = $anthill::default_version,
 
   Enum['present', 'absent'] $ensure             = 'present',
   String $service_name                          = $anthill_discovery::params::service_name,
@@ -20,6 +20,8 @@ class anthill_discovery (
 
   Boolean $enable_monitoring                    = $anthill_discovery::params::enable_monitoring,
   String $monitoring_location                   = $anthill_discovery::params::monitoring_location,
+
+  Boolean $debug                                = $anthill::debug,
 
   String $internal_broker_location              = $anthill_discovery::params::internal_broker_location,
   String $pubsub_location                       = $anthill_discovery::params::pubsub_location,

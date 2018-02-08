@@ -1,7 +1,7 @@
 
 class anthill_game_controller (
 
-  String $default_version,
+  String $default_version                       = $anthill::default_version,
 
   Enum['present', 'absent'] $ensure             = 'present',
   String $service_name                          = $anthill_game_controller::params::service_name,
@@ -23,6 +23,8 @@ class anthill_game_controller (
 
   Boolean $enable_monitoring                    = $anthill_game_controller::params::enable_monitoring,
   String $monitoring_location                   = $anthill_game_controller::params::monitoring_location,
+
+  Boolean $debug                                = $anthill::debug,
 
   String $internal_broker_location              = $anthill_game_controller::params::internal_broker_location,
   String $pubsub_location                       = $anthill_game_controller::params::pubsub_location,
@@ -62,7 +64,9 @@ class anthill_game_controller (
     internal_broker_location => $internal_broker_location,
     whitelist => $whitelist,
 
-    export_discovery_entry => false
+    export_discovery_entry => false,
+
+    nginx_max_body_size => $nginx_max_body_size
   }
 
 

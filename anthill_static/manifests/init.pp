@@ -1,7 +1,7 @@
 
 class anthill_static (
 
-  String $default_version,
+  String $default_version                       = $anthill::default_version,
 
   Enum['present', 'absent'] $ensure             = 'present',
   String $service_name                          = $anthill_static::params::service_name,
@@ -21,14 +21,16 @@ class anthill_static (
   Integer $rate_cache_db                        = $anthill_static::params::rate_cache_db,
   Integer $rate_cache_max_connections           = $anthill_static::params::rate_cache_max_connections,
 
+  String $rate_file_upload                      = $anthill_static::params::rate_file_upload,
+  Integer $max_file_size                        = $anthill_static::params::max_file_size,
+
   Boolean $enable_monitoring                    = $anthill_static::params::enable_monitoring,
   String $monitoring_location                   = $anthill_static::params::monitoring_location,
 
+  Boolean $debug                                = $anthill::debug,
+
   String $internal_broker_location              = $anthill_static::params::internal_broker_location,
   String $pubsub_location                       = $anthill_static::params::pubsub_location,
-
-  Array[Integer] $rate_file_upload              = $anthill_static::params::rate_file_upload,
-  Integer $max_file_size                        = $anthill_static::params::max_file_size,
 
   Optional[String] $discovery_service           = undef,
   Optional[String] $host                        = undef,

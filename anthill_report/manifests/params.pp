@@ -13,6 +13,12 @@ class anthill_report::params {
   $token_cache_max_connections = $anthill::redis_default_max_connections
   $token_cache_db = 4
 
+  $rate_cache_location = "redis-${hostname}"
+  $rate_cache_max_connections = $anthill::redis_default_max_connections
+  $rate_cache_db = 2
+
+  $rate_report_upload = "100,600"
+
   $enable_monitoring = $anthill::services_enable_monitoring
   $monitoring_location = $anthill::services_monitoring_location
 

@@ -1,7 +1,7 @@
 
 class anthill_environment (
 
-  String $default_version,
+  String $default_version                       = $anthill::default_version,
 
   Enum['present', 'absent'] $ensure             = 'present',
   String $service_name                          = $anthill_environment::params::service_name,
@@ -19,6 +19,8 @@ class anthill_environment (
 
   Boolean $enable_monitoring                    = $anthill_environment::params::enable_monitoring,
   String $monitoring_location                   = $anthill_environment::params::monitoring_location,
+
+  Boolean $debug                                = $anthill::debug,
 
   String $internal_broker_location              = $anthill_environment::params::internal_broker_location,
   String $pubsub_location                       = $anthill_environment::params::pubsub_location,

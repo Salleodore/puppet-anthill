@@ -1,7 +1,7 @@
 
 class anthill_event (
 
-  String $default_version,
+  String $default_version                       = $anthill::default_version,
 
   Enum['present', 'absent'] $ensure             = 'present',
   String $service_name                          = $anthill_event::params::service_name,
@@ -23,6 +23,8 @@ class anthill_event (
 
   Boolean $enable_monitoring                    = $anthill_event::params::enable_monitoring,
   String $monitoring_location                   = $anthill_event::params::monitoring_location,
+
+  Boolean $debug                                = $anthill::debug,
 
   String $internal_broker_location              = $anthill_event::params::internal_broker_location,
   String $pubsub_location                       = $anthill_event::params::pubsub_location,

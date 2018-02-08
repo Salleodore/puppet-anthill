@@ -18,6 +18,8 @@ define anthill_leaderboard::version (
   Boolean $enable_monitoring                          = $anthill_leaderboard::enable_monitoring,
   String $monitoring_location                         = $anthill_leaderboard::monitoring_location,
 
+  Boolean $debug                                      = $anthill_leaderboard::debug,
+
   String $internal_broker_location                    = $anthill_leaderboard::internal_broker_location,
   Optional[Array[String]] $internal_restrict          = $anthill_leaderboard::internal_restrict,
   Optional[Integer] $internal_max_connections         = $anthill_leaderboard::internal_max_connections,
@@ -34,26 +36,26 @@ define anthill_leaderboard::version (
 
 ) {
 
-  anthill::ensure_location("mysql database", $db_location)
-  anthill::ensure_location("token cache redis", $token_cache_location)
-  anthill::ensure_location("internal broker", $internal_broker_location)
-  anthill::ensure_location("pubsub", $pubsub_location)
+  $db = anthill::ensure_location("mysql database", $db_location, true)
+  $token_cache = anthill::ensure_location("token cache redis", $token_cache_location, true)
+  $internal_broker = generate_rabbitmq_url(anthill::ensure_location("internal broker", $internal_broker_location, true), $environment)
+  $pubsub = generate_rabbitmq_url(anthill::ensure_location("pubsub", $pubsub_location, true), $environment)
 
-  $internal_broker = generate_rabbitmq_url(Anthill::Location[$internal_broker_location], $environment)
-  $pubsub = generate_rabbitmq_url(Anthill::Location[$pubsub_location], $environment)
+
+
 
   $args = {
-    "db_host" => getparam(Anthill::Location[$db_location], "host"),
-    "db_username" => getparam(Anthill::Location[$db_location], "username"),
+    "db_host" => $db["host"],
+    "db_username" => $db["username"],
     "db_name" => $db_name,
-    "token_cache_host" => getparam(Anthill::Location[$token_cache_location], "host"),
-    "token_cache_port" => getparam(Anthill::Location[$token_cache_location], "port"),
+    "token_cache_host" => $token_cache["host"],
+    "token_cache_port" => $token_cache["port"],
     "token_cache_max_connections" => $token_cache_max_connections,
     "token_cache_db" => $token_cache_db
   }
 
   $application_environment = {
-    "db_password" => getparam(Anthill::Location[$db_location], "password")
+    "db_password" => $db["password"]
   }
 
   anthill::service::version { "${anthill_leaderboard::service_name}_${version}":
@@ -70,6 +72,7 @@ define anthill_leaderboard::version (
 
     enable_monitoring                           => $enable_monitoring,
     monitoring_location                         => $monitoring_location,
+    debug                                       => $debug,
 
     internal_broker                             => $internal_broker,
     internal_restrict                           => $internal_restrict,

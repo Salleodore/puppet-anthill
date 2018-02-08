@@ -26,7 +26,7 @@ class anthill_static::params {
   $nginx_max_body_size = '1024m'
 
   # A limit for static upload for user tuple: (amount, time)
-  $rate_file_upload = [10, 600]
+  $rate_file_upload = "10,600"
   # Maximum files size to accept
   $max_file_size = 104857600
 }

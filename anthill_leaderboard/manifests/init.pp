@@ -1,7 +1,7 @@
 
 class anthill_leaderboard (
 
-  String $default_version,
+  String $default_version                       = $anthill::default_version,
 
   Enum['present', 'absent'] $ensure             = 'present',
   String $service_name                          = $anthill_leaderboard::params::service_name,
@@ -19,6 +19,8 @@ class anthill_leaderboard (
 
   Boolean $enable_monitoring                    = $anthill_leaderboard::params::enable_monitoring,
   String $monitoring_location                   = $anthill_leaderboard::params::monitoring_location,
+
+  Boolean $debug                                = $anthill::debug,
 
   String $internal_broker_location              = $anthill_leaderboard::params::internal_broker_location,
   String $pubsub_location                       = $anthill_leaderboard::params::pubsub_location,
