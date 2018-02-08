@@ -38,31 +38,30 @@ define anthill_market::version (
 
 ) {
 
-  anthill::ensure_location("mysql database", $db_location)
-  anthill::ensure_location("token cache redis", $token_cache_location)
-  anthill::ensure_location("cache redis", $cache_location)
-  anthill::ensure_location("internal broker", $internal_broker_location)
-  anthill::ensure_location("pubsub", $pubsub_location)
-
-  $internal_broker = generate_rabbitmq_url(Anthill::Location[$internal_broker_location], $environment)
-  $pubsub = generate_rabbitmq_url(Anthill::Location[$pubsub_location], $environment)
+  $db = anthill::ensure_location("mysql database", $db_location, true)
+  $token_cache = anthill::ensure_location("token cache redis", $token_cache_location, true)
+  $cache = anthill::ensure_location("cache redis", $cache_location, true)
+  $internal_broker = generate_rabbitmq_url(anthill::ensure_location("internal broker", $internal_broker_location, true), $environment)
+  $pubsub = generate_rabbitmq_url(anthill::ensure_location("pubsub", $pubsub_location, true), $environment)
 
   $args = {
-    "db_host" => getparam(Anthill::Location[$db_location], "host"),
-    "db_username" => getparam(Anthill::Location[$db_location], "username"),
+    "db_host" => $db["host"],
+    "db_username" => $db["username"],
     "db_name" => $db_name,
-    "token_cache_host" => getparam(Anthill::Location[$token_cache_location], "host"),
-    "token_cache_port" => getparam(Anthill::Location[$token_cache_location], "port"),
+
+    "token_cache_host" => $token_cache["host"],
+    "token_cache_port" => $token_cache["port"],
     "token_cache_max_connections" => $token_cache_max_connections,
     "token_cache_db" => $token_cache_db,
-    "cache_host" => getparam(Anthill::Location[$cache_location], "host"),
-    "cache_port" => getparam(Anthill::Location[$cache_location], "port"),
+
+    "cache_host" => $cache["host"],
+    "cache_port" => $cache["port"],
     "cache_max_connections" => $cache_max_connections,
     "cache_db" => $cache_db
   }
 
   $application_environment = {
-    "db_password" => getparam(Anthill::Location[$db_location], "password")
+    "db_password" => $db["password"]
   }
 
   anthill::service::version { "${anthill_market::service_name}_${version}":
