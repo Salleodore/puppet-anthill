@@ -47,10 +47,6 @@ define anthill_game_controller::version (
   $internal_broker = generate_rabbitmq_url(anthill::ensure_location("internal broker", $internal_broker_location, true), $environment)
   $pubsub = generate_rabbitmq_url(anthill::ensure_location("pubsub", $pubsub_location, true), $environment)
 
-
-
-
-
   $args = {
     "sock_path" => $sock_directory,
     "binaries_path" => $binaries_directory,
