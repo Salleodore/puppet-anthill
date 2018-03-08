@@ -28,7 +28,10 @@ class anthill::mysql::install inherits anthill::mysql {
       "mysqld" => {
         "event_scheduler" => "ON",
         "port"            => $listen_port,
-        "bind-address"    => $anthill::internal_fqdn
+        "bind-address"    => $anthill::internal_fqdn,
+        "character-set-client-handshake" => "FALSE",
+        "character-set-server" => "utf8mb4",
+        "collation-server" => "utf8mb4_unicode_ci",
       }
     }
   }
