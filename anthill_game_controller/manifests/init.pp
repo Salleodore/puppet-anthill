@@ -11,6 +11,8 @@ class anthill_game_controller (
 
   String $sock_directory                        = $anthill_game_controller::params::sock_directory,
   String $binaries_directory                    = $anthill_game_controller::params::binaries_directory,
+  String $logs_directory                        = $anthill_game_controller::params::logs_directory,
+  Integer $logs_keep_time                       = $anthill_game_controller::params::logs_keep_time,
   Integer $ports_pool_from                      = $anthill_game_controller::params::ports_pool_from,
   Integer $ports_pool_to                        = $anthill_game_controller::params::ports_pool_to,
   String $gs_host                               = $anthill_game_controller::params::gs_host,
@@ -43,6 +45,14 @@ class anthill_game_controller (
 ) inherits anthill_game_controller::params {
 
   file { $binaries_directory:
+    ensure => $ensure ? {default => 'directory', 'absent' => 'absent' },
+    force  => true,
+    owner  => $anthill::applications_user,
+    group  => $anthill::applications_group,
+    mode   => '0760'
+  }
+
+  file { $logs_directory:
     ensure => $ensure ? {default => 'directory', 'absent' => 'absent' },
     force  => true,
     owner  => $anthill::applications_user,
