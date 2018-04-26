@@ -7,8 +7,6 @@ define anthill_game_controller::version (
 
   String $sock_directory                              = $anthill_game_controller::sock_directory,
   String $binaries_directory                          = $anthill_game_controller::binaries_directory,
-  String $logs_directory                              = $anthill_game_controller::logs_directory,
-  Integer $logs_keep_time                             = $anthill_game_controller::logs_keep_time,
   Integer $ports_pool_from                            = $anthill_game_controller::ports_pool_from,
   Integer $ports_pool_to                              = $anthill_game_controller::ports_pool_to,
   String $gs_host                                     = $anthill_game_controller::gs_host,
@@ -50,14 +48,10 @@ define anthill_game_controller::version (
   $pubsub = generate_rabbitmq_url(anthill::ensure_location("pubsub", $pubsub_location, true), $environment)
 
   $args = {
-    "logs_path" => $logs_directory,
-    "logs_keep_time" => $logs_keep_time,
-
-    "ports_pool_from" => $ports_pool_from,
-    "ports_pool_to" => $ports_pool_to,
-
     "sock_path" => $sock_directory,
     "binaries_path" => $binaries_directory,
+    "ports_pool_from" => $ports_pool_from,
+    "ports_pool_to" => $ports_pool_to,
     "gs_host" => $gs_host,
 
     "token_cache_host" => $token_cache["host"],
