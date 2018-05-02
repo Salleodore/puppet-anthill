@@ -8,6 +8,8 @@ class anthill_game_controller::params {
 
   $sock_directory = "/tmp"
   $binaries_directory = "${anthill::runtime_location}/${service_name}-gameserver"
+  $logs_directory = "/var/log/gameserver"
+  $logs_keep_time = 86400
   $ports_pool_from = 38000
   $ports_pool_to = 40000
 
