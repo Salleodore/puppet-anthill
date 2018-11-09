@@ -17,6 +17,11 @@ class anthill_message (
   Integer $token_cache_db                       = $anthill_message::params::token_cache_db,
   Integer $token_cache_max_connections          = $anthill_message::params::token_cache_max_connections,
 
+  String $rate_cache_location                   = $anthill_message::params::rate_cache_location,
+  Integer $rate_cache_db                        = $anthill_message::params::rate_cache_db,
+  Integer $rate_cache_max_connections           = $anthill_message::params::rate_cache_max_connections,
+  String $rate_read_messages_with               = $anthill_message::params::rate_read_messages_with,
+
   Boolean $enable_monitoring                    = $anthill_message::params::enable_monitoring,
   String $monitoring_location                   = $anthill_message::params::monitoring_location,
 

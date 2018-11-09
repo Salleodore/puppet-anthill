@@ -19,6 +19,11 @@ define anthill_message::version (
   Optional[Array[String]] $internal_restrict          = $anthill_message::internal_restrict,
   Optional[Integer] $internal_max_connections         = $anthill_message::internal_max_connections,
 
+  String $rate_cache_location                         = $anthill_message::rate_cache_location,
+  Integer $rate_cache_max_connections                 = $anthill_message::rate_cache_max_connections,
+  Integer $rate_cache_db                              = $anthill_message::rate_cache_db,
+  String $rate_read_messages_with                     = $anthill_message::rate_read_messages_with,
+
   Boolean $enable_monitoring                          = $anthill_message::enable_monitoring,
   String $monitoring_location                         = $anthill_message::monitoring_location,
 
@@ -41,6 +46,7 @@ define anthill_message::version (
 
   $db = anthill::ensure_location("mysql database", $db_location, true)
   $token_cache = anthill::ensure_location("token cache redis", $token_cache_location, true)
+  $rate_cache = anthill::ensure_location("ratelimit cache redis", $rate_cache_location, true)
   $internal_broker = generate_rabbitmq_url(anthill::ensure_location("internal broker", $internal_broker_location, true), $environment)
   $pubsub = generate_rabbitmq_url(anthill::ensure_location("pubsub", $pubsub_location, true), $environment)
   $message_broker = generate_rabbitmq_url(anthill::ensure_location("message broker", $message_broker_location, true), $environment)
@@ -49,10 +55,17 @@ define anthill_message::version (
     "db_host" => $db["host"],
     "db_username" => $db["username"],
     "db_name" => $db_name,
+
     "token_cache_host" => $token_cache["host"],
     "token_cache_port" => $token_cache["port"],
     "token_cache_max_connections" => $token_cache_max_connections,
     "token_cache_db" => $token_cache_db,
+
+    "rate_cache_host" => $rate_cache["host"],
+    "rate_cache_port" => $rate_cache["port"],
+    "rate_cache_max_connections" => $rate_cache_max_connections,
+    "rate_cache_db" => $rate_cache_db,
+    "rate_read_messages_with" => $rate_read_messages_with,
 
     "message_broker" => $message_broker,
     "message_broker_max_connections" => $message_broker_max_connections
