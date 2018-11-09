@@ -17,6 +17,11 @@ class anthill_promo (
   Integer $token_cache_db                       = $anthill_promo::params::token_cache_db,
   Integer $token_cache_max_connections          = $anthill_promo::params::token_cache_max_connections,
 
+  String $rate_cache_location                   = $anthill_promo::params::rate_cache_location,
+  Integer $rate_cache_db                        = $anthill_promo::params::rate_cache_db,
+  Integer $rate_cache_max_connections           = $anthill_promo::params::rate_cache_max_connections,
+  String $rate_promo_not_found                  = $anthill_promo::params::rate_promo_not_found,
+
   Boolean $enable_monitoring                    = $anthill_promo::params::enable_monitoring,
   String $monitoring_location                   = $anthill_promo::params::monitoring_location,
 
