@@ -34,7 +34,9 @@ define anthill_craft::version (
   Optional[Integer] $instances                        = undef,
   Optional[Enum['present', 'absent']] $ensure         = undef,
   Optional[String] $runtime_location                  = undef,
-  Optional[String] $sockets_location                  = undef
+  Optional[String] $sockets_location                  = undef,
+
+  String $virtualenv_location                         = $anthill::virtualenv_location
 
 ) {
 
@@ -93,7 +95,8 @@ define anthill_craft::version (
     application_arguments                       => $application_arguments,
     application_environment                     => $application_environment,
 
-    require                                     => Anthill::Common::Version[$version]
+    require                                     => Anthill::Common::Version[$version],
+    virtualenv_location                         => $virtualenv_location
 
   }
 }

@@ -12,6 +12,10 @@ define anthill_report::version (
   Integer $token_cache_max_connections                = $anthill_report::token_cache_max_connections,
   Integer $token_cache_db                             = $anthill_report::token_cache_db,
 
+  String $cache_location                              = $anthill_report::cache_location,
+  Integer $cache_max_connections                      = $anthill_report::cache_max_connections,
+  Integer $cache_db                                   = $anthill_report::cache_db,
+
   String $rate_cache_location                         = $anthill_report::rate_cache_location,
   Integer $rate_cache_max_connections                 = $anthill_report::rate_cache_max_connections,
   Integer $rate_cache_db                              = $anthill_report::rate_cache_db,
@@ -45,6 +49,7 @@ define anthill_report::version (
   $db = anthill::ensure_location("mysql database", $db_location, true)
   $token_cache = anthill::ensure_location("token cache redis", $token_cache_location, true)
   $rate_cache = anthill::ensure_location("ratelimit cache redis", $rate_cache_location, true)
+  $cache = anthill::ensure_location("cache redis", $cache_location, true)
   $internal_broker = generate_rabbitmq_url(anthill::ensure_location("internal broker", $internal_broker_location, true), $environment)
   $pubsub = generate_rabbitmq_url(anthill::ensure_location("pubsub", $pubsub_location, true), $environment)
 
@@ -60,6 +65,11 @@ define anthill_report::version (
     "token_cache_port" => $token_cache["port"],
     "token_cache_max_connections" => $token_cache_max_connections,
     "token_cache_db" => $token_cache_db,
+
+    "cache_host" => $cache["host"],
+    "cache_port" => $cache["port"],
+    "cache_max_connections" => $cache_max_connections,
+    "cache_db" => $cache_db,
 
     "rate_cache_host" => $rate_cache["host"],
     "rate_cache_port" => $rate_cache["port"],

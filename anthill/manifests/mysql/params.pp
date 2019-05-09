@@ -6,6 +6,6 @@ class anthill::mysql::params {
   $username = 'anthill'
   $password = 'anthill'
 
-  $mysql_package = '5.7.17-1debian8'
+  $mysql_package = '5.7.23-1debian8'
 
 }

@@ -21,6 +21,10 @@ class anthill_report (
   Integer $rate_cache_db                        = $anthill_report::params::rate_cache_db,
   Integer $rate_cache_max_connections           = $anthill_report::params::rate_cache_max_connections,
 
+  String $cache_location                        = $anthill_report::params::cache_location,
+  Integer $cache_db                             = $anthill_report::params::cache_db,
+  Integer $cache_max_connections                = $anthill_report::params::cache_max_connections,
+
   String $rate_report_upload                      = $anthill_report::params::rate_report_upload,
 
   Boolean $enable_monitoring                    = $anthill_report::params::enable_monitoring,

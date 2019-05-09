@@ -45,7 +45,8 @@ class anthill::monitoring::grafana::install inherits anthill::monitoring::grafan
         admin_password => $admin_password
       },
       session => $session
-    }
+    },
+    version => '5.2.2'
   } -> Grafana_datasource <<| |>>
 
   if ($manage_mysql_db) {

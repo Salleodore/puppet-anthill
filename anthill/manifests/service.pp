@@ -19,8 +19,9 @@ define anthill::service (
   Boolean $dns_first_record                       = false,
 
   Boolean $nginx_serve_static                     = true,
-  Optional[String] $nginx_max_body_size          = undef,
-  Hash $nginx_locations                           = {}
+  Optional[String] $nginx_max_body_size           = undef,
+  Hash $nginx_locations                           = {},
+  String $nginx_download_location                 = undef
 
 ) {
   $vhost = "${environment}_${service_name}"
@@ -177,6 +178,20 @@ define anthill::service (
 
       location_allow => $location_allow,
       location_deny => $location_deny
+    }
+
+    if ($nginx_download_location) {
+      nginx::resource::location { "nginx_location_${vhost}_download":
+        ensure => $ensure,
+        location => "/download",
+        server => $vhost,
+        location_alias => $nginx_download_location,
+        index_files => [],
+        ssl => $anthill::nginx::ssl,
+
+        location_allow => $location_allow,
+        location_deny => $location_deny
+      }
     }
   }
 

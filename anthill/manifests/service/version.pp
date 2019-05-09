@@ -9,6 +9,7 @@ define anthill::service::version (
   $pubsub,
 
   $source_directory = "${anthill::sources_location}/${service_name}",
+  $virtualenv_location = "${anthill::virtualenv_location}",
   $source_commit,
 
   $host = undef,
@@ -167,7 +168,7 @@ define anthill::service::version (
   $base_arguments = convert_cmd_args($result_arguments)
   $env = convert_environment_args($result_environment)
 
-  $command = "${anthill::virtualenv_location}/${environment}/bin/python ${service_directory}/${subdirectory}/server.py $base_arguments $application_arguments"
+  $command = "$virtualenv_location/${environment}/bin/python ${service_directory}/${subdirectory}/server.py $base_arguments $application_arguments"
 
   supervisor::program { "${environment}_${service_name}_${version}":
     ensure               => $ensure,

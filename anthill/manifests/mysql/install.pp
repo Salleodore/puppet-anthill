@@ -32,6 +32,12 @@ class anthill::mysql::install inherits anthill::mysql {
         "character-set-client-handshake" => "FALSE",
         "character-set-server" => "utf8mb4",
         "collation-server" => "utf8mb4_unicode_ci",
+        "slow_query_log" => "ON",
+        "slow_query_log_file" => "/var/log/mysql/mysql-slow.log",
+        "long_query_time" => 1,
+        "log-queries-not-using-indexes" => "ON",
+        "max_connections" => 500,
+        "query_cache_type" => 1
       }
     }
   }

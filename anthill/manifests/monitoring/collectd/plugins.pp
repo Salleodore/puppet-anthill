@@ -22,12 +22,13 @@ class anthill::monitoring::collectd::plugins inherits anthill::monitoring::colle
 
   class { collectd::plugin::cpu:
     ensure => $report_cpu ? { true => present, default => absent },
-    reportbystate => false,
+    reportbystate => true,
     valuespercentage => true
   }
 
   class { collectd::plugin::load:
-    ensure => $report_load ? { true => present, default => absent }
+    ensure => $report_load ? { true => present, default => absent },
+    report_relative => true
   }
 
   class { collectd::plugin::df:
@@ -75,7 +76,7 @@ class anthill::monitoring::collectd::plugins inherits anthill::monitoring::colle
         password    => $report_mysql_password,
         port        => getparam(Class[Anthill::Mysql], "listen_port"),
         masterstats => false,
-        wsrepstats  => false
+        # wsrepstats  => false
       }
     }
   }

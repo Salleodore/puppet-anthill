@@ -22,6 +22,7 @@ define anthill_dlc::version (
   Boolean $debug                                      = $anthill_dlc::debug,
 
   String $data_location                               = $anthill_dlc::data_location,
+  String $data_runtime_location                       = $anthill_dlc::data_runtime_location,
   String $data_host_location                          = $anthill_dlc::data_host_location,
 
   Optional[String] $host                              = $anthill_dlc::host,
@@ -65,6 +66,7 @@ define anthill_dlc::version (
     "cache_max_connections" => $cache_max_connections,
     "cache_db" => $cache_db,
     "data_location" => $data_location,
+    "data_runtime_location" => $data_runtime_location,
     "data_host_location" => $data_host_location
   }
 

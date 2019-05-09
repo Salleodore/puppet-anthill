@@ -24,6 +24,7 @@ class anthill_dlc::params {
   $pubsub_location = "rabbitmq-${hostname}"
 
   $data_location = "${anthill::runtime_location}/${service_name}-dlc"
+  $data_runtime_location = "${anthill::runtime_location}/runtime-dlc"
   $data_host_location = "${anthill::protocol}://${service_name}-${environment}.${anthill::external_domain_name}/download/"
 
   $nginx_max_body_size = '1024m'

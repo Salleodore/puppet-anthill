@@ -30,6 +30,7 @@ class anthill_dlc (
   String $pubsub_location                       = $anthill_dlc::params::pubsub_location,
 
   String $data_location                         = $anthill_dlc::params::data_location,
+  String $data_runtime_location                 = $anthill_dlc::params::data_runtime_location,
   String $data_host_location                    = $anthill_dlc::params::data_host_location,
 
   String $nginx_max_body_size                   = $anthill_dlc::params::nginx_max_body_size,
@@ -61,6 +62,7 @@ class anthill_dlc (
     internal_broker_location => $internal_broker_location,
     whitelist => $whitelist,
 
+    nginx_download_location => $data_runtime_location,
     nginx_max_body_size => $nginx_max_body_size
   }
 

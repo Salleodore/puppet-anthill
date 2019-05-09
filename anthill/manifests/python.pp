@@ -53,17 +53,25 @@ class anthill::python inherits anthill {
     url => "git+https://github.com/anthill-utils/pika.git",
     require => Python::Virtualenv[$venv] }
   python::pip { 'pyOpenSSL': virtualenv => $venv, require => Python::Virtualenv[$venv] }
+
   python::pip { 'cffi': virtualenv => $venv, require => Python::Virtualenv[$venv] }
   python::pip { 'cryptography': virtualenv => $venv, require => Python::Virtualenv[$venv] }
   python::pip { 'futures': virtualenv => $venv, require => Python::Virtualenv[$venv] }
   python::pip { 'pympler': virtualenv => $venv, require => Python::Virtualenv[$venv] }
-  python::pip { 'ipgetter': virtualenv => $venv, require => Python::Virtualenv[$venv] }
+
+  # python::pip { 'ipgetter': virtualenv => $venv, require => Python::Virtualenv[$venv] } # removed from pip
+
   python::pip { 'expiringdict': virtualenv => $venv, require => Python::Virtualenv[$venv] }
   python::pip { 'python-geoip': virtualenv => $venv, require => Python::Virtualenv[$venv] }
   python::pip { 'python-geoip-geolite2-yplan': virtualenv => $venv, require => Python::Virtualenv[$venv] }
   python::pip { 'psutil': virtualenv => $venv, require => Python::Virtualenv[$venv] }
   python::pip { 'lazy': virtualenv => $venv, require => Python::Virtualenv[$venv] }
   python::pip { 'GitPython': virtualenv => $venv, require => Python::Virtualenv[$venv]}
-  python::pip { 'sprockets-influxdb': virtualenv => $venv, require => Python::Virtualenv[$venv]}
-
+  # python::pip { 'sprockets-influxdb': virtualenv => $venv, require => Python::Virtualenv[$venv]}
+  python::pip { 'sprockets-influxdb': virtualenv => $venv,
+    url => "git+https://github.com/anthill-utils/sprockets-influxdb.git",
+    require => Python::Virtualenv[$venv]}
+  python::pip { 'celery': virtualenv => $venv, require => Python::Virtualenv[$venv]}
+  python::pip { 'dpath': virtualenv => $venv, require => Python::Virtualenv[$venv]}
+  python::pip { 'python-crontab': virtualenv => $venv, require => Python::Virtualenv[$venv]}
 }
